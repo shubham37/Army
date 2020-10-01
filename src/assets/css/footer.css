@@ -1,0 +1,19 @@
+.civil {
+    padding: 5px;
+    border-top: 2px gray solid;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+    text-align: center;
+}
+  
+li {
+    display: inline-block;
+    color: white;
+    padding: 4px;
+}

@@ -1,0 +1,12 @@
+.LogInForm {
+    /* text-align: center; */
+    padding: 20px;
+}
+
+.create {
+    width: 250px;
+}
+
+span {
+    display: inline;
+}

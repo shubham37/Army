@@ -1,14 +1,34 @@
 import React, { Component } from 'react';
-// import './App.css';
-import './assets/css/main.css'
+import Navigation from './components/navigation.js'
+import Footer from './components/footer.js'
+import './App.css';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import Header from './components/header.js';
+import Main from './components/main.js'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <img src={require('./assets/images/flag.jpg')} alt='flag.jpg' className='img-fluid float-right' height='15%' />
-        <img src={require('./assets/images/flag.jpg')} alt='flag.jpg' className='img-responsive float-left' width='60%' height={150} />
-      </div>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route path='/student'>
+            <Header />
+          </Route>
+          <Route path='/assessors'>
+            <h1>Assessors</h1>
+          </Route>
+          <Route path='/'>
+            <Navigation />
+            <Main />
+            <br/>
+            <div className='scroll_message container-fluid'>
+              <marquee behavior="scroll" direction="left">Here is some scrolling text... </marquee>
+            </div>
+          </Route>
+        </Switch>
+        <Footer />
+      </BrowserRouter>
     );
   }
 }
