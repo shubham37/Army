@@ -1,3 +1,9 @@
+.FreeTest {
+    width: 100%;
+}
+
 .free_btn {
- margin-top: 25%;   
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
 }

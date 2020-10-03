@@ -5,34 +5,36 @@ class LogInForm extends Component {
   render() {
     return (
         <div className='LogInForm'>
-            <h5>Login Students/Accessors</h5>
-            <form>
-                <div class="row">
-                    <label for="username" class="col col-md-4">User Name</label>
-                    <div class="col-sm-10">
-                    <input type="text"  id="username" placeholder="your user name ..." />
+            <h6  className='login_title'>Login Students/Accessors</h6>
+            <div className='login'>
+                <form>
+                    <div class="row">
+                        <label for="username" class="col col-md-4">User Name</label>
+                        <div class="col-sm-10">
+                        <input type="text"  id="username" placeholder="your user name ..." />
+                        </div>
                     </div>
-                </div>
-                <br />
+                    <br />
 
-                <div class="row">
-                    <label for="inputPassword" class="col-sm-2 col-md-6">Password</label>
-                    <div class="col-sm-10">
-                    <input type="password"  id="inputPassword" placeholder="Password" />
+                    <div class="row">
+                        <label for="inputPassword" class="col-sm-2 col-md-6">Password</label>
+                        <div class="col-sm-10">
+                        <input type="password"  id="inputPassword" placeholder="Password" />
+                        </div>
                     </div>
-                </div>
-                <br />
+                    <br />
 
-                <div class='row'>
-                    <div class='col col-md-6'>
-                        <span>
-                            <input className='btn btn-primary' type="submit" value="Login"/> <input className='btn btn-success' type="submit" value="Forgot Password"/>
-                        </span>
+                    <div class='row'>
+                        <div class='col col-md-6'>
+                            <span>
+                                <input className='btn btn-primary' type="submit" value="Login"/> <span><a href='/forgot_password'><input className='btn btn-danger' type="button" value="Forgot Password"/></a></span>
+                            </span>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
             <br />
-            <button className='btn btn-primary create'>Create Account</button>
+            <a href='/create_account'><button className='btn btn-primary create'>Create Account</button></a>
         </div>
     );
   }

@@ -12,7 +12,7 @@ class Main extends Component {
         <div className='col col-sm-6 col-md-6'>
           <FreeTest />
         </div>
-        <div className='col col-sm-6 col-md-6'>
+        <div className='col col-sm-6 col-md-6 form_section'>
           <BrowserRouter>
             <Switch>
               <Route path='/free' >

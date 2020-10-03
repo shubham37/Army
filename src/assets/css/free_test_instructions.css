@@ -1,0 +1,11 @@
+.instruction {
+    color: teal;
+}
+
+.free_test_start_block {
+    padding: 10px;
+}
+
+#free_test_start_btn {
+    margin: 20px 20px;
+}

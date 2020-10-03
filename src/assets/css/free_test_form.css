@@ -1,3 +1,14 @@
+.FreeTestForm {
+    padding: 2%;
+}
+
+.ff {
+    text-align: center;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
 #email, #otp {
     width: 100%;
     padding: 12px 20px;
@@ -16,11 +27,4 @@
     margin: 8px 0;
     border: none;
     border-radius: 4px;
-}
-    
-.FreeTestForm {
-    text-align: center;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 10px;
 }
