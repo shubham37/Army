@@ -1,0 +1,40 @@
+.form_header {
+    color: rgb(45, 45, 160);
+    font-size: larger;
+    margin-top: 1%;
+}
+
+.info_badge {
+    margin-top: -1%;
+    color: grey;
+}
+
+label {
+    font-size: smaller;
+    font-weight: bold;
+    width: 30%;
+}
+
+.required_symbol {
+    font-size: small;
+    color: red;
+}
+
+.input_take {
+    width: 50%;
+    float: right;
+}
+
+.input_take_cls {
+    width: 100%;
+    float: left;
+}
+
+hr {
+    border: 1px solid grey;
+}
+
+.submit_btn  {
+    text-align: center;
+    margin: 2%;
+}

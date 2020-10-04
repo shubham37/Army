@@ -6,9 +6,9 @@ class ContactNavigation extends Component {
   render() {
     return (
         <NavDropdown title="Contact us" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Chief Executive Offier</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Chief Operations Offier</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Chief Marketing Offier</NavDropdown.Item>
+            <NavDropdown.Item href="/contact_us/ceo">Chief Executive Offier</NavDropdown.Item>
+            <NavDropdown.Item href="/contact_us/coo">Chief Operations Offier</NavDropdown.Item>
+            <NavDropdown.Item href="/contact_us/cmo">Chief Marketing Offier</NavDropdown.Item>
         </NavDropdown>
     );
   }

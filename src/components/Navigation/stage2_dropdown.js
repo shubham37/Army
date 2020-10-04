@@ -6,9 +6,9 @@ class Stage2Navigation extends Component {
   render() {
     return (
         <NavDropdown title="Stage2" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">PSYCH</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">GTO</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">IO</NavDropdown.Item>
+            <NavDropdown.Item href="/stage2/psych">PSYCH</NavDropdown.Item>
+            <NavDropdown.Item href="/stage2/gto">GTO</NavDropdown.Item>
+            <NavDropdown.Item href="/stage2/io">IO</NavDropdown.Item>
         </NavDropdown>
     );
   }

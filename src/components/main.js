@@ -4,6 +4,7 @@ import  FreeTest from './free_test.js'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LogInForm from  './forms/login_form.js'
 import FreeTestForm from './forms/free_test_form.js'
+import ForgotPassword from './forms/forgot_password.js'
 
 class Main extends Component {
   render() {
@@ -17,6 +18,9 @@ class Main extends Component {
             <Switch>
               <Route path='/free' >
                 <FreeTestForm />
+              </Route>
+              <Route path='/forgot_password' >
+                <ForgotPassword />
               </Route>
               <Route path='/' >
                 <LogInForm />

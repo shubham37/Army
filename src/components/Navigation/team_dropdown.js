@@ -6,13 +6,13 @@ class TeamNavigation extends Component {
   render() {
     return (
     <NavDropdown title="Team" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">GTO Dept</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">IO Dept</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">PSYCH Dept</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.4">PD Dept</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.4">Intt Test Dept</NavDropdown.Item>
+        <NavDropdown.Item href="/team/gto_dept">GTO Dept</NavDropdown.Item>
+        <NavDropdown.Item href="/team/io_dept">IO Dept</NavDropdown.Item>
+        <NavDropdown.Item href="/team/psych_dept">PSYCH Dept</NavDropdown.Item>
+        <NavDropdown.Item href="/team/pd_dept">PD Dept</NavDropdown.Item>
+        <NavDropdown.Item href="/team/intt_test_dept">Intt Test Dept</NavDropdown.Item>
     </NavDropdown>
-);
+    );
   }
 }
 

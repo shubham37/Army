@@ -34,7 +34,7 @@ class LogInForm extends Component {
                 </form>
             </div>
             <br />
-            <a href='/create_account'><button className='btn btn-primary create'>Create Account</button></a>
+            <a href='/create_account'><button className='btn btn-info create'>Create Account</button></a>
         </div>
     );
   }

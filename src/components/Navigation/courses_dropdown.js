@@ -6,8 +6,8 @@ class CoursesNavigation extends Component {
   render() {
     return (
         <NavDropdown title="Courses" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">COURSES</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">FEE STRUCTURE</NavDropdown.Item>
+            <NavDropdown.Item href="/courses/courses">COURSES</NavDropdown.Item>
+            <NavDropdown.Item href="/courses/fee_structure">FEE STRUCTURE</NavDropdown.Item>
         </NavDropdown>
     );
   }

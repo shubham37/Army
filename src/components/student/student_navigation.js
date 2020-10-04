@@ -5,58 +5,56 @@ class StudentNavigation extends Component {
   render() {
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">Brand</Navbar.Brand>
+            <Navbar.Brand href="/student">Brand</Navbar.Brand>
             <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">    
                     <NavDropdown title="Dashboard" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">PIQ Form</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Psych Tests</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">IO Tests</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">GTO Tests</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/dashboard/piq">PIQ Form</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/dashboard/psych">Psych Tests</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/dashboard/io">IO Tests</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/dashboard/gto">GTO Tests</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="#home">Instruction</Nav.Link>
-                    <Nav.Link href="#home">PIQ</Nav.Link>
+                    <Nav.Link href="/student/instruction">Instruction</Nav.Link>
+                    <Nav.Link href="/student/piq">PIQ</Nav.Link>
 
                     <NavDropdown title="Assessors" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.3">GTO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">IO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Psych Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">PD Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">Intt Test Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/assessor/gto">GTO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/assessor/io">IO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/assessor/psych">Psych Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/assessor/pd">PD Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/assessor/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
-
-                    <Nav.Link href="#home">Training Schedule</Nav.Link>
-                    <Nav.Link href="#home">Schedule For Today</Nav.Link>
+                    <Nav.Link href="/student/training_schedule">Training Schedule</Nav.Link>
+                    <Nav.Link href="/student/schedule_for_day">Schedule For Today</Nav.Link>
 
                     <NavDropdown title="Tests" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.3">GTO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">IO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Psych Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">PD Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">Intt Test Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/tests/gto">GTO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/tests/io">IO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/tests/psych">Psych Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/tests/pd">PD Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/tests/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="#home">Tests Pending</Nav.Link>
+                    <Nav.Link href="/student/pending_test">Tests Pending</Nav.Link>
 
                     <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.3">GTO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">IO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Psych Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">PD Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">Intt Test Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/test_reports/gto">GTO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/test_reports/io">IO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/test_reports/psych">Psych Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/test_reports/pd">PD Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/test_reports/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
                     <NavDropdown title="Progress Report" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.3">GTO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">IO Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Psych Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">PD Dept</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">Intt Test Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/progress_report/gto">GTO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/progress_report/io">IO Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/progress_report/psych">Psych Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/progress_report/pd">PD Dept</NavDropdown.Item>
+                        <NavDropdown.Item href="/student/progress_report/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
-
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

@@ -16,7 +16,7 @@ class Navigation extends Component {
     return (
       <div className="Navigation">
         <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Brand</Navbar.Brand>
+        <Navbar.Brand href="/">Brand</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

@@ -6,8 +6,8 @@ class RollOfHonorNavigation extends Component {
   render() {
     return (
         <NavDropdown title="Roll of Honor" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Star Of The Day</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Evergreen Star's</NavDropdown.Item>
+            <NavDropdown.Item href="/roll_of_honor/star_of_day">Star Of The Day</NavDropdown.Item>
+            <NavDropdown.Item href="/roll_of_honor/evergreen_star">Evergreen Star's</NavDropdown.Item>
         </NavDropdown>
     );
   }

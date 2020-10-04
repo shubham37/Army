@@ -5,6 +5,7 @@ class FreeTestForm extends Component {
   render() {
     return (
       <div className="FreeTestForm">
+        <h6>Free Test Details</h6>
           <div className='ff'>
             <form action="/action_page.php">
                 <div className='row'>

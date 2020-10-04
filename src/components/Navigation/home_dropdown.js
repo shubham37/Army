@@ -6,10 +6,10 @@ class HomeNavigation extends Component {
   render() {
     return (
         <NavDropdown title="Home" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Vision</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Mission</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Why its unique</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.4">Courses</NavDropdown.Item>
+            <NavDropdown.Item href="/home/vision">Vision</NavDropdown.Item>
+            <NavDropdown.Item href="/home/mission">Mission</NavDropdown.Item>
+            <NavDropdown.Item href="/home/why_its_unique">Why its unique</NavDropdown.Item>
+            <NavDropdown.Item href="/home/courses">Courses</NavDropdown.Item>
         </NavDropdown>
     );
   }
