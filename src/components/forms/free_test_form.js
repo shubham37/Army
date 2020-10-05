@@ -5,21 +5,19 @@ class FreeTestForm extends Component {
   render() {
     return (
       <div className="FreeTestForm">
-        <h6>Free Test Details</h6>
-          <div className='ff'>
+        <div className='ff'>
+          <p className='free_test_title'>Free Test Details</p>
             <form action="/action_page.php">
                 <div className='row'>
-                    <div className='col col-md-12'>
-                        <label for="email">Enter Email/Mobile Number
+                    <label for="email" className='col col-md-6 col-sm-12'>Enter Email/Mobile Number </label><br />
+                    <div className='col col-sm-10'>
                             <input type="text" id="email" name="firstname" placeholder="Your email/mobile number..." />
-                        </label>
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col col-md-12'>
-                        <label for="otp">Enter Password/OTP
+                    <label for="otp" className='col col-md-6 col-sm-12'>Enter Password/OTP</label><br />
+                    <div className='col col-sm-10'>
                             <input type="text" id="otp" name="lastname" placeholder="Your password/OTP..." />
-                        </label>
                     </div>
                 </div>
 
@@ -27,7 +25,7 @@ class FreeTestForm extends Component {
                 <input className='btn' type="button" value="Request OTP" id='otp_btn' />
 
             </form>
-          </div>
+        </div>
     </div>
     );
   }

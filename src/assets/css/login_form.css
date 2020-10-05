@@ -5,11 +5,12 @@
 .login_title {
     border-bottom: 1px grey solid;
     width: 250px;
+    font-size: medium;
     font-weight: bolder;
 }
 
 .login {
-    margin-top: 4%;
+    margin-top: 1%;
 }
 
 .create {
