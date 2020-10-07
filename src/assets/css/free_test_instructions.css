@@ -1,11 +1,41 @@
+.FreeTestInstruction {
+    margin-bottom: 1%;
+}
 .instruction {
-    color: teal;
+    color: black;
 }
 
 .free_test_start_block {
     padding: 10px;
 }
 
+.instruction_block {
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
 #free_test_start_btn {
     margin: 20px 20px;
+    padding: 10px;
+    font-weight: bolder;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar_text {
+    margin-top: 1%;
+    color: black;
+    font-size: larger;
+    font-weight: bolder;
+    border: 2px solid black;
+}
+
+.navbar_text_instruction {
+    color: black;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.danger_text {
+    color: red;
+    font-style: italic;
 }

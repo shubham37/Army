@@ -19,7 +19,7 @@ class ForgotPasswordForm extends Component {
                                 <form action='/'>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <input type="email"  id="email" placeholder="Enter Your Email.." />
+                                            <input type="email"  id="email_link" placeholder="Enter Your Email.." />
                                         </div>
                                     </div>
                                     <br />

@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap'
 
 class RollOfHonorStarDay extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in RollOfHonorStarDay.</h1>
+      <div className='container-fluid'>
+        <Card>
+          <Card.Header>Star of the day</Card.Header>
+          <Card.Body>
+            <div className='row'>
+              <div className='col float-right'>
+                <h4>Image</h4>
+              </div>
+              <div className='col float-left'>
+                <h4>Bio Data</h4>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
       </div>
-      );
+    );
   }
 }
 

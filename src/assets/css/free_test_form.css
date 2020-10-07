@@ -7,9 +7,9 @@
 }
 
 .free_test_title {
-    width: 250px;
+    width: 80%;
     border-bottom: 1px solid black;
-    font-size: medium;
+    font-size: larger;
     font-weight: bolder;
 }
 
@@ -23,12 +23,19 @@ label {
     margin-top: 1%;
     padding: 5px;
 }
-  
+
+#email_number, #otp {
+    padding: 1% 2%;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
 #otp_btn,#login_btn {
     text-align: center;
     background-color: #239958;
     color: white;
-    padding: 1% 5%;
+    width: 80%;
     margin: 8px 0;
     border: none;
     border-radius: 4px;

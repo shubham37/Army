@@ -35,12 +35,12 @@ import TeamPD from '../general/team/pd_dept.js'
 import TeamPsych from '../general/team/psych_dept.js'
 
 
-
 class GeneralMain extends Component {
   render() {
     return (
-      <div>
+      <div className='content_home'>
         <Navigation />
+        <br />
         <BrowserRouter>
           <Switch>
 

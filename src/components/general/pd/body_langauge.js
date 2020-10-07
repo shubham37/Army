@@ -3,10 +3,15 @@ import React, { Component } from 'react';
 class PDBodyLanguage extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in PDBodyLanguage.</h1>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col'>
+            <h4>Body Lanugage</h4>
+            <hr />            
+          </div>
+        </div>
       </div>
-      );
+    );
   }
 }
 

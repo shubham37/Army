@@ -1,5 +1,9 @@
 .scroll_message {
     color: white;
-    padding: 5px;
+    font-size: larger;
+    font-weight: bolder;
+    font-style: italic;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 1%;
     background-color: brown;
 }

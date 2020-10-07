@@ -4,9 +4,20 @@
 
 .login_title {
     border-bottom: 1px grey solid;
-    width: 250px;
-    font-size: medium;
+    width: 100%;
+    font-size: large;
     font-weight: bolder;
+}
+
+label {
+    font-size: larger;
+}
+
+#username, #inputPassword {
+    padding: 1% 2%;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .login {
@@ -14,7 +25,7 @@
 }
 
 .create {
-    width: 250px;
+    width: 100%;
 }
 
 span {

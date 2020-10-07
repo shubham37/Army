@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap'
 
 class ContactCOO extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in ContactCOO.</h1>
-      </div>
-      );
+      <div className='container-fluid'>
+        <Card>
+          <Card.Header>COO</Card.Header>
+          <Card.Body>
+            <div className='row'>
+              <div className='col float-right'>
+                <h4>Image</h4>
+              </div>
+              <div className='col float-left'>
+                <h4>Bio Data</h4>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+        </div>
+  );
   }
 }
 

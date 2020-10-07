@@ -1,10 +1,89 @@
 import React, { Component } from 'react';
+import { Card } from 'react-bootstrap'
 
 class Stage1DT extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in Stage1DT.</h1>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col'>
+            <h4>DT</h4>
+            <hr />            
+          </div>
+        </div>
+
+        <div className='row'>
+          <div className='col'>
+            <Card>
+              <Card.Header>Training Videos</Card.Header>
+              <Card.Body>
+                <div className='row'>
+                  <div className='col'>
+                    <h3>Video 1</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 2</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                </div>
+                </Card.Body>
+            </Card>
+          </div>
+        </div>
+        <br />
+        <div className='row'>
+          <div className='col'>
+            <Card>
+              <Card.Header>Practice (45 Min)</Card.Header>
+              <Card.Body>
+                <div className='row'>
+                  <div className='col'>
+                    <h3>Video 1</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 2</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                </div>
+                </Card.Body>
+            </Card>
+          </div>
+        </div>
+        <br />
+        <div className='row'>
+          <div className='col'>
+            <Card>
+              <Card.Header>Interactive Session-1 (30 Min)</Card.Header>
+              <Card.Body>
+                <div className='row'>
+                  <div className='col'>
+                    <h3>Video 1</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 2</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                  <div className='col'>
+                    <h3>Video 3</h3>
+                  </div>
+                </div>
+                </Card.Body>
+            </Card>
+          </div>
+        </div>
+    
       </div>
       );
   }

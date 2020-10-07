@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 class PDDAD extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in PDDAD.</h1>
+      <div className='row'>
+        <div className='col'>
+          <h4>Hello, We are in PDDFS1S2.</h4>
+        </div>
       </div>
-      );
+    );
   }
 }
 

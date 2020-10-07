@@ -3,10 +3,14 @@ import React, { Component } from 'react';
 class CurrentAffairNational extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in CurrentAffairNational.</h1>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col'>
+            <h4>National</h4>
+          </div>
+        </div>
       </div>
-      );
+    );
   }
 }
 
