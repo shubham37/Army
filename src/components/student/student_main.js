@@ -34,7 +34,9 @@ import StudentIntruction from './instruction.js'
 import StudentScheduleToday from './schedule_for_today.js'
 import StudentTestPending from './tests_pending.js'
 import StudentTrainingSchedule from './training_schedule.js'
+import StudentPIQForm from './piq_form.js'
 
+import '../../assets/css/student.css'
 
 class StudentMain extends Component {
   render() {
@@ -45,21 +47,32 @@ class StudentMain extends Component {
                     <StudentNavigation />
                 </div>
             </div>
-            <div className='container-fluid'>
-                <p>Welcome Mr.Shubham<span className='float-right'><button className='btn-danger'>Logout</button></span></p>
+            <br />
+            <div className='row container-fluid'>
+                <div className='col'>
+                    <span className='person_title float-left'>Welcome, Mr. Shubham Pratap Singh</span>
+                </div>
+                <div className='col'>
+                    <span className='float-right'><button className='btn-danger'>Logout</button></span>
+                </div>
             </div>
             <br />
             <BrowserRouter>
                 <Switch>
+                    <Route path='/student/dashboard/gto' component={StudentDashboardGTO} />
+                    <Route path='/student/dashboard/io' component={StudentDashboardIO} />
+                    <Route path='/student/dashboard/piq' component={StudentDashboardPIQ} />
+
+                    <Route path='/student/instruction' component={StudentIntruction} />
+
+                    <Route path='/student/piq' component={StudentPIQForm} />
+
                     <Route path='/student/assessor/gto' component={StudentAssessorGTO} />
                     <Route path='/student/assessor/itd' component={StudentAssessorITD} />
                     <Route path='/student/assessor/io' component={StudentAssessorIO} />
                     <Route path='/student/assessor/pd' component={StudentAssessorPD} />
                     <Route path='/student/assessor/psych' component={StudentAssessorPsych} />
 
-                    <Route path='/student/dashboard/gto' component={StudentDashboardGTO} />
-                    <Route path='/student/dashboard/io' component={StudentDashboardIO} />
-                    <Route path='/student/dashboard/piq' component={StudentDashboardPIQ} />
 
                     <Route path='/student/progress_report/gto' component={StudentProgressReportGTO} />
                     <Route path='/student/progress_report/itd' component={StudentProgressReportITD} />
@@ -79,7 +92,6 @@ class StudentMain extends Component {
                     <Route path='/student/tests/pd' component={StudentTestPD} />
                     <Route path='/student/tests/psych' component={StudentTestPsych} />
 
-                    <Route path='/student/instruction' component={StudentIntruction} />
                     <Route path='/student/schedule_for_day' component={StudentScheduleToday} />
                     <Route path='/student/pending_test' component={StudentTestPending} />
                     <Route path='/student/training_schedule' component={StudentTrainingSchedule} />

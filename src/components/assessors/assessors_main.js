@@ -21,21 +21,27 @@ class AssessorMain extends Component {
                     <AssessorNavigation />
                 </div>
             </div>
-            <div className='container-fluid'>
-                <p>Welcome Mr.Shubham<span className='float-right'><button className='btn-danger'>Logout</button></span></p>
+            <br />
+            <div className='row container-fluid'>
+                <div className='col'>
+                    <span className='float-left'>Welcome, Mr. Shubham Pratap Singh</span>
+                </div>
+                <div className='col'>
+                    <span className='float-right'><button className='btn-danger'>Logout</button></span>
+                </div>
             </div>
             <br />
             <BrowserRouter>
                 <Switch>
-                    <Route path='/assessor/account' component={AssessorAccount} />
                     <Route path='/assessor/briefcase' component={AssessorBriefcase} />
                     <Route path='/assessor/instruction' component={AssessorInstruction} />
+                    <Route path='/assessor/training_schedule' component={AssessorTrainingSchedule} />
+                    <Route path='/assessor/schedule_for_day' component={AssessorScheduleToday} />
+                    <Route path='/assessor/test_report' component={AssessorTestReport} />
                     <Route path='/assessor/progress_report' component={AssessorProgressReport} />
                     <Route path='/assessor/rating' component={AssessorRating} />
-                    <Route path='/assessor/schedule_for_day' component={AssessorScheduleToday} />
+                    <Route path='/assessor/account' component={AssessorAccount} />
                     <Route path='/assessor/statistics' component={AssessorStatistics} />
-                    <Route path='/assessor/test_report' component={AssessorTestReport} />
-                    <Route path='/assessor/training_schedule' component={AssessorTrainingSchedule} />
                 </Switch>
             </BrowserRouter>
 

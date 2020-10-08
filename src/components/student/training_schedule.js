@@ -4,9 +4,9 @@ class StudentTrainingSchedule extends Component {
   render() {
     return (
       <div>
-          <h1>Hello, We are in StudentTrainingSchedule.</h1>
+        <h1>Require Calendar</h1>
       </div>
-      );
+    );
   }
 }
 

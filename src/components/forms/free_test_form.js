@@ -7,35 +7,38 @@ class FreeTestForm extends Component {
       <div className="FreeTestForm">
         <div className='ff'>
           <div className='row'>
-              <div className='col col-md-6 col-sm-12 col-xs-12'>
+              <div className='col'>
                 <p className='free_test_title'>Free Test Details</p>
               </div>
           </div>
 
             <form action="/action_page.php">
                 <div className='row'>
-                    <label for="email" className='col col-md-6 col-sm-12'>Enter Email/Mobile Number </label>
-                    <div className='col col-sm-10'>
-                            <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." />
+                    <div className='col'>
+                      <label for="email" className='email_label'>Enter Email/Mobile Number </label>
+                    </div>
+                    <div className='col'>
+                      <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." />
                     </div>
                 </div>
                 <div className='row'>
-                    <label for="otp" className='col col-md-6 col-sm-12'>Enter Password/OTP</label>
-                    <div className='col col-sm-10'>
-                            <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." />
+                  <div className='col'>
+                    <label for="otp" className='otp_label'>Enter Password/OTP</label>
+                  </div>
+                    <div className='col'>
+                      <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." />
                     </div>
                 </div>
 
                 <br />
 
                 <div className='row'>
-                  <div className='col col-md-6 col-sm-12 col-xs-12'>
+                  <div className='col'>
                     <a href='/free_test'><button className='btn btn-info' id='login_btn'>Login</button></a>
-                      {/* <input className='btn' type="submit" value="Login" id='login_btn' /> */}
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col col-md-6 col-sm-12 col-xs-12'>
+                  <div className='col'>
                     <input className='btn' type="button" value="Request OTP" id='otp_btn' />
                   </div>
                 </div>

@@ -44,7 +44,7 @@ class StudentNavigation extends Component {
                         <NavDropdown.Item href="/student/tests/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="/student/pending_test">Tests Pending</Nav.Link>
+                    <Nav.Link href="/student/pending_test">Tests Status</Nav.Link>
 
                     <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/student/test_reports/gto">GTO Dept</NavDropdown.Item>

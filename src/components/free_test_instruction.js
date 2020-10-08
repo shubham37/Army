@@ -14,7 +14,7 @@ class FreeTestInstruction extends Component {
                     </Navbar>
                 </div>
             </div>
-            <div className='row'>
+            <div className='row container-fluid'>
                 <div className='col-sm'>
                     <p className="alert navbar_text">Please follow the instruction before attempting the test</p>
                     <div className='instruction_block'>

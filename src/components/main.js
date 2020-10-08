@@ -10,10 +10,10 @@ class Main extends Component {
   render() {
     return (
       <div className="Main container-fluid row">
-        <div className='col col-xs-12 col-sm-12 col-md-6'>
+        <div className='col-md-9 col-sm-12'>
           <FreeTest />
         </div>
-        <div className='col col-xs-12 col-sm-12 col-md-6 form_section'>
+        <div className='col-md-3 col-sm-12 form_section'>
           <BrowserRouter>
             <Switch>
               <Route path='/free' >

@@ -1,18 +1,28 @@
-.form_header {
-    color: rgb(45, 45, 160);
-    font-size: larger;
-    margin-top: 1%;
+.header_line {
+    padding: 1% 0;
+    margin: 1% 0;
+    border-bottom: 2px solid rgb(95, 99, 95);
 }
 
+.form_header {
+    color: rgb(30, 30, 138);
+    font-size: larger;
+    font-weight: bolder;
+}
 .info_badge {
     margin-top: -1%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: grey;
+}
+.block_view{
+    margin-top: 2%;
 }
 
 label {
-    font-size: smaller;
-    font-weight: bold;
+    font-size: medium;
+    font-weight: bolder;
     width: 40%;
+    vertical-align: top;
 }
 
 .required_symbol {
@@ -23,6 +33,12 @@ label {
 .input_take {
     width: 50%;
     float: right;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 1%;
+    font-weight: lighter;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .input_take_cls {

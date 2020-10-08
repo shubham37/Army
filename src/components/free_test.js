@@ -7,9 +7,9 @@ class FreeTest extends Component {
     return (
       <div className="FreeTest">
         <div  className='row'>
-          <div className='col col-sm-12 col-md-12 free_btn'>
+          <div className='col-md-8 offset-md-2 float-right  free_btn'>
             <img src={require('../assets/images/meter.jpg')} alt='meter' width='100%' />
-
+            <br />
             <a href='/free'><Button variant="primary">Free Test Me</Button></a>
             <br />
           </div>

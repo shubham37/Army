@@ -1,5 +1,7 @@
 .LogInForm {
-    padding: 20px;
+    padding: 10px;
+    margin-top: 5%;
+    box-shadow: 4px 4px 4px 4px black;
 }
 
 .login_title {
@@ -9,12 +11,14 @@
     font-weight: bolder;
 }
 
-label {
-    font-size: larger;
+.username, .password {
+    margin-top: 2%;
+    color: black;
+    font-size: large;
 }
 
 #username, #inputPassword {
-    padding: 1% 2%;
+    padding: 2% 5%;
     border: 1px solid black;
     border-radius: 4px;
     font-family: 'Times New Roman', Times, serif;
@@ -25,7 +29,7 @@ label {
 }
 
 .create {
-    width: 100%;
+    width: 97%;
 }
 
 span {

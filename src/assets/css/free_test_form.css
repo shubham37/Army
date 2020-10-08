@@ -1,21 +1,24 @@
 .FreeTestForm {
     padding: 5px 5px;
     margin-top: 3%;
-    border: 2px solid rgb(75, 71, 71);
-    background-color: #f2f2f2;
+    background-color: #107cd4f5;
     border-radius: 5px;
+    box-shadow: 5px 5px 5px 5px rgb(202, 198, 198);
 }
 
 .free_test_title {
-    width: 80%;
-    border-bottom: 1px solid black;
+    width: 100%;
+    color: white;
+    border-bottom: 1px solid wheat;
     font-size: larger;
     font-weight: bolder;
 }
 
-label {
-    width: 120%;
+.otp_label, .email_label {
+    width: 100%;
     padding: 1%;
+    /* font-style: italic; */
+    color: white;
     margin: 5px 0;
 }
 
@@ -26,17 +29,16 @@ label {
 
 #email_number, #otp {
     padding: 1% 2%;
-    border: 1px solid black;
+    border: 1px solid rgb(238, 232, 232);
     border-radius: 4px;
     font-family: 'Times New Roman', Times, serif;
 }
 
 #otp_btn,#login_btn {
     text-align: center;
-    background-color: #239958;
+    border: 2px solid white;
     color: white;
     width: 80%;
     margin: 8px 0;
-    border: none;
     border-radius: 4px;
 }
