@@ -8,7 +8,7 @@ class StudentTestReportPD extends Component {
         <div className='col'>
           <Table bordered size="md">
             <thead>
-              <tr>
+              <tr style={{backgroundColor:'brown', color:'white'}}>
                 <th>S/NO</th>
                 <th>Test</th>
                 <th>Remark</th>

@@ -8,21 +8,26 @@ import AdminHR from './hr.js'
 import AdminMarketing from './marketing.js'
 import AdminMisc from './misc.js'
 import AdminTraining  from './training.js'
-
+import '../../assets/css/admin.css'
 
 class AdminMain extends Component {
   render() {
     return (
-        <div className='AdminMain'>
-            <div className='row'>
+        <div className='AdminMain container-fluid'>
+            <div className='row admin_navigation'>
                 <div className='col'>
                     <AdminNavigation />
                 </div>
             </div>
-            <div className='container-fluid'>
-                <p>Welcome Admin Office<span className='float-right'><button className='btn-danger'>Logout</button></span></p>
+            <br />                                                                                                                                              
+            <div className='row container-fluid'>
+                <div className='col'>
+                    <span className='float-left'>Welcome Admin Office</span>
+                    <span className='float-right'><button className='btn-danger'>Logout</button></span> 
+                    <br />
+                    <hr />                                                
+                </div>
             </div>
-            <br />
             <BrowserRouter>
                 <Switch>
                     <Route path='/admin_user/accounts' component={AdminAccount} />

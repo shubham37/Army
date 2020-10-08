@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Accordion } from 'react-bootstrap';
 
 class Stage1OIR extends Component {
   render() {
@@ -14,76 +14,65 @@ class Stage1OIR extends Component {
 
         <div className='row'>
           <div className='col'>
-            <Card>
-              <Card.Header>Training Videos</Card.Header>
-              <Card.Body>
-                <div className='row'>
-                  <div className='col'>
-                    <h3>Video 1</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 2</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                </div>
-                </Card.Body>
-            </Card>
+            <Accordion defaultActiveKey="1">
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                Training Videos
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <div className='row'>
+                      <div className='col'>
+                        <h3>Video 1</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 2</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 3</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 3</h3>
+                      </div>
+                    </div>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
           </div>
         </div>
         <br />
+
         <div className='row'>
           <div className='col'>
-            <Card>
-              <Card.Header>Practice (45 Min)</Card.Header>
-              <Card.Body>
-                <div className='row'>
-                  <div className='col'>
-                    <h3>Video 1</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 2</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                </div>
-                </Card.Body>
-            </Card>
+            <Accordion defaultActiveKey="1">
+              <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                Practice [45 Min]
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body>
+                    <div className='row'>
+                      <div className='col'>
+                        <h3>Video 1</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 2</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 3</h3>
+                      </div>
+                      <div className='col'>
+                        <h3>Video 3</h3>
+                      </div>
+                    </div>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
           </div>
         </div>
-        <br />
-        <div className='row'>
-          <div className='col'>
-            <Card>
-              <Card.Header>Interactive Session-1 (30 Min)</Card.Header>
-              <Card.Body>
-                <div className='row'>
-                  <div className='col'>
-                    <h3>Video 1</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 2</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                  <div className='col'>
-                    <h3>Video 3</h3>
-                  </div>
-                </div>
-                </Card.Body>
-            </Card>
-          </div>
-        </div>
-    
+        <br />    
       </div>
       );
   }

@@ -6,6 +6,7 @@ class AssessorBriefcase extends Component {
     return (
       <div className="row container-fluid">
         <div className="col">
+          <hr />
           <Accordion defaultActiveKey="0">
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -24,11 +25,14 @@ class AssessorBriefcase extends Component {
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
+          </Accordion>
+          <br />
+          <Accordion defaultActiveKey="0">
             <Card>
-              <Accordion.Toggle as={Card.Header} eventKey="1">
+              <Accordion.Toggle as={Card.Header} eventKey="0">
                 Document
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="1">
+              <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <div className="row">
                     <div className="col">

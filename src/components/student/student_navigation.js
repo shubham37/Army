@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Dropdown } from 'react-bootstrap';
 
 class StudentNavigation extends Component {
   render() {
@@ -11,13 +11,18 @@ class StudentNavigation extends Component {
                 <Nav className="mr-auto">    
                     <NavDropdown title="Dashboard" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/student/dashboard/piq">PIQ Form</NavDropdown.Item>
-                        <NavDropdown title="Psych Tests" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/student/dashboard/psych">TAT-1</NavDropdown.Item>
-                            <NavDropdown.Item href="/student/dashboard/psych">WAT-1</NavDropdown.Item>
-                            <NavDropdown.Item href="/student/dashboard/psych">SRT-1</NavDropdown.Item>
-                            <NavDropdown.Item href="/student/dashboard/psych">SD-1</NavDropdown.Item>
-                            <NavDropdown.Item href="/student/dashboard/psych">PSYCH Test Complete</NavDropdown.Item>
-                        </NavDropdown>
+                        <Dropdown key='right' drop='right'>
+                            <Dropdown.Toggle variant="none" id="dropdown-basic">
+                                Psych Tests
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/tat_test">TAT-1</Dropdown.Item>
+                                <Dropdown.Item href="/wat_test">WAT-1</Dropdown.Item>
+                                <Dropdown.Item href="/srt_test">SRT-1</Dropdown.Item>
+                                <Dropdown.Item href="/sd_test">SD-1</Dropdown.Item>
+                                <Dropdown.Item href="/psych_test">PSYCH Test Complete</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                         <NavDropdown.Item href="/student/dashboard/io">IO Tests</NavDropdown.Item>
                         <NavDropdown.Item href="/student/dashboard/gto">GTO Tests</NavDropdown.Item>
                     </NavDropdown>

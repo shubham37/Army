@@ -8,7 +8,7 @@ class StudentTestPending extends Component {
         <div className='col'>
           <Table bordered size="md">
             <thead>
-              <tr>
+              <tr style={{backgroundColor:'brown', color:'white'}}>
                 <th>S/NO</th>
                 <th>Test</th>
                 <th>Taken On</th>
@@ -17,13 +17,13 @@ class StudentTestPending extends Component {
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
+                <td style={{fontWeight:'bolder'}}>1</td>
                 <td>OIR 1</td>
                 <td>Mr. XXXXX</td>
                 <td>Yes</td>
               </tr>
               <tr>
-                <td>2</td>
+                <td style={{fontWeight:'bolder'}}>2</td>
                 <td>PPDT -2</td>
                 <td>Mr. XXX</td>
                 <td>No</td>

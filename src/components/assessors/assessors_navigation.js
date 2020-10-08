@@ -4,7 +4,7 @@ import { Nav, Navbar } from 'react-bootstrap';
 class AssessorNavigation extends Component {
   render() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" sticky='top'>
             <Navbar.Brand href="/assessor">Brand</Navbar.Brand>
             <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -23,7 +23,7 @@ class AssessorNavigation extends Component {
 
                     <Nav.Link href="/assessor/rating">Ratings</Nav.Link>
 
-                    <Nav.Link href="/assessor/accounts">Accounts</Nav.Link>
+                    <Nav.Link href="/assessor/account">Accounts</Nav.Link>
 
                     <Nav.Link href="/assessor/statistics">Statistics</Nav.Link>
                 </Nav>

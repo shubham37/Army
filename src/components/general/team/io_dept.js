@@ -6,7 +6,7 @@ class TeamIO extends Component {
     return (
       <div className='container-fluid'>
         <Card>
-          <Card.Header>GTO Dept.</Card.Header>
+          <Card.Header>IO Dept.</Card.Header>
           <Card.Body>
           <div className='row'>
             <div className='col'>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@syncfusion/ej2-react-schedule": "^18.3.35",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
     "jquery.js": "0.0.2-security",

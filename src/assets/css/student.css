@@ -6,3 +6,7 @@ iframe {
     width: 800px;
     height: 600px;
 }
+
+.student_navigation {
+    box-shadow: 2px 2px 2px 2px rgb(190, 189, 189);
+}

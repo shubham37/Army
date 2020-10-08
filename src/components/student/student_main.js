@@ -42,7 +42,7 @@ class StudentMain extends Component {
   render() {
     return (
         <div className='StudentMain'>
-            <div className='row'>
+            <div className='row student_navigation'>
                 <div className='col'>
                     <StudentNavigation />
                 </div>
@@ -50,13 +50,12 @@ class StudentMain extends Component {
             <br />
             <div className='row container-fluid'>
                 <div className='col'>
-                    <span className='person_title float-left'>Welcome, Mr. Shubham Pratap Singh</span>
-                </div>
-                <div className='col'>
+                    <span className='float-left'>Welcome, Mr. Shubham </span>
                     <span className='float-right'><button className='btn-danger'>Logout</button></span>
+                    <br />
+                    <hr />
                 </div>
             </div>
-            <br />
             <BrowserRouter>
                 <Switch>
                     <Route path='/student/dashboard/gto' component={StudentDashboardGTO} />

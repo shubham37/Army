@@ -10,13 +10,14 @@ import AssessorStatistics  from './statistics.js'
 import AssessorTestReport from './test_reports.js'
 import AssessorTrainingSchedule  from './training_schedule.js'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import '../../assets/css/assesor.css'
 
 
 class AssessorMain extends Component {
   render() {
     return (
         <div className='AssessorMain'>
-            <div className='row'>
+            <div className='row assessor_navigation'>
                 <div className='col'>
                     <AssessorNavigation />
                 </div>
@@ -24,13 +25,11 @@ class AssessorMain extends Component {
             <br />
             <div className='row container-fluid'>
                 <div className='col'>
-                    <span className='float-left'>Welcome, Mr. Shubham Pratap Singh</span>
-                </div>
-                <div className='col'>
+                    <span className='float-left'>Welcome, Mr. Shubham </span>
                     <span className='float-right'><button className='btn-danger'>Logout</button></span>
                 </div>
             </div>
-            <br />
+
             <BrowserRouter>
                 <Switch>
                     <Route path='/assessor/briefcase' component={AssessorBriefcase} />

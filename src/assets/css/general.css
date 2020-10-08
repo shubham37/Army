@@ -1,3 +1,7 @@
 .content_home {
     margin: 1% 0;
 }
+
+.Navigation {
+    box-shadow: 2px 2px 2px 2px rgb(196, 196, 196);
+}

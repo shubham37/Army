@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Card, Button} from 'react-bootstrap'
+import AssessorAvailablityCheck from '../assessor_availability.js'
+
 
 class StudentAssessorITD extends Component {
   render() {
@@ -17,7 +19,7 @@ class StudentAssessorITD extends Component {
                     <Card.Text>
                       BioData Details.
                     </Card.Text>
-                    <a href='/'><Button variant="primary">See Availability</Button></a>
+                    <Button variant="primary" data-toggle="modal" data-target="#availabilityModal">See Availability</Button>
                   </Card.Body>
                 </Card>                
               </div>
@@ -29,11 +31,11 @@ class StudentAssessorITD extends Component {
                     <Card.Text>
                       BioData Details.
                     </Card.Text>
-                    <a href='/'><Button variant="primary">See Availability</Button></a>
+                    <Button variant="primary" data-toggle="modal" data-target="#availabilityModal">See Availability</Button>
                   </Card.Body>
                 </Card>                
               </div>
-
+              <AssessorAvailablityCheck />
             </div>
           </Card.Body>
         </Card>

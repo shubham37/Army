@@ -6,7 +6,7 @@ class TeamITD extends Component {
     return (
       <div className='container-fluid'>
         <Card>
-          <Card.Header>GTO Dept.</Card.Header>
+          <Card.Header>Intt Test Dept.</Card.Header>
           <Card.Body>
           <div className='row'>
             <div className='col'>

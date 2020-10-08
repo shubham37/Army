@@ -9,7 +9,7 @@ import CurrentAffairNavigation from './Navigation/current_affair_dropdown.js'
 import CoursesNavigation from './Navigation/courses_dropdown.js'
 import RollOfHonorNavigation from './Navigation/roll_of_honor_dropdown.js'
 import ContactNavigation from './Navigation/contact_dropdown.js'
-
+import '../assets/css/general.css'
 
 class Navigation extends Component {
   render() {

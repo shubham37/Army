@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 class AssessorTestReport extends Component {
   render() {
     return (
-      <div>
-          <h1>Hello, We are in AssessorTestReport.</h1>
+      <div className='row container-fluid'>
+        <div className='col'>
+          <hr />
+          <h5>Hello, We are in AssessorInstruction.</h5>
+        </div>
       </div>
-      );
+    );
   }
 }
 
