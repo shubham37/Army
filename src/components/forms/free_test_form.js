@@ -7,25 +7,25 @@ class FreeTestForm extends Component {
       <div className="FreeTestForm">
         <div className='ff'>
           <div className='row'>
-              <div className='col'>
+              <div className='col-md'>
                 <p className='free_test_title'>Free Test Details</p>
               </div>
           </div>
 
             <form action="/action_page.php">
                 <div className='row'>
-                    <div className='col'>
+                    <div className='col-md'>
                       <label for="email" className='email_label'>Enter Email/Mobile Number </label>
                     </div>
-                    <div className='col'>
+                    <div className='col-md'>
                       <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." />
                     </div>
                 </div>
                 <div className='row'>
-                  <div className='col'>
+                  <div className='col-md'>
                     <label for="otp" className='otp_label'>Enter Password/OTP</label>
                   </div>
-                    <div className='col'>
+                    <div className='col-md'>
                       <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." />
                     </div>
                 </div>
@@ -33,12 +33,12 @@ class FreeTestForm extends Component {
                 <br />
 
                 <div className='row'>
-                  <div className='col'>
+                  <div className='col-md' style={{textAlign:'center'}}>
                     <a href='/free_test'><button className='btn btn-info' id='login_btn'>Login</button></a>
                   </div>
                 </div>
                 <div className='row'>
-                  <div className='col'>
+                  <div className='col-md' style={{textAlign:'center'}}>
                     <input className='btn' type="button" value="Request OTP" id='otp_btn' />
                   </div>
                 </div>

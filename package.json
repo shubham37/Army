@@ -2,9 +2,12 @@
   "name": "army",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@syncfusion/ej2-react-schedule": "^18.3.35",
+    "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "http-proxy-middleware": "^1.0.5",
     "jquery": "^3.5.1",
     "jquery.js": "0.0.2-security",
     "popper.js": "^1.16.1",

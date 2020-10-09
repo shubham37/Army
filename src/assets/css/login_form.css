@@ -24,12 +24,16 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+#login_button, #fp_button {
+    padding: 1% 5%;
+}
+
 .login {
     margin-top: 1%;
 }
 
 .create {
-    width: 97%;
+    width: 99%;
 }
 
 span {

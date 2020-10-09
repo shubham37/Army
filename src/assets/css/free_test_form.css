@@ -29,8 +29,9 @@
 
 #email_number, #otp {
     padding: 1% 2%;
-    border: 1px solid rgb(238, 232, 232);
+    border: 1px solid white;
     border-radius: 4px;
+    font-size: medium;
     font-family: 'Times New Roman', Times, serif;
 }
 
