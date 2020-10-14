@@ -6,6 +6,14 @@
     box-shadow: 5px 5px 5px 5px rgb(202, 198, 198);
 }
 
+.ff {
+    padding: 2%;
+}
+
+.inside {
+    padding: 1%;
+}
+
 .free_test_title {
     width: 100%;
     color: white;
@@ -14,32 +22,44 @@
     font-weight: bolder;
 }
 
+.mobile-block, .otp-block {
+    margin-top: 2%;
+    vertical-align: middle;
+}
+
 .otp_label, .email_label {
     width: 100%;
     padding: 1%;
-    /* font-style: italic; */
     color: white;
     margin: 5px 0;
 }
 
-.ff {
-    margin-top: 1%;
-    padding: 5px;
-}
 
 #email_number, #otp {
-    padding: 1% 2%;
+    padding: 2%;
+    text-align: center;
     border: 1px solid white;
-    border-radius: 4px;
+    border-radius: 1px;
     font-size: medium;
     font-family: 'Times New Roman', Times, serif;
 }
 
-#otp_btn,#login_btn {
+#otp_btn, #login_btn {
     text-align: center;
     border: 2px solid white;
     color: white;
     width: 80%;
-    margin: 8px 0;
+    margin: 1% 0;
     border-radius: 4px;
+    font-weight: bolder;
+}
+
+#otp_btn:hover {
+    background-color: white;
+    color: blue;
+}
+
+#login_btn:hover {
+    background-color: white;
+    color: teal;
 }

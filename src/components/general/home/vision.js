@@ -6,12 +6,11 @@ class Vision extends Component {
     return (
       <div className='container-fluid'>
         <Card>
-          <Card.Header>Vission</Card.Header>
+          <Card.Header><b>Vission</b></Card.Header>
           <Card.Body>
             <blockquote className="blockquote mb-0">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                erat a ante.
+                To be the best Launchpad for aspirants into the career of Indian Armed Forces & Coast Guards.
               </p>
             </blockquote>
           </Card.Body>

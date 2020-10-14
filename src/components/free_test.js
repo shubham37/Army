@@ -7,16 +7,18 @@ class FreeTest extends Component {
     return (
       <div className="FreeTest">
         <div  className='row'>
-          <div className='col-md-8 offset-md-2 float-right  free_btn'>
+          <div className='col-md-11 offset-md-1'>
             <img src={require('../assets/images/meter.jpg')} alt='meter' width='100%' />
-            <br />
-            <a href='/free'><Button variant="primary">Free Test Me</Button></a>
-            <br />
+          </div>
+        </div>
+        <div  className='row'>
+          <div className='col-md-11 offset-md-1' style={{textAlign:'center'}}>
+            <a href='/free'><Button className='free_btn'>Free Test Me</Button></a>
           </div>
         </div>
     </div>
     );
   }
 }
-
+ 
 export default FreeTest;

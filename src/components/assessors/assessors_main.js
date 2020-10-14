@@ -11,10 +11,19 @@ import AssessorTestReport from './test_reports.js'
 import AssessorTrainingSchedule  from './training_schedule.js'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../../assets/css/assesor.css'
+import {Redirect} from 'react-router-dom'
 
 
 class AssessorMain extends Component {
-  render() {
+    
+
+    logout(){
+        const token = localStorage.getItem('access-token')
+        const role = localStorage.getItem('role')
+        return <Redirect to='/student' />
+    }
+
+    render() {
     return (
         <div className='AssessorMain'>
             <div className='row assessor_navigation'>
@@ -26,10 +35,10 @@ class AssessorMain extends Component {
             <div className='row container-fluid'>
                 <div className='col'>
                     <span className='float-left'>Welcome, Mr. Shubham </span>
-                    <span className='float-right'><button className='btn-danger'>Logout</button></span>
+                    <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
                 </div>
             </div>
-
+            <br />
             <BrowserRouter>
                 <Switch>
                     <Route path='/assessor/briefcase' component={AssessorBriefcase} />

@@ -16,9 +16,9 @@ class Navigation extends Component {
     return (
       <div className="Navigation">
         <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Brand</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Brand href="/">Brand</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
                 <HomeNavigation />
                 <TeamNavigation />
@@ -30,7 +30,7 @@ class Navigation extends Component {
                 <RollOfHonorNavigation />
                 <ContactNavigation />
             </Nav>
-        </Navbar.Collapse>
+          </Navbar.Collapse>
         </Navbar>
       </div>
     );

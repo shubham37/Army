@@ -54,3 +54,16 @@ hr {
     text-align: center;
     margin: 2%;
 }
+
+.register {
+    background-color: rgba(216, 152, 14, 0.856);
+    color: white;
+    font-weight: bolder;
+    padding: 1% 2%;
+    box-shadow: 2px 2px 2px 2px white;
+}
+
+.register:hover {
+    color: white;
+    box-shadow: 2px 2px 2px 2px grey;
+}

@@ -27,8 +27,8 @@ class StudentNavigation extends Component {
                         <NavDropdown.Item href="/student/dashboard/gto">GTO Tests</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="/student/instruction">Instruction</Nav.Link>
-                    <Nav.Link href="/student/piq">PIQ</Nav.Link>
+                    <Nav.Link id="basic-nav-dropdown" id="basic-nav-dropdown" href="/student/instruction">Instruction</Nav.Link>
+                    <Nav.Link id="basic-nav-dropdown" href="/student/piq">PIQ</Nav.Link>
 
                     <NavDropdown title="Assessors" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/student/assessor/gto">GTO Dept</NavDropdown.Item>
@@ -38,8 +38,8 @@ class StudentNavigation extends Component {
                         <NavDropdown.Item href="/student/assessor/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="/student/training_schedule">Training Schedule</Nav.Link>
-                    <Nav.Link href="/student/schedule_for_day">Schedule For Today</Nav.Link>
+                    <Nav.Link id="basic-nav-dropdown" href="/student/training_schedule">Training Schedule</Nav.Link>
+                    <Nav.Link id="basic-nav-dropdown" href="/student/schedule_for_day">Schedule For Today</Nav.Link>
 
                     <NavDropdown title="Tests" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/student/tests/gto">GTO Dept</NavDropdown.Item>
@@ -49,7 +49,7 @@ class StudentNavigation extends Component {
                         <NavDropdown.Item href="/student/tests/itd">Intt Test Dept</NavDropdown.Item>
                     </NavDropdown>
 
-                    <Nav.Link href="/student/pending_test">Tests Status</Nav.Link>
+                    <Nav.Link id="basic-nav-dropdown" href="/student/pending_test">Tests Status</Nav.Link>
 
                     <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/student/test_reports/gto">GTO Dept</NavDropdown.Item>

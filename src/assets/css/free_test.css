@@ -1,8 +1,21 @@
 .FreeTest {
     width: 100%;
+    height: 100%;
+    padding: 2%;
+    vertical-align: top;
 }
 
 .free_btn {
     text-align: center;
-    width: 100%;
+    font-weight: bolder;
+    background-color: chocolate;
+    padding: 2% 5%;
+    border: 2px solid chocolate;
 }
+
+.free_btn:hover {
+    color: chocolate;
+    background-color: white;
+    border: 2px solid chocolate;
+}
+

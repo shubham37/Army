@@ -23,6 +23,7 @@ class Courses extends Component {
             </blockquote>
           </Card.Body>
         </Card>
+        <br />
       </div>
     );
   }
