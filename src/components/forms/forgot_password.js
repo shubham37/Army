@@ -6,43 +6,30 @@ import axios from  'axios';
 export default function ForgotPasswordForm() {
  
     const [contact, setContact] = useState("");
-    const [contacterror, setContacterror] = useState("");
     const [linksent, setLinksent] = useState(false);
     const [success, setSuccess] = useState('');
 
     function onChange(e) {
-        if (e.target.value === '') {
-            setContacterror("Email Should Not be Empty.")
-        }
-        else {
-            setContacterror("")
-        }
         setContact(e.target.value);
     }
 
     function goHome() {
-        if (contact === '') {
-            setContacterror("Email Should Not be Empty.")
-        }
-        else {
-            axios.post(`/accounts/forgot_password/`, {email: contact})
-            .then((data) => {
-                console.log(data)
-                if (data.status === 200) {
-                    setSuccess(data.data.detail);
-                    setLinksent(true);
-                } else {
-                    console.log(data.statusText)
-                }
-            })
-            .catch(error => console.log(error.message))
-        }
+        axios.post(`/accounts/forgot_password/`, {email: contact})
+        .then((data) => {
+            console.log(data)
+            if (data.status === 200) {
+                setSuccess(data.data.detail);
+                setLinksent(true);
+            } else {
+                console.log(data.statusText)
+            }
+        })
+        .catch(error => console.log(error.message))
     }
 
     function close() {
         setLinksent(false);
         setSuccess("");
-        setContacterror("");
         setContact("");
     }
 
@@ -64,20 +51,21 @@ export default function ForgotPasswordForm() {
                             </div>
                             : 
                             <div className='forgot_password'>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <input type="email"  id="email_link" placeholder="Enter Your Email.." value={contact} onChange={onChange} />
-                                        <br /><span style={{fontSize:'small', color:'red'}}>{contacterror}</span>
+                                <form onSubmit={goHome}>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input type="email"  id="email_link" placeholder="Enter Your Email.." value={contact} onChange={onChange} required />
+                                        </div>
                                     </div>
-                                </div>
-                                <br />
-                                <div class='row'>
-                                    <div class='col col-sm-12'>
-                                        <span>
-                                            <button className='btn btn-danger' onClick={goHome}>Send Link</button>
-                                        </span>
+                                    <br />
+                                    <div class='row'>
+                                        <div class='col col-sm-12'>
+                                            <span>
+                                                <input type='submit' className='btn btn-danger' value="Send Link" />
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             }
                         </div>

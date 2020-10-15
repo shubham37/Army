@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@syncfusion/ej2-react-buttons": "^18.3.40",
     "@syncfusion/ej2-react-schedule": "^18.3.35",
     "axios": "^0.20.0",

@@ -20,5 +20,5 @@ class FreeTest extends Component {
     );
   }
 }
- 
+
 export default FreeTest;

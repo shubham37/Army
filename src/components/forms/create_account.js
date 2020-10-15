@@ -4,7 +4,6 @@ import '../../assets/css/create_account.css'
 import axios from 'axios';
 import { Redirect, useHistory } from 'react-router';
 
-
 export default function CreateAccount() {
 
     const [username, setUsername] = useState("");
@@ -40,7 +39,7 @@ export default function CreateAccount() {
     const [postoffices, setPostoffices] = useState([]);
 
     const [plan,setPlan] =  useState(0);
-    const [hide,setHide] =  useState(true);
+    const [hide,setHide] =  useState(false);
 
     let history = useHistory();
 
@@ -447,9 +446,9 @@ export default function CreateAccount() {
                 </div>
                 :
                 <div className='row'>
-                    <div style={{textAlign:'center', width:'100%'}}>
-                        <h4 style={{color:'green', fontWeight:'bolder', border:'2px solid orange', boxShadow:'1px 1px wheate', padding:'1%', margin:'0 2%'}} hidden={hide} >Form Submit Successfully. 
-                        <span><button type="button" class='close' onClick={e => setHide(true)}><span aria-hidden="true">&times;</span></button></span></h4>
+                    <div style={{textAlign:'center'}} className='container'>
+                        <p style={{color:'white', fontWeight:'bolder', boxShadow:'15% 15% 15% 15% black', padding:'1%', margin:'0 2%', borderRadius:'4px', backgroundColor:'green'}} hidden={hide} >Form Submit Successfully. 
+                        <span><button type="button" class='close' onClick={e => setHide(true)} style={{color:'white'}}><span aria-hidden="true">&times;</span></button></span></p>                    
                     </div>
                     <br />
                     <p style={{textAlign:'center', width:'100%', marginTop:'2%'}}>

@@ -1,3 +1,188 @@
 .form_section {
+    padding: 0 4%;
     width: 100%;
+    margin: 1%;
+}
+
+.FreeTest {
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    vertical-align: top;
+}
+
+.free_btn {
+    text-align: center;
+    font-weight: bolder;
+    background-color: chocolate;
+    padding: 2% 5%;
+    border: 2px solid chocolate;
+}
+
+.free_btn:hover {
+    color: chocolate;
+    background-color: white;
+    border: 2px solid chocolate;
+}
+
+
+
+.FreeTestForm {
+    padding: 5px 5px;
+    margin-top: 3%;
+    background-color: #107cd4f5;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 5px rgb(202, 198, 198);
+}
+
+.ff {
+    padding: 2%;
+}
+
+.inside {
+    padding: 1%;
+}
+
+.free_test_title {
+    width: 100%;
+    color: white;
+    border-bottom: 1px solid wheat;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.mobile-block, .otp-block {
+    margin-top: 2%;
+    vertical-align: middle;
+}
+
+.otp_label, .email_label {
+    width: 100%;
+    padding: 1%;
+    color: white;
+    margin: 5px 0;
+}
+
+
+#email_number, #otp {
+    padding: 2%;
+    text-align: center;
+    border: 2px solid grey;
+    border-radius: 1px;
+    font-size: medium;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#otp_btn, #login_btn {
+    text-align: center;
+    border: 2px solid white;
+    color: white;
+    width: 80%;
+    margin: 1% 0;
+    border-radius: 4px;
+    font-weight: bolder;
+}
+
+#otp_btn:hover {
+    background-color: white;
+    color: blue;
+}
+
+#login_btn:hover {
+    background-color: white;
+    color: teal;
+}
+
+
+.LogInForm {
+    padding: 5%;
+    width: 100%;
+    margin-top: 5%;
+    box-shadow: 4px 4px 4px 4px black;
+}
+
+.login_title {
+    border-bottom: 1px grey solid;
+    font-size: large;
+    font-weight: bolder;
+}
+
+.login {
+    padding: 1%;
+}
+
+.username-block, .password-block {
+    margin-top: 5%;
+}
+
+.username, .password {
+    text-align: left;
+    color: black;
+    font-size: large;
+}
+
+.password_input, .username_input {
+    text-indent: 4%;
+}
+
+.error {
+    color: red;
+    font-size: xx-small;
+    font-style: italic;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#username, #inputPassword {
+    text-align: center;
+    border: 1px solid black;
+    padding: 1%;
+    border-radius: 2px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#login_button {
+    width: 90%;
+    color: white;
+    padding: 1% 5%;
+    border: 2px solid white;
+    background-color: teal;
+    font-weight: bolder;
+}
+
+#login_button:hover {
+    color: teal;
+    background-color: white;
+    border: 2px solid teal;
+}
+
+#fp_button {
+    width: 100%;
+    color: white;
+    padding: 2% 5%;
+    font-weight: bolder;
+    border: 2px solid white;
+    background-color: rgb(199, 7, 7);
+}
+
+#fp_button:hover {
+    color: red;
+    background-color: white;
+    border: 2px solid red;  
+}
+
+.create {
+    width: 99%;
+    padding: 2% 5%;
+    font-weight: bolder;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.create:hover {
+    color: rgb(5, 165, 149);
+    background-color: white;
+    border: 2px solid rgb(5, 165, 149);
+}
+
+span {
+    display: inline;
 }
