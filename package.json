@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@syncfusion/ej2-react-buttons": "^18.3.40",
     "@syncfusion/ej2-react-schedule": "^18.3.35",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",

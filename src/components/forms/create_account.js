@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/create_account.css'
 import axios from 'axios';
+import { Redirect, useHistory } from 'react-router';
 
 
 export default function CreateAccount() {
@@ -37,6 +38,11 @@ export default function CreateAccount() {
     const [cities, setCities] = useState([]);
     const [pincodes, setPincodes] = useState([]);
     const [postoffices, setPostoffices] = useState([]);
+
+    const [plan,setPlan] =  useState(0);
+    const [hide,setHide] =  useState(true);
+
+    let history = useHistory();
 
 
     useEffect( () => {
@@ -201,8 +207,6 @@ export default function CreateAccount() {
 
     function onSubmit() {
         // debugger
-        setNofilled(false);
-
         let params = {
             username:username, password:password,
             confirmpassword:confirmpassword,
@@ -218,18 +222,31 @@ export default function CreateAccount() {
             phone:phone
         }
         console.log(params)
-        // if (password === confirmpassword) {
-        //     axios.post(`/api/signup/`,params)
-        //     .then((data) =>{
-        //         console.log(data);
-        //         setNofilled(true);
-        //     })
-        //     .catch(error => console.log(error.message));
-        // }
-        // else {
-        //     setError("Password and Confirm Password Should Be Same. Please Check")
-        // }
+        if (password === confirmpassword) {
+            axios.post(`/api/signup/`,params)
+            .then((data) =>{
+                console.log(data);
+                setNofilled(false);
+                setHide(false);
+            })
+            .catch(error => console.log(error.message));
+        }
+        else {
+            setError("Password and Confirm Password Should Be Same. Please Check")
+        }
     }
+
+    function onChoosePlan() {
+        axios.post(`/api/plan/`,{plan:plan})
+        .then((data) =>{
+            console.log(data);
+            setNofilled(true);
+            setHide(true);
+            history.push('/student');
+        })
+        .catch(error => console.log(error.message));
+    }
+
 
 
     return (
@@ -258,11 +275,12 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='user_name'>User Name <span className='required_symbol'>*</span> : </label> 
-                                <input type='text' placeholder='User Name' id='user_name' className='input_take' value={username} onChange={e => (setUsername(e.target.value))} />
+                                <input type='text' placeholder='User Name' id='user_name' className='input_take' value={username} pattern='^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$'
+                                title='username is 8-20 characters long, no _ or . at the beginning, no __ or _. or ._ or .. inside, no _ or . at the end' onChange={e => (setUsername(e.target.value))} />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='password'>Password <span className='required_symbol'>*</span> : </label>
-                                <input type='password' placeholder='Password' id='password' className='input_take' value={password} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+                                <input type='password' placeholder='Password' id='password' className='input_take' value={password} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" onChange={e => (setPassword(e.target.value))} />
                             </div>
                         </div>
@@ -297,7 +315,8 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='first_name'>Name <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='FirstName' id='first_name' className='input_take' value={firstname} onChange={e => (setFirstname(e.target.value))} />
+                                <input type='text' placeholder='FirstName' id='first_name' className='input_take' value={firstname} pattern='^[A-Za-z]+$' 
+                                title="Only 1 to 10 length Alphabetic." maxLength={10} onChange={e => (setFirstname(e.target.value))} />
                             </div>
                             <div className='col-md block_view'>
                                 <input type='text' placeholder='MiddleName [optional]' id='middle_name' className='input_take float-left' style={{width:'45%'}} value={middlename} onChange={e => (setMiddlename(e.target.value))} />
@@ -360,11 +379,11 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='flat'>Flat/Door/Block <span className='required_symbol'>*</span> : </label>
-                                <textarea id="flat" rows="1" cols="30" className='input_take' value={flat} onChange={e => (setFlat(e.target.value))} ></textarea>
+                                <input type='text' placeholder='Enter flat/block' id='flat' className='input_take' value={flat} onChange={e => (setFlat(e.target.value))} />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='street'>Street/Lane (Optional) : </label>
-                                <textarea id="street" rows="1" cols="30" className='input_take' value={street} onChange={e => (setStreet(e.target.value))} ></textarea>
+                                <input type='text' placeholder='Enter Street/Lane' id='street' className='input_take' value={street} onChange={e => (setStreet(e.target.value))} />
                             </div>
                         </div>
                         <hr />
@@ -429,9 +448,26 @@ export default function CreateAccount() {
                 :
                 <div className='row'>
                     <div style={{textAlign:'center', width:'100%'}}>
-                        <h4 style={{color:'green', fontWeight:'bolder'}}>Form Submit Successfully.</h4>
+                        <h4 style={{color:'green', fontWeight:'bolder', border:'2px solid orange', boxShadow:'1px 1px wheate', padding:'1%', margin:'0 2%'}} hidden={hide} >Form Submit Successfully. 
+                        <span><button type="button" class='close' onClick={e => setHide(true)}><span aria-hidden="true">&times;</span></button></span></h4>
                     </div>
                     <br />
+                    <p style={{textAlign:'center', width:'100%', marginTop:'2%'}}>
+                        <form onSubmit={onChoosePlan}> 
+                            <label for='plan'>Select Your Plan</label>
+                            <br />
+                            <select value={plan} id='plan' onChange={e => setPlan(e.target.value)}>
+                                <option value={0} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Basic [*Free]</option>
+                                <option value={1} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Diamond</option>
+                                <option value={2} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Gold</option>
+                                <option value={3} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Silver</option>
+                                <option value={4} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Institutional</option>
+                            </select>
+                            <br />
+                            <input type='submit' className='btn btn-warning' value='Get Started' style={{marginTop:'20px', padding:'10px', fontWeight:'bolder'}} />
+                        </form>
+                    </p>
+                        
                 </div>
             }
             <div className='row container'>

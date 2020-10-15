@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import AssessorNavigation from './assessors_navigation.js'
 import AssessorAccount  from './accounts.js'
 import AssessorBriefcase from './briefcase.js'
@@ -11,16 +11,51 @@ import AssessorTestReport from './test_reports.js'
 import AssessorTrainingSchedule  from './training_schedule.js'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import '../../assets/css/assesor.css'
-import {Redirect} from 'react-router-dom'
 
 
 class AssessorMain extends Component {
-    
+    constructor(props, context){
+        super(props, context);
+        this.state = {
+            error:null
+        };
+        this.logout = this.logout.bind(this);
+    }
+
+    componentWillMount(){
+        const token = localStorage.getItem('access-token');
+        const role = localStorage.getItem('role');
+
+        // if (token && role==2) {
+        //     console.log("Welome");
+        // } else if(token && role==1) {
+        //     window.location = '/student';
+        // } else {
+        //     window.location = '/';
+        // }
+    }
 
     logout(){
-        const token = localStorage.getItem('access-token')
-        const role = localStorage.getItem('role')
-        return <Redirect to='/student' />
+        window.localStorage.clear();
+        window.location = '/';
+
+        // this.props.router.replace('/')
+        // return <Redirect to='/student' />
+        // console.log('data');
+        // const token = localStorage.getItem('access-token');
+        // axios.get(`/api/logout/`,  {
+        //     headers: {
+        //       'Authorization': `Token ${token}`
+        //     }
+        // })
+        // .then((data) =>{
+        //     localStorage.removeItem('access-token');
+        //     localStorage.removeItem('role');
+        //     localStorage.removeItem('user_id');
+        //     setNofilled(true);
+        //     setHide(true);
+        // })
+        // .catch(error => console.log(error.message));
     }
 
     render() {
@@ -38,7 +73,6 @@ class AssessorMain extends Component {
                     <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
                 </div>
             </div>
-            <br />
             <BrowserRouter>
                 <Switch>
                     <Route path='/assessor/briefcase' component={AssessorBriefcase} />

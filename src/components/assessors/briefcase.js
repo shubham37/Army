@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap'
+import UploadDocument from './upload_dcument.js'
 
 class AssessorBriefcase extends Component {
   render() {
@@ -47,9 +48,10 @@ class AssessorBriefcase extends Component {
             </Card>
           </Accordion>
           <br />
-          <button className='btn btn-rounded btn-info float-right'>Upload New</button>
+          <button className='btn btn-rounded btn-info float-right' data-toggle="modal" data-target="#uploadnew">Upload New</button>
           <br />
           <br />
+          <UploadDocument />
         </div>
       </div>
       );
