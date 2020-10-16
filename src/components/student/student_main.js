@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import StudentNavigation from './student_navigation.js'
-
 import StudentAssessorGTO from './assessors/gto_dept.js'
 import StudentAssessorITD from './assessors/intt_test_dept.js'
 import StudentAssessorIO from './assessors/io_dept.js'
@@ -24,12 +21,6 @@ import StudentTestReportIO from './test_reports/io_dept.js'
 import StudentTestReportPD from './test_reports/pd_dept.js'
 import StudentTestReportPsych from './test_reports/psych_dept.js'
 
-import StudentTestGTO from './tests/gto_dept.js'
-import StudentTestITD from './tests/intt_test_dept.js'
-import StudentTestIO from './tests/io_dept.js'
-import StudentTestPD from './tests/pd_dept.js'
-import StudentTestPsych from './tests/psych_dept.js'
-
 import StudentIntruction from './instruction.js'
 import StudentScheduleToday from './schedule_for_today.js'
 import StudentTestPending from './tests_pending.js'
@@ -37,14 +28,205 @@ import StudentTrainingSchedule from './training_schedule.js'
 import StudentPIQForm from './piq_form.js'
 
 import '../../assets/css/student.css'
+import {NavDropdown, Navbar,Nav, Button, Dropdown, Card} from 'react-bootstrap'
+
 
 class StudentMain extends Component {
-  render() {
+    constructor(props) {
+        super(props);
+        this.state ={
+          globalview : {}
+        }
+        this.view = {
+            is_PIQFORM_hidden:true,
+            is_IO_hidden:true,
+            is_GTO_hidden:true,
+            is_Instruction_hidden:true,
+            is_PIQ_hidden:true,
+
+            is_GTOA_hidden:true,
+            is_IOA_hidden:true,
+            is_PSYCHA_hidden:true,
+            is_PDA_hidden:true,
+            is_ITA_hidden:true,
+
+            is_TS_hidden:true,
+            is_SFD_hidden:true,
+
+            is_TSS_hidden:true,
+
+            is_GTOTR_hidden:true,
+            is_IOTR_hidden:true,
+            is_PSYCHTR_hidden:true,
+            is_PDTR_hidden:true,
+            is_ITTR_hidden:true,
+
+            is_GTOPR_hidden:true,
+            is_IOPR_hidden:true,
+            is_PSYCHPR_hidden:true,
+            is_PDPR_hidden:true,
+            is_ITPR_hidden:true,
+  
+            is_Home_hidden:true
+        };
+      
+    }
+    
+    componentWillMount() {
+        this.state.globalview = Object.assign({}, this.view);
+        this.state.globalview.is_Home_hidden = false;
+    }
+    
+    onClickOption(title) {
+        const view_local = Object.assign({}, this.view);
+        switch(title) {
+            case 'PIQFORM':
+                view_local.is_PIQFORM_hidden = false;
+                break;
+            case 'IO':
+                view_local.is_IO_hidden = false;
+                break;
+            case 'GTO':
+                view_local.is_GTO_hidden = false;
+                break;
+            case 'Instruction':
+                view_local.is_Instruction_hidden = false;
+                break;
+            case 'PIQ':
+                view_local.is_PIQ_hidden = false;
+                break;
+            case 'GTOA':
+                view_local.is_GTOA_hidden = false;
+                break;
+            case 'IOA':
+                view_local.is_IOA_hidden = false;
+                break;
+            case 'PSYCHA':
+                view_local.is_PSYCHA_hidden = false;
+                break;
+            case 'PDA':
+                view_local.is_PDA_hidden = false;
+                break;
+            case 'ITA':
+                view_local.is_ITA_hidden = false;
+                break;
+            case 'TS':
+                view_local.is_TS_hidden = false;
+                break;
+            case 'SFD':
+                view_local.is_SFD_hidden = false;
+                break;
+            case 'TSS':
+                view_local.is_TSS_hidden = false;
+                break;
+            case 'GTOTR':
+                view_local.is_GTOTR_hidden = false;
+                break;
+            case 'IOTR':
+                view_local.is_IOTR_hidden = false;
+                break;
+            case 'PSYCHTR':
+                view_local.is_PSYCHTR_hidden = false;
+                break;
+            case 'PDTR':
+                view_local.is_PDTR_hidden = false;
+                break;
+            case 'ITTR':
+                view_local.is_ITTR_hidden = false;
+                break;
+            case 'GTOPR':
+                view_local.is_GTOPR_hidden = false;
+                break;
+            case 'IOPR':
+                view_local.is_IOPR_hidden = false;
+                break;
+            case 'PSYCHPR':
+                view_local.is_PSYCHPR_hidden = false;
+                break;
+            case 'PDPR':
+                view_local.is_PDPR_hidden = false;
+                break;
+            case 'ITPR':
+                view_local.is_ITPR_hidden = false;
+                break;
+            default:
+                view_local.is_Home_hidden = false;
+        }
+        this.setState({globalview :view_local});
+    }
+
+    render() {
     return (
         <div className='StudentMain'>
             <div className='row student_navigation'>
                 <div className='col'>
-                    <StudentNavigation />
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Brand href="/student">
+                            <img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} />
+                        </Navbar.Brand>
+                        <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">    
+                                <NavDropdown title="Dashboard" id="basic-nav-dropdown">
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PIQFORM")}>PIQ Form</Button></NavDropdown.Item>
+                                    <Dropdown key='right' drop='right'>
+                                        <Dropdown.Toggle variant="none" style={{width:'100%'}} id="dropdown-basic">
+                                            Psych Tests
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item href="/tat_test">TAT-1</Dropdown.Item>
+                                            <Dropdown.Item href="/wat_test">WAT-1</Dropdown.Item>
+                                            <Dropdown.Item href="/srt_test">SRT-1</Dropdown.Item>
+                                            <Dropdown.Item href="/sd_test">SD-1</Dropdown.Item>
+                                            <Dropdown.Item href="/psych_test">PSYCH Test Complete</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IO')}>IO Tests</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTO')}>GTO Tests</Button></NavDropdown.Item>
+                                </NavDropdown>
+
+                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instruction</Nav.Link>
+                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PIQ')}>PIQ</Nav.Link>
+
+                                <NavDropdown title="Assessors" id="basic-nav-dropdown">
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTOA')}>GTO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOA")}>IO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHA")}>Psych Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDA")}>PD Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITA")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                </NavDropdown>
+
+                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TS')}>Training Schedule</Nav.Link>
+                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
+
+                                <NavDropdown title="Tests" id="basic-nav-dropdown">
+                                    <NavDropdown.Item href='/gto_dept_test'>GTO Dept</NavDropdown.Item>
+                                    <NavDropdown.Item href='/io_dept_test'>IO Dept</NavDropdown.Item>
+                                    <NavDropdown.Item href='/psych_dept_test'>Psych Dept</NavDropdown.Item>
+                                    <NavDropdown.Item href='/pd_dept_test'>PD Dept</NavDropdown.Item>
+                                    <NavDropdown.Item href='/itd_dept_test'>Intt Test Dept</NavDropdown.Item>
+                                </NavDropdown>
+
+                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
+
+                                <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOTR")}>GTO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOTR")}>IO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHTR")}>Psych Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDTR")}>PD Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITTR")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                </NavDropdown>
+
+                                <NavDropdown title="Progress Report" id="basic-nav-dropdown">
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOPR")}>GTO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOPR")}>IO Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHPR")}>Psych Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDPR")}>PD Dept</Button></NavDropdown.Item>
+                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITPR")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
                 </div>
             </div>
             <br />
@@ -56,46 +238,92 @@ class StudentMain extends Component {
                     <hr />
                 </div>
             </div>
-            <BrowserRouter>
-                <Switch>
-                    <Route path='/student/dashboard/gto' component={StudentDashboardGTO} />
-                    <Route path='/student/dashboard/io' component={StudentDashboardIO} />
-                    <Route path='/student/dashboard/piq' component={StudentDashboardPIQ} />
 
-                    <Route path='/student/instruction' component={StudentIntruction} />
+            <div hidden={this.state.globalview.is_GTO_hidden}>
+                <StudentDashboardGTO />
+            </div>
+            <div hidden={this.state.globalview.is_IO_hidden}>
+                <StudentDashboardIO />
+            </div>
+            <div hidden={this.state.globalview.is_PIQFORM_hidden}>
+                <StudentDashboardPIQ />
+            </div>
 
-                    <Route path='/student/piq' component={StudentPIQForm} />
+            <div hidden={this.state.globalview.is_Instruction_hidden}>
+                <StudentIntruction />
+            </div>
 
-                    <Route path='/student/assessor/gto' component={StudentAssessorGTO} />
-                    <Route path='/student/assessor/itd' component={StudentAssessorITD} />
-                    <Route path='/student/assessor/io' component={StudentAssessorIO} />
-                    <Route path='/student/assessor/pd' component={StudentAssessorPD} />
-                    <Route path='/student/assessor/psych' component={StudentAssessorPsych} />
+            <div hidden={this.state.globalview.is_PIQ_hidden}>
+                <StudentPIQForm />
+            </div>
+
+            <div hidden={this.state.globalview.is_GTOA_hidden}>
+                <StudentAssessorGTO />
+            </div>
+            <div hidden={this.state.globalview.is_ITA_hidden}>
+                <StudentAssessorITD />
+            </div>
+            <div hidden={this.state.globalview.is_IOA_hidden}>
+                <StudentAssessorIO />
+            </div>
+            <div hidden={this.state.globalview.is_PDA_hidden}>
+                <StudentAssessorPD />
+            </div>
+            <div hidden={this.state.globalview.is_PSYCHA_hidden}>
+                <StudentAssessorPsych />
+            </div>
 
 
-                    <Route path='/student/progress_report/gto' component={StudentProgressReportGTO} />
-                    <Route path='/student/progress_report/itd' component={StudentProgressReportITD} />
-                    <Route path='/student/progress_report/io' component={StudentProgressReportIO} />
-                    <Route path='/student/progress_report/pd' component={StudentProgressReportPD} />
-                    <Route path='/student/progress_report/psych' component={StudentProgressReportPsych} />
+            <div hidden={this.state.globalview.is_GTOPR_hidden}>
+                <StudentProgressReportGTO />
+            </div>
+            <div hidden={this.state.globalview.is_ITPR_hidden}>
+                <StudentProgressReportITD />
+            </div>
+            <div hidden={this.state.globalview.is_IOPR_hidden}>
+                <StudentProgressReportIO />
+            </div>
+            <div hidden={this.state.globalview.is_PDPR_hidden}>
+                <StudentProgressReportPD />
+            </div>
+            <div hidden={this.state.globalview.is_PSYCHPR_hidden}>
+                <StudentProgressReportPsych />
+            </div>
 
-                    <Route path='/student/test_reports/gto' component={StudentTestReportGTO} />
-                    <Route path='/student/test_reports/itd' component={StudentTestReportITD} />
-                    <Route path='/student/test_reports/io' component={StudentTestReportIO} />
-                    <Route path='/student/test_reports/pd' component={StudentTestReportPD} />
-                    <Route path='/student/test_reports/psych' component={StudentTestReportPsych} />
+            <div hidden={this.state.globalview.is_GTOTR_hidden}>
+                <StudentTestReportGTO />
+            </div>
+            <div hidden={this.state.globalview.is_ITTR_hidden}>
+                <StudentTestReportITD />
+            </div>
+            <div hidden={this.state.globalview.is_IOTR_hidden}>
+                <StudentTestReportIO />
+            </div>
+            <div hidden={this.state.globalview.is_PDTR_hidden}>
+                <StudentTestReportPD />
+            </div>
+            <div hidden={this.state.globalview.is_PSYCHTR_hidden}>
+                <StudentTestReportPsych />
+            </div>
 
-                    <Route path='/student/tests/gto' component={StudentTestGTO} />
-                    <Route path='/student/tests/itd' component={StudentTestITD} />
-                    <Route path='/student/tests/io' component={StudentTestIO} />
-                    <Route path='/student/tests/pd' component={StudentTestPD} />
-                    <Route path='/student/tests/psych' component={StudentTestPsych} />
+            <div hidden={this.state.globalview.is_SFD_hidden}>
+                <StudentScheduleToday />
+            </div>
+            <div hidden={this.state.globalview.is_TSS_hidden}>
+                <StudentTestPending />
+            </div>
+            <div hidden={this.state.globalview.is_TS_hidden}>
+                <StudentTrainingSchedule />
+            </div>
 
-                    <Route path='/student/schedule_for_day' component={StudentScheduleToday} />
-                    <Route path='/student/pending_test' component={StudentTestPending} />
-                    <Route path='/student/training_schedule' component={StudentTrainingSchedule} />
-                </Switch>
-            </BrowserRouter>
+            <div hidden={this.state.globalview.is_Home_hidden}>
+                <div className='container-fluid'>
+                    <p>
+                        Home Content Will Showed Here.
+                    </p>
+                </div>
+            </div>
+
         </div>
     );
   }

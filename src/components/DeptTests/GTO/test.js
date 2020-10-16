@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
+import Rating from '@material-ui/lab/Rating';
+import Button from '@material-ui/core/Button';
+
 
 class GTODT extends Component {
 
@@ -25,11 +28,13 @@ class GTODT extends Component {
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
 
+    this.feedbackSubmit = this.feedbackSubmit.bind(this);
+
   }
 
   componentWillMount() {
     this.setState({
-      seconds_part1:10,
+      seconds_part1:4,
     })
   }
 
@@ -72,7 +77,7 @@ class GTODT extends Component {
     // Check if we're at zero.
     if (seconds == 0) { 
       clearInterval(this.timer_part1);
-      this.setState({seconds_part2:20});
+      this.setState({seconds_part2:5});
 
       let timeLeftVar = this.secondsToTime(this.state.seconds_part2);
       this.setState({
@@ -107,6 +112,11 @@ class GTODT extends Component {
     }
   }
 
+  feedbackSubmit() {
+    window.localStorage.clear();
+    window.location = '/';
+}
+
 
   render() {
     return (
@@ -135,7 +145,7 @@ class GTODT extends Component {
           <br />
           <div className='row container'>
             <div className='col-md' style={{textAlign:'center'}}>
-              <span style={{marginTop:'1%', padding:'2%', backgroundColor:'blue', fontWeight:'bolder', color:'white'}}>{this.state.time_part1.m} : {this.state.time_part1.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part1.m} : {this.state.time_part1.s}</span>
             </div>
           </div>
           <br />
@@ -155,8 +165,8 @@ class GTODT extends Component {
         <div className='container-fluid' hidden={this.state.is_hidden_part2}>
           <div className='row container'>
             <div className='col-md' style={{textAlign:'center'}}>
-              <span style={{margin:'1%', padding:'2%', backgroundColor:'blue', fontWeight:'bolder', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
-              <span style={{margin:'1%', padding:'2%', backgroundColor:'red', fontWeight:'bolder', color:'white'}}>Live</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}}>Live</span>
             </div>
           </div>
           <br />
@@ -176,7 +186,7 @@ class GTODT extends Component {
         <div className='container-fluid' hidden={this.state.is_hidden_part3}>
           <div className='row container'>
             <div className='col-md' style={{textAlign:'center'}}>
-              <span style={{margin:'1%', padding:'2%', backgroundColor:'blue', fontWeight:'bolder', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
             </div>
           </div>
           <br />
@@ -193,28 +203,29 @@ class GTODT extends Component {
           </div>
 
           <div className='row container'>
-              <h4>
-              Hi Mr/Ms xxxxx. What do you think about me,
-              please rate me by clicking on Stars, 5 star is max.
-              Thanks. Col XXXXX
-              </h4>
+              <Card body>
+                <h4>
+                  Hi Mr/Ms xxxxx. What do you think about me,
+                  please rate me by clicking on Stars, 5 star is max.
+                  Thanks. Col XXXXX
+                </h4>
+                <br />
+                <Rating
+                  name="simple-controlled"
+                  value={this.state.rating}
+                  onChange={(event, newValue) => {
+                    this.setState({rating:newValue});
+                  }}
+                  size="large"
+                />
+                <br />
+                <Button variant="contained" color="primary" disableElevation>
+                  FINISH
+                </Button>
+              </Card>
               <br />
-              <select value={this.state.rating} onChange={e => this.setState({rating:e.target.value})}>
-                <option value={1}>One</option>
-                <option value={2}>Two</option>
-                <option value={3}>Three</option>
-                <option value={4}>Four</option>
-                <option value={5}>Five</option>
-              </select>
-
-              <br />
-              <br />
-
-              <button className='btn btn-primary' style={{padding:'5%', margin:'2%'}}>Finish</button>
           </div>
-
         </div>
-
       </div>
     );
   }
