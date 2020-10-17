@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../assets/css/create_account.css'
 import axios from 'axios';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 
 export default function CreateAccount() {
 

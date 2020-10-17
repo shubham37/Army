@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import AssessorAccount  from './accounts.js'
 import AssessorBriefcase from './briefcase.js'
 import AssessorInstruction from './instruction.js'
@@ -38,8 +38,8 @@ class AssessorMain extends Component {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
 
-        const token = localStorage.getItem('access-token');
-        const role = localStorage.getItem('role');
+        // const token = localStorage.getItem('access-token');
+        // const role = localStorage.getItem('role');
 
         // if (token && role==2) {
         //     console.log("Welome");

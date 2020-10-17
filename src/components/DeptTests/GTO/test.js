@@ -44,7 +44,7 @@ class GTODT extends Component {
       time_part1: timeLeftVar
     });
   
-    if (this.timer_part1 == 0 && this.state.seconds_part1 > 0) {
+    if (this.timer_part1 === 0 && this.state.seconds_part1 > 0) {
       this.timer_part1 = setInterval(this.countDown, 1000);
     }
   }
@@ -75,7 +75,7 @@ class GTODT extends Component {
     });
 
     // Check if we're at zero.
-    if (seconds == 0) { 
+    if (seconds === 0) { 
       clearInterval(this.timer_part1);
       this.setState({seconds_part2:5});
 
@@ -87,7 +87,7 @@ class GTODT extends Component {
         is_disable:false
       });
   
-      if (this.timer_part2 == 0 && this.state.seconds_part2 > 0) {
+      if (this.timer_part2 === 0 && this.state.seconds_part2 > 0) {
         this.timer_part2 = setInterval(this.countDown2, 1000);
       }
     }
@@ -101,7 +101,7 @@ class GTODT extends Component {
       seconds_part2: seconds,
     });
 
-    if (seconds == 0) { 
+    if (seconds === 0) { 
       clearInterval(this.timer_part2);
       this.setState({
         is_hidden_part1:true,

@@ -3,10 +3,6 @@ import { ScheduleComponent, WorkWeek, Week, Month, Inject, Day, Agenda, MonthAge
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 
 class StudentTrainingSchedule extends Component {
-
-  constructor(props) {
-    super(props);
-  }
   
   componentWillMount() {    
     this.data = [{

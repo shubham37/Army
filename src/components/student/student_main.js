@@ -28,7 +28,7 @@ import StudentTrainingSchedule from './training_schedule.js'
 import StudentPIQForm from './piq_form.js'
 
 import '../../assets/css/student.css'
-import {NavDropdown, Navbar,Nav, Button, Dropdown, Card} from 'react-bootstrap'
+import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
 
 
 class StudentMain extends Component {
