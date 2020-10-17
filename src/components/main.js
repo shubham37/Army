@@ -12,9 +12,11 @@ class Main extends Component {
       is_login_hidden:false,
       username:"",
       password:"",
-      free_test_disable:false  
+      free_test_disable:false,
+      is_disable:true
     }
     this.loginFormSubmit = this.loginFormSubmit.bind(this);
+    this.onSendOtp = this.onSendOtp.bind(this);
   }
 
 
@@ -44,6 +46,12 @@ class Main extends Component {
         }
       })
       .catch(error => console.log(error.message))
+  }
+
+  onSendOtp() {
+    this.setState({
+      is_disable:false
+    });
   }
 
   render() {
@@ -77,13 +85,13 @@ class Main extends Component {
               </div>
 
             <div className='inside'>
-              <form>
+              <form onSubmit={this.onSendOtp}>
                   <div className='row mobile-block'>
                       <div className='col-md'>
                         <label for="email_number" className='email_label'>Email/Mobile Number </label>
                       </div>
                       <div className='col-md'>
-                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." />
+                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." required />
                       </div>
                   </div>
                   <div className='row otp-block'>
@@ -91,7 +99,7 @@ class Main extends Component {
                       <label for="otp" className='otp_label'>Password/OTP</label>
                     </div>
                       <div className='col-md'>
-                        <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." />
+                        <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." disabled={this.state.is_disable} />
                       </div>
                   </div>
 
@@ -99,12 +107,12 @@ class Main extends Component {
 
                   <div className='row'>
                     <div className='col-md' style={{textAlign:'center'}}>
-                      <a href='/free_test'><button className='btn btn-info' id='login_btn'>Login</button></a>
+                      <a href='/free_test'><button className='btn btn-info' id='login_btn' disabled={this.state.is_disable} >Login</button></a>
                     </div>
                   </div>
                   <div className='row'>
                     <div className='col-md' style={{textAlign:'center'}}>
-                      <input className='btn' type="button" value="Request OTP" id='otp_btn' />
+                      <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' disabled={!this.state.is_disable} />
                     </div>
                   </div>
               </form>

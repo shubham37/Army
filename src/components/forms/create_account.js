@@ -22,7 +22,7 @@ export default function CreateAccount() {
     const [phone, setPhone] = useState("");
 
     const [error, setError] = useState("");
-    const [notfilled, setNofilled] = useState(false);
+    const [notfilled, setNofilled] = useState(true);
 
     const [statet, setStatet] = useState("")
     const [city, setCity] = useState("")
@@ -275,12 +275,12 @@ export default function CreateAccount() {
                             <div className='col-md block_view'>
                                 <label for='user_name'>User Name <span className='required_symbol'>*</span> : </label> 
                                 <input type='text' placeholder='User Name' id='user_name' className='input_take' value={username} pattern='^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$'
-                                title='username is 8-20 characters long, no _ or . at the beginning, no __ or _. or ._ or .. inside, no _ or . at the end' onChange={e => (setUsername(e.target.value))} />
+                                title='username is 8-20 characters long, no _ or . at the beginning, no __ or _. or ._ or .. inside, no _ or . at the end' onChange={e => (setUsername(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='password'>Password <span className='required_symbol'>*</span> : </label>
                                 <input type='password' placeholder='Password' id='password' className='input_take' value={password} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" onChange={e => (setPassword(e.target.value))} />
+                                title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" onChange={e => (setPassword(e.target.value))} required />
                             </div>
                         </div>
                         <hr />
@@ -289,7 +289,7 @@ export default function CreateAccount() {
                             <div className='col col-md-6 block_view'>
                                 <label for='confirm_password'>Confirm Password <span className='required_symbol'>*</span> : </label>
                                 <input type='text' placeholder='Confirm Password' id='confirm_password' className='input_take' value={confirmpassword} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" onChange={e => (setConfirmpassword(e.target.value))} />
+                                title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" onChange={e => (setConfirmpassword(e.target.value))} required />
                             </div>
                         </div>
                         <hr />
@@ -297,13 +297,13 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='security_question'>Security Question <span className='required_symbol'>*</span> : </label>
-                                <select value={squestion} id="security_question" className='input_take'  onChange={onSelectSquestion}>
+                                <select value={squestion} id="security_question" className='input_take'  onChange={onSelectSquestion} required>
                                     <SecurityQuestion />
                                 </select>
                             </div>
                             <div className='col-md block_view'>
                                 <label for='security_answer'>Security Answer <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='Security Answer' id='security_answer' className='input_take' value={sanswer} onChange={e => (setSanswer(e.target.value))} />
+                                <input type='text' placeholder='Security Answer' id='security_answer' className='input_take' value={sanswer} onChange={e => (setSanswer(e.target.value))} required />
                             </div>
                         </div>
                         <hr />
@@ -315,7 +315,7 @@ export default function CreateAccount() {
                             <div className='col-md block_view'>
                                 <label for='first_name'>Name <span className='required_symbol'>*</span> : </label>
                                 <input type='text' placeholder='FirstName' id='first_name' className='input_take' value={firstname} pattern='^[A-Za-z]+$' 
-                                title="Only 1 to 10 length Alphabetic." maxLength={10} onChange={e => (setFirstname(e.target.value))} />
+                                title="Only 1 to 10 length Alphabetic." maxLength={10} onChange={e => (setFirstname(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <input type='text' placeholder='MiddleName [optional]' id='middle_name' className='input_take float-left' style={{width:'45%'}} value={middlename} onChange={e => (setMiddlename(e.target.value))} />
@@ -329,7 +329,7 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col col-md-6 block_view'>
                                 <label for='gender'>Gender <span className='required_symbol'>*</span> : </label>
-                                <select value={gender} id="gender" className='input_take' onChange={onSelectGender}>
+                                <select value={gender} id="gender" className='input_take' onChange={onSelectGender} required>
                                     <Gender />
                                 </select>
                             </div>
@@ -339,11 +339,11 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='dob'>Date Of Birth <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='DOB eg. mm/dd/yyyy' id='dob' className='input_take' value={dob} pattern="^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\\d\\d$" onChange={e => (setDob(e.target.value))} />
+                                <input type='text' placeholder='DOB eg. mm/dd/yyyy' id='dob' className='input_take' value={dob} pattern="^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\\d\\d$" onChange={e => (setDob(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='occupation'>Occupation <span className='required_symbol'>*</span> : </label>
-                                <select value={occupation} id="occupation" className='input_take' onChange={onSelectOccupation} >
+                                <select value={occupation} id="occupation" className='input_take' onChange={onSelectOccupation} required >
                                     <Occupation />
                                 </select>
                             </div>
@@ -363,11 +363,11 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='mobile'>Mobile <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='Mobile' id='mobile' className='input_take' value={mobile} pattern="^(\+\d{1,3}[- ]?)?\d{10}$" onChange={e => (setMobile(e.target.value))} />
+                                <input type='text' placeholder='Mobile' id='mobile' className='input_take' value={mobile} pattern="^(\+\d{1,3}[- ]?)?\d{10}$" onChange={e => (setMobile(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='email'>Email <span className='required_symbol'>*</span> : </label>
-                                <input type='email' placeholder='Email' name='email' className='input_take' pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={email} onChange={e => (setEmail(e.target.value))} />
+                                <input type='email' placeholder='Email' name='email' className='input_take' pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value={email} onChange={e => (setEmail(e.target.value))} required />
                             </div>
                         </div>
                         <hr />
@@ -378,7 +378,7 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='flat'>Flat/Door/Block <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='Enter flat/block' id='flat' className='input_take' value={flat} onChange={e => (setFlat(e.target.value))} />
+                                <input type='text' placeholder='Enter flat/block' id='flat' className='input_take' value={flat} onChange={e => (setFlat(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='street'>Street/Lane (Optional) : </label>
@@ -394,7 +394,7 @@ export default function CreateAccount() {
                             </div>
                             <div className='col-md block_view'>
                                 <label for='state'>State <span className='required_symbol'>*</span> : </label>
-                                <select value={statet} id="state" className='input_take'  onChange={onSelectState}>
+                                <select value={statet} id="state" className='input_take'  onChange={onSelectState} required>
                                     <option value="">Choose One</option>
                                     <StateOption />
                                 </select>
@@ -405,14 +405,14 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='city'>City/Town <span className='required_symbol'>*</span> : </label>
-                                <select value={city} id="city" className='input_take' onChange={onSelectCity}>
+                                <select value={city} id="city" className='input_take' onChange={onSelectCity} required>
                                     <option value="">Choose One</option>
                                     <CityOption />
                                 </select>                      
                             </div>
                             <div className='col-md block_view'>
                                 <label for='pincode'>Pin code <span className='required_symbol'>*</span> : </label>
-                                <select value={pincode} id="pincode" className='input_take' onChange={onSelectPincode}>
+                                <select value={pincode} id="pincode" className='input_take' onChange={onSelectPincode} required>
                                     <option value="">Choose One</option>
                                     <PincodeOption />
                                 </select>                             
@@ -423,7 +423,7 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='postoffice'>Post Office <span className='required_symbol'>*</span> : </label>
-                                <select value={postoffice} id="postoffice" className='input_take'  onChange={onSelectPostoffice}>
+                                <select value={postoffice} id="postoffice" className='input_take'  onChange={onSelectPostoffice} required>
                                     <option value="">Choose One</option>
                                     <PostofficeOption />
                                 </select>                      
@@ -431,7 +431,7 @@ export default function CreateAccount() {
 
                             <div className='col-md block_view'>
                                 <label for='phone'>Phone <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='Phone' id='phone' className='input_take' value={phone} pattern='^[0-9]\d{2,4}-\d{6,8}$' onChange={e => (setPhone(e.target.value))} />
+                                <input type='text' placeholder='Phone' id='phone' className='input_take' value={phone} pattern='^[0-9]\d{2,4}-\d{6,8}$' onChange={e => (setPhone(e.target.value))} required />
                             </div>
                         </div>
                         <hr />
@@ -451,11 +451,11 @@ export default function CreateAccount() {
                         <span><button type="button" class='close' onClick={e => setHide(true)} style={{color:'white'}}><span aria-hidden="true">&times;</span></button></span></p>                    
                     </div>
                     <br />
-                    <p style={{textAlign:'center', width:'100%', marginTop:'2%'}}>
+                    <p style={{textAlign:'center', width:'100%', marginTop:'1%'}}>
                         <form onSubmit={onChoosePlan}> 
                             <label for='plan'>Select Your Plan</label>
                             <br />
-                            <select value={plan} id='plan' onChange={e => setPlan(e.target.value)}>
+                            <select value={plan} id='plan' onChange={e => setPlan(e.target.value)} style={{width:'300px', padding:'1%', border:'2px solid black', backgroundColor:'white', borderRadius:'3px'}}>
                                 <option value={0} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Basic [*Free]</option>
                                 <option value={1} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Diamond</option>
                                 <option value={2} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Gold</option>
@@ -463,7 +463,7 @@ export default function CreateAccount() {
                                 <option value={4} data-toggle="tooltip" data-placement="right" title="Tooltip on right" >Institutional</option>
                             </select>
                             <br />
-                            <input type='submit' className='btn btn-warning' value='Get Started' style={{marginTop:'20px', padding:'10px', fontWeight:'bolder'}} />
+                            <input type='submit' className='btn' value='Get Started' style={{marginTop:'20px', backgroundColor:'lightseagreen', padding:'2%, 0', color:'white', boxShadow:"3px 3px 3px 3px lightgray", fontWeight:'bolder'}} />
                         </form>
                     </p>
                         
