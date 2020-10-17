@@ -203,7 +203,7 @@ class PSYCHDT extends Component {
               <Rating 
               value={this.state.rating}
               onChange={(event, newValue) => {
-                setState({rating: newValue});
+                this.setState({rating: newValue});
               }}
               />
               <br />

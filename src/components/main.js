@@ -34,11 +34,11 @@ class Main extends Component {
           localStorage.setItem('token', data.data.access_token);
           localStorage.setItem('role', data.data.role);
           if (data.data.role === 0) {
-              history.push('/student');
+            console.log(data);
           } else if (data.data.role === 1) {
-              history.push('/assessor')
+            console.log(data);
           } else {
-              history.push('/admin_user');
+            console.log(data);
           }
           window.location.reload(true)
         } else {
