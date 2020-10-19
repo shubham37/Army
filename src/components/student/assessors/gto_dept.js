@@ -13,7 +13,7 @@ class StudentAssessorGTO extends Component {
             <div className='row'>
               <div className='col'>
                 <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180" alt='Assessor_Image' />
+                  {/* <Card.Img variant="top" src="holder.js/100px180" alt='Assessor_Image' /> */}
                   <Card.Body>
                     <Card.Title>Col Mr. XXXX</Card.Title>
                     <Card.Text>
@@ -25,7 +25,7 @@ class StudentAssessorGTO extends Component {
               </div>
               <div className='col'>
                 <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180" alt='Assessor_Image' />
+                  {/* <Card.Img variant="top" src="holder.js/100px180" alt='Assessor_Image' /> */}
                   <Card.Body>
                     <Card.Title>Brig Mr. XXXX</Card.Title>
                     <Card.Text>

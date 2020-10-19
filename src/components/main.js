@@ -12,6 +12,9 @@ class Main extends Component {
       is_login_hidden:false,
       username:"",
       password:"",
+      email_number:"",
+      otp:"",
+      otp_msg:"",
       free_test_disable:false,
       is_disable:true
     }
@@ -21,11 +24,10 @@ class Main extends Component {
 
 
   loginFormSubmit () {
-    axios.post(`/accounts/login/`, 
-      {username: this.state.username, password: this.state.password}
-    ).then((data) => {
+    // debugger
+    axios.post(`/api/login/`,{username: this.state.username, password: this.state.password})
+    .then((data) => {
         console.log(data);
-        // debugger
         if (data.status === 200) {
           this.setState({
             username:"",
@@ -34,13 +36,35 @@ class Main extends Component {
           localStorage.setItem('token', data.data.access_token);
           localStorage.setItem('role', data.data.role);
           if (data.data.role === 0) {
-            console.log(data);
+            window.location = '/student';
           } else if (data.data.role === 1) {
-            console.log(data);
+            window.location = '/assessor';
           } else {
-            console.log(data);
+            window.location = '/admin_user';
           }
-          window.location.reload(true)
+        } else {
+          console.log(data);
+        }
+      })
+      .catch(error => {
+        debugger
+        console.log(error.message);
+      })
+    }
+
+  onSendOtp() {
+    axios.post(`/api/send_otp/`, 
+      {email: this.state.email_number}
+    ).then((data) => {
+        console.log(data);
+        // debugger
+        if (data.status === 200) {
+
+          this.setState({
+            otp_msg: data.data.detail,
+            is_disable:false
+          })
+          localStorage.setItem('otp', data.data.otp)
         } else {
             console.log(data);
         }
@@ -48,10 +72,18 @@ class Main extends Component {
       .catch(error => console.log(error.message))
   }
 
-  onSendOtp() {
-    this.setState({
-      is_disable:false
-    });
+  verify_otp() {
+    local_otp = localStorage.getItem('otp');
+    if (local_otp === this.state.otp) {
+      window.location = '/free_test'
+    } else {
+      this.setState({
+        otp_msg: "OTP  Not Matched. Please Try Again.",
+        otp: "",
+        is_disable: true
+      });
+      localStorage.removeItem('otp');
+    }
   }
 
   render() {
@@ -91,7 +123,7 @@ class Main extends Component {
                         <label for="email_number" className='email_label'>Email/Mobile Number </label>
                       </div>
                       <div className='col-md'>
-                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." required />
+                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." value={this.state.email_number} onChange={(e) => this.setState({email_number:e.target.value})} required />
                       </div>
                   </div>
                   <div className='row otp-block'>
@@ -99,7 +131,7 @@ class Main extends Component {
                       <label for="otp" className='otp_label'>Password/OTP</label>
                     </div>
                       <div className='col-md'>
-                        <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." disabled={this.state.is_disable} />
+                        <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." value={this.state.otp} disabled={this.state.is_disable}  onChange={(e) => this.setState({otp:e.target.value})} />
                       </div>
                   </div>
 
@@ -107,7 +139,9 @@ class Main extends Component {
 
                   <div className='row'>
                     <div className='col-md' style={{textAlign:'center'}}>
-                      <a href='/free_test'><button className='btn btn-info' id='login_btn' disabled={this.state.is_disable} >Login</button></a>
+                      {/* <a href='/free_test'> */}
+                      <button className='btn btn-info' id='login_btn' onClick={this.verify_otp} disabled={this.state.is_disable} >Login</button>
+                      {/* </a> */}
                     </div>
                   </div>
                   <div className='row'>
@@ -137,7 +171,7 @@ class Main extends Component {
                                 <label for="username" className="col-md">User Name</label>
                             </div>
                             <div className="col-md username_input">
-                                <input type="text"  id="username" placeholder="your user name ..." value={this.state.username} onChange={e => this.setState({username:e.target.value})} required />
+                                <input type="text"  id="username" placeholder="Enter Your Username/Email" value={this.state.username} onChange={e => this.setState({username:e.target.value})} required />
                                 {/* <br /><p className='error'>{usernameerror}</p> */}
                             </div>
                         </div>
@@ -146,7 +180,7 @@ class Main extends Component {
                                 <label for="inputPassword" className="col-md">Password</label>
                             </div>
                             <div className="col-md password_input">
-                                <input type="password"  id="inputPassword" placeholder="Password" value={this.state.password} onChange={e => this.setState({password:e.target.value})} required />
+                                <input type="password"  id="inputPassword" placeholder="Enter Your Password" value={this.state.password} onChange={e => this.setState({password:e.target.value})} required />
                                 {/* <br /><p className='error'>{passworderror}</p> */}
                             </div>
                         </div>

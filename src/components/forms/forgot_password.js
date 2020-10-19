@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../assets/css/forgot_password.css';
-import axios from  'axios';
+import axios from 'axios';
 
 
 export default function ForgotPasswordForm() {
@@ -9,19 +9,17 @@ export default function ForgotPasswordForm() {
     const [linksent, setLinksent] = useState(false);
     const [success, setSuccess] = useState('');
 
-    function onChange(e) {
-        setContact(e.target.value);
-    }
-
     function goHome() {
-        axios.post(`/accounts/forgot_password/`, {email: contact})
+        axios.post(`/api/forgot_password/`, {email: contact})
         .then((data) => {
+            debugger
             console.log(data)
             if (data.status === 200) {
                 setSuccess(data.data.detail);
                 setLinksent(true);
+                setContact("");
             } else {
-                console.log(data.statusText)
+                console.log(data)
             }
         })
         .catch(error => console.log(error.message))
@@ -54,7 +52,7 @@ export default function ForgotPasswordForm() {
                                 <form onSubmit={goHome}>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <input type="email"  id="email_link" placeholder="Enter Your Email.." value={contact} onChange={onChange} required />
+                                            <input type="email"  id="email_link" placeholder="Enter Your Email.." value={contact} onChange={(e) => setContact(e.target.value)} required />
                                         </div>
                                     </div>
                                     <br />

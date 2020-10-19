@@ -40,7 +40,7 @@ export default function CreateAccount() {
 
     const [plan,setPlan] =  useState(0);
     const [hide,setHide] =  useState(false);
-
+    const [errorplan, setErrorplan] = useState("")
     let history = useHistory();
 
 
@@ -224,9 +224,16 @@ export default function CreateAccount() {
         if (password === confirmpassword) {
             axios.post(`/api/signup/`,params)
             .then((data) =>{
-                console.log(data);
-                setNofilled(false);
-                setHide(false);
+                if (data.status === 201) {
+                    console.log(data);
+                    localStorage.setItem('token', data.data.token);
+                    localStorage.setItem('role', data.data.role);
+                    setNofilled(false);
+                    setHide(false);
+                }
+                else {
+                    setError(data.data.error);
+                }
             })
             .catch(error => console.log(error.message));
         }
@@ -236,12 +243,25 @@ export default function CreateAccount() {
     }
 
     function onChoosePlan() {
-        axios.post(`/api/plan/`,{plan:plan})
+        token = localStorage.getItem('token');
+        axios.post(
+            `/api/select_plan/`,
+            {
+                plan:plan,
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            }
+        )
         .then((data) =>{
-            console.log(data);
-            setNofilled(true);
-            setHide(true);
-            history.push('/student');
+            if (data.status === 200) {
+                console.log(data);
+                setNofilled(true);
+                setHide(true);
+                history.push('/student');
+            } else {
+                setErrorplan(data.data);
+            }
         })
         .catch(error => console.log(error.message));
     }
@@ -448,7 +468,7 @@ export default function CreateAccount() {
                 <div className='row'>
                     <div style={{textAlign:'center'}} className='container'>
                         <p style={{color:'white', fontWeight:'bolder', boxShadow:'15% 15% 15% 15% black', padding:'1%', margin:'0 2%', borderRadius:'4px', backgroundColor:'green'}} hidden={hide} >Form Submit Successfully. 
-                        <span><button type="button" class='close' onClick={e => setHide(true)} style={{color:'white'}}><span aria-hidden="true">&times;</span></button></span></p>                    
+                        <span><button type="button" class='close' onClick={e => setHide(true)} style={{color:'white'}}><span aria-hidden="true">&times;</span></button></span></p>
                     </div>
                     <br />
                     <p style={{textAlign:'center', width:'100%', marginTop:'1%'}}>
@@ -466,7 +486,8 @@ export default function CreateAccount() {
                             <input type='submit' className='btn' value='Get Started' style={{marginTop:'20px', backgroundColor:'lightseagreen', padding:'2%, 0', color:'white', boxShadow:"3px 3px 3px 3px lightgray", fontWeight:'bolder'}} />
                         </form>
                     </p>
-                        
+                    <br />
+                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{errorplan}</p>
                 </div>
             }
             <div className='row container'>

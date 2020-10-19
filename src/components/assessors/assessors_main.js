@@ -17,7 +17,8 @@ class AssessorMain extends Component {
         super(props, context);
         this.state = {
             error:null,
-            globalview : {}
+            globalview : {},
+            logout_message: ''
         };
         this.logout = this.logout.bind(this);
         this.view = {
@@ -51,26 +52,25 @@ class AssessorMain extends Component {
     }
 
     logout(){
-        window.localStorage.clear();
-        window.location = '/';
-
-        // this.props.router.replace('/')
-        // return <Redirect to='/student' />
-        // console.log('data');
-        // const token = localStorage.getItem('access-token');
-        // axios.get(`/api/logout/`,  {
-        //     headers: {
-        //       'Authorization': `Token ${token}`
-        //     }
-        // })
-        // .then((data) =>{
-        //     localStorage.removeItem('access-token');
-        //     localStorage.removeItem('role');
-        //     localStorage.removeItem('user_id');
-        //     setNofilled(true);
-        //     setHide(true);
-        // })
-        // .catch(error => console.log(error.message));
+        const token = localStorage.getItem('token');
+        axios.get(`/api/logout/`,  {
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        })
+        .then((data) =>{
+            if (data.status === 200){
+                localStorage.clear();
+                window.localStorage.clear();
+                window.location = '/';
+            } else {
+                console.log(data.data)
+                this.setState({
+                    logout_message: data.data
+                });
+            }
+        })
+        .catch(error => console.log(error.message));
     }
 
     onClickOption(title) {
@@ -149,6 +149,9 @@ class AssessorMain extends Component {
                 <div className='col'>
                     <span className='float-left'>Welcome, Mr. Shubham </span>
                     <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
+                    <br />
+                    <hr />
+                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
                 </div>
             </div>
 

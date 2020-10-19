@@ -11,7 +11,7 @@ class TeamPsych extends Component {
           <div className='row'>
             <div className='col'>
               <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                  {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                   <Card.Body>
                     <Card.Title>HOD - COL  Mr. MP Singh</Card.Title>
                     <Card.Text>
@@ -24,7 +24,7 @@ class TeamPsych extends Component {
 
             <div className='col'>
               <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                  {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Text>
@@ -37,7 +37,7 @@ class TeamPsych extends Component {
 
             <div className='col'>
               <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                  {/* <Card.Img variant="top" src="holder.js/100px180?text=Image cap" /> */}
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Text>

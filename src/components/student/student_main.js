@@ -28,14 +28,15 @@ import StudentTrainingSchedule from './training_schedule.js'
 import StudentPIQForm from './piq_form.js'
 
 import '../../assets/css/student.css'
-import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
-
+import {NavDropdown, Navbar,Nav, Button, Dropdown, Card} from 'react-bootstrap'
+import axios from 'axios'
 
 class StudentMain extends Component {
     constructor(props) {
         super(props);
         this.state ={
-          globalview : {}
+          globalview : {},
+          logout_message: ''
         }
         this.view = {
             is_PIQFORM_hidden:true,
@@ -69,7 +70,8 @@ class StudentMain extends Component {
   
             is_Home_hidden:true
         };
-      
+
+        this.logout = this.logout.bind(this);      
     }
     
     componentWillMount() {
@@ -155,6 +157,29 @@ class StudentMain extends Component {
         this.setState({globalview :view_local});
     }
 
+    logout(){
+        const token = localStorage.getItem('token');
+        axios.get(`/api/logout/`,  {
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        })
+        .then((data) =>{
+            if (data.status === 200){
+                localStorage.clear();
+                window.localStorage.clear();
+                window.location = '/';
+            } else {
+                console.log(data.data)
+                this.setState({
+                    logout_message: data.data
+                });
+            }
+        })
+        .catch(error => console.log(error.message));
+    }
+
+
     render() {
     return (
         <div className='StudentMain'>
@@ -233,9 +258,10 @@ class StudentMain extends Component {
             <div className='row container-fluid'>
                 <div className='col'>
                     <span className='float-left'>Welcome, Mr. Shubham </span>
-                    <span className='float-right'><button className='btn-danger'>Logout</button></span>
+                    <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
                     <br />
                     <hr />
+                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
                 </div>
             </div>
 
