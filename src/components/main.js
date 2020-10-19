@@ -3,8 +3,10 @@ import '../assets/css/main.css'
 import ForgotPasswordForm from './forms/forgot_password.js'
 import { Card, Button } from 'react-bootstrap';
 import axios from "axios";
+import {Redirect} from'react-router-dom';
 
 class Main extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -16,55 +18,50 @@ class Main extends Component {
       otp:"",
       otp_msg:"",
       free_test_disable:false,
-      is_disable:true
+      is_disable:true,
+      role:null,
+      is_free_test_now:false
     }
     this.loginFormSubmit = this.loginFormSubmit.bind(this);
     this.onSendOtp = this.onSendOtp.bind(this);
+    this.verify_otp = this.verify_otp.bind(this);
   }
 
 
-  loginFormSubmit () {
-    // debugger
+  loginFormSubmit (e) {
+    e.preventDefault();
     axios.post(`/api/login/`,{username: this.state.username, password: this.state.password})
     .then((data) => {
+      if (data.status === 200) {
         console.log(data);
-        if (data.status === 200) {
-          this.setState({
-            username:"",
-            password:""
-          });
-          localStorage.setItem('token', data.data.access_token);
-          localStorage.setItem('role', data.data.role);
-          if (data.data.role === 0) {
-            window.location = '/student';
-          } else if (data.data.role === 1) {
-            window.location = '/assessor';
-          } else {
-            window.location = '/admin_user';
-          }
-        } else {
+        localStorage.setItem('token', data.data.access_token);
+        localStorage.setItem('role', data.data.role);
+        this.setState({
+          username:"",
+          password:"",
+          role:data.data.role
+        });
+        return true
+      } else {
           console.log(data);
         }
       })
       .catch(error => {
-        debugger
-        console.log(error.message);
+        console.log(error);
       })
     }
 
-  onSendOtp() {
+  onSendOtp(e) {
+    e.preventDefault();
     axios.post(`/api/send_otp/`, 
       {email: this.state.email_number}
     ).then((data) => {
-        console.log(data);
-        // debugger
         if (data.status === 200) {
-
           this.setState({
             otp_msg: data.data.detail,
             is_disable:false
           })
-          localStorage.setItem('otp', data.data.otp)
+          localStorage.setItem('otp', data.data.OTP)
         } else {
             console.log(data);
         }
@@ -72,10 +69,13 @@ class Main extends Component {
       .catch(error => console.log(error.message))
   }
 
-  verify_otp() {
-    local_otp = localStorage.getItem('otp');
+  verify_otp(e) {
+    e.preventDefault();
+    const local_otp = localStorage.getItem('otp');
     if (local_otp === this.state.otp) {
-      window.location = '/free_test'
+      this.setState({
+        is_free_test_now: true
+      });
     } else {
       this.setState({
         otp_msg: "OTP  Not Matched. Please Try Again.",
@@ -87,6 +87,18 @@ class Main extends Component {
   }
 
   render() {
+    if (this.state.role === 0) {
+      return <Redirect to='/student' />
+    }
+    else if (this.state.role === 1) {
+      return <Redirect to='/assessor' />
+    }
+    else if (this.state.role === 2) {
+      return <Redirect to='/admin_user' />
+    }
+    else if  (this.state.is_free_test_now) {
+      return <Redirect to='/free_test_instruction' />
+    }
     return (
       <div className="row">
 

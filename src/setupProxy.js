@@ -9,24 +9,24 @@ module.exports = function(app) {
     })
   );
   app.use(
-    '/student',
+    '/student_api',
     createProxyMiddleware({
       target: 'http://localhost:8000',
       changeOrigin: true,
     })
   );  
   app.use(
-    '/assessor',
+    '/assessor_api',
     createProxyMiddleware({
       target: 'http://localhost:8000',
       changeOrigin: true,
     })
   );  
-  // app.use(
-  //   '/api',
-  //   createProxyMiddleware({
-  //     target: 'http://localhost:8000',
-  //     changeOrigin: true,
-  //   })
-  // );
+  app.use(
+    '/admin_api',
+    createProxyMiddleware({
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+    })
+  );
 };

@@ -4,6 +4,7 @@ import '../../assets/css/create_account.css'
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
+
 export default function CreateAccount() {
 
     const [username, setUsername] = useState("");
@@ -45,7 +46,7 @@ export default function CreateAccount() {
 
 
     useEffect( () => {
-        axios.get(`/student/state/`)
+        axios.get(`/student_api/state/`)
         .then((response) => {
             if (response.data.is_success) {
                 setStates(response.data.states);
@@ -154,9 +155,8 @@ export default function CreateAccount() {
     }
     
     function onSelectState(e) {
-        axios.get(`/student/state/`+e.target.value)
+        axios.get(`/student_api/state/`+e.target.value)
         .then((response) => {
-            debugger
             if (response.data.length >0) {
                 setCities(response.data);
             } else {
@@ -170,7 +170,7 @@ export default function CreateAccount() {
 
 
     function onSelectCity(e) {
-        axios.get(`/student/city/`+ e.target.value)
+        axios.get(`/student_api/city/`+ e.target.value)
         .then((response) => {
             if (response.data.length >0) {
                 setPincodes(response.data);
@@ -185,7 +185,7 @@ export default function CreateAccount() {
 
 
     function onSelectPincode(e) {
-        axios.get(`/student/pincode/`+ e.target.value)
+        axios.get(`/student_api/pincode/`+ e.target.value)
         .then((response) => {
             if (response.data.length >0) {
                 setPostoffices(response.data);
@@ -204,8 +204,8 @@ export default function CreateAccount() {
     }
 
 
-    function onSubmit() {
-        // debugger
+    function onSubmit(e) {
+        e.preventDefault();
         let params = {
             username:username, password:password,
             confirmpassword:confirmpassword,
@@ -220,7 +220,7 @@ export default function CreateAccount() {
             pincode:pincode, postoffice:postoffice,
             phone:phone
         }
-        console.log(params)
+        console.log(params);
         if (password === confirmpassword) {
             axios.post(`/api/signup/`,params)
             .then((data) =>{
@@ -242,15 +242,20 @@ export default function CreateAccount() {
         }
     }
 
-    function onChoosePlan() {
-        token = localStorage.getItem('token');
+    function onChoosePlan(e) {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
         axios.post(
             `/api/select_plan/`,
             {
-                plan:plan,
-                headers: {
-                    'Authorization': `Token ${token}`
-                }
+                plan:plan
+            },
+            {
+                headers: headers
             }
         )
         .then((data) =>{
@@ -265,7 +270,6 @@ export default function CreateAccount() {
         })
         .catch(error => console.log(error.message));
     }
-
 
 
     return (
@@ -359,7 +363,7 @@ export default function CreateAccount() {
                         <div className='row'>
                             <div className='col-md block_view'>
                                 <label for='dob'>Date Of Birth <span className='required_symbol'>*</span> : </label>
-                                <input type='text' placeholder='DOB eg. mm/dd/yyyy' id='dob' className='input_take' value={dob} pattern="^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\\d\\d$" onChange={e => (setDob(e.target.value))} required />
+                                <input type='text' placeholder='YYYY-MM-DD' id='dob' className='input_take' value={dob} pattern="^\d{4}-\d{1,2}-\d{1,2}$" onChange={e => (setDob(e.target.value))} required />
                             </div>
                             <div className='col-md block_view'>
                                 <label for='occupation'>Occupation <span className='required_symbol'>*</span> : </label>

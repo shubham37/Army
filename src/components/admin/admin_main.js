@@ -8,6 +8,8 @@ import AdminMisc from './misc.js'
 import AdminTraining  from './training.js'
 import '../../assets/css/admin.css'
 import { Navbar,Nav } from 'react-bootstrap'
+import { Redirect } from 'react-router';
+import axios  from 'axios'
 
 
 class AdminMain extends Component {
@@ -15,7 +17,8 @@ class AdminMain extends Component {
         super(props, context);
         this.state = {
             globalview : {},
-            logout_message:''
+            logout_message:'',
+            is_logout: false
         };
         this.view = {
             is_Briefcase_hidden:true,
@@ -33,6 +36,14 @@ class AdminMain extends Component {
     componentWillMount(){
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
+
+        if (localStorage.getItem('token') && (localStorage.getItem('role') == 2)){
+            this.setState({is_logout:false});
+        }
+        else {
+            localStorage.clear();
+            this.setState({is_logout:true});
+        }
     }
 
     onClickOption(title) {
@@ -69,18 +80,21 @@ class AdminMain extends Component {
         this.setState({globalview :view_local});
     }
 
-    logout(){
+    logout(e){
+        e.preventDefault();
         const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
+
         axios.get(`/api/logout/`,  {
-            headers: {
-                'Authorization': `Token ${token}`
-            }
+            headers: headers
         })
         .then((data) =>{
             if (data.status === 200){
                 localStorage.clear();
-                window.localStorage.clear();
-                window.location = '/';
+                this.setState({is_logout:true});
             } else {
                 console.log(data.data)
                 this.setState({
@@ -92,6 +106,9 @@ class AdminMain extends Component {
     }
 
     render() {
+        if (this.state.is_logout) {
+            return <Redirect to='/' />
+        }
         return (
             <div className='AdminMain container-fluid'>
                 <div className='row admin_navigation'>

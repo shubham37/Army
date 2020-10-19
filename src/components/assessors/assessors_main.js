@@ -10,6 +10,8 @@ import AssessorTestReport from './test_reports.js'
 import AssessorTrainingSchedule  from './training_schedule.js'
 import { Navbar,Nav } from 'react-bootstrap'
 import '../../assets/css/assesor.css'
+import { Redirect } from 'react-router';
+import axios from 'axios';
 
 
 class AssessorMain extends Component {
@@ -18,7 +20,8 @@ class AssessorMain extends Component {
         this.state = {
             error:null,
             globalview : {},
-            logout_message: ''
+            logout_message: '',
+            is_logout:false
         };
         this.logout = this.logout.bind(this);
         this.view = {
@@ -39,30 +42,29 @@ class AssessorMain extends Component {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
 
-        // const token = localStorage.getItem('access-token');
-        // const role = localStorage.getItem('role');
-
-        // if (token && role==2) {
-        //     console.log("Welome");
-        // } else if(token && role==1) {
-        //     window.location = '/student';
-        // } else {
-        //     window.location = '/';
-        // }
+        if (localStorage.getItem('token') && localStorage.getItem('role') == 1){
+            this.setState({is_logout:false});
+        }
+        else {
+            localStorage.clear();
+            this.setState({is_logout:true});
+        }
     }
 
-    logout(){
+    logout(e){
+        e.preventDefault();
         const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
         axios.get(`/api/logout/`,  {
-            headers: {
-                'Authorization': `Token ${token}`
-            }
+            headers: headers
         })
         .then((data) =>{
             if (data.status === 200){
                 localStorage.clear();
-                window.localStorage.clear();
-                window.location = '/';
+                this.setState({is_logout:true});
             } else {
                 console.log(data.data)
                 this.setState({
@@ -111,86 +113,89 @@ class AssessorMain extends Component {
     }
 
     render() {
-    return (
-        <div className='AssessorMain'>
-            <div className='row assessor_navigation'>
-                <div className='col'>
-                    <Navbar bg="light" expand="lg" sticky='top'>
-                        <Navbar.Brand href="/assessor">
-                            <img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} />
-                        </Navbar.Brand>
-                        <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="mr-auto">
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Briefcase')}>Briefcase</Nav.Link>
+        if (this.state.is_logout) {
+            return <Redirect to='/' />
+        }
+        return (
+            <div className='AssessorMain'>
+                <div className='row assessor_navigation'>
+                    <div className='col'>
+                        <Navbar bg="light" expand="lg" sticky='top'>
+                            <Navbar.Brand href="/assessor">
+                                <img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} />
+                            </Navbar.Brand>
+                            <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="mr-auto">
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Briefcase')}>Briefcase</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instructions</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instructions</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TS')}>Training Schedule</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TS')}>Training Schedule</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TR')}>Test Reports</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TR')}>Test Reports</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PR')}>Progress Report</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PR')}>Progress Report</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('RATING')}>Ratings</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('RATING')}>Ratings</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('ACCOUNT')}>Accounts</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('ACCOUNT')}>Accounts</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('STATISTICS')}>Statistics</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('STATISTICS')}>Statistics</Nav.Link>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Navbar>
+                    </div>
+                </div>
+                <br />
+                <div className='row container-fluid'>
+                    <div className='col'>
+                        <span className='float-left'>Welcome, Mr. Shubham </span>
+                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
+                        <br />
+                        <hr />
+                        <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
+                    </div>
+                </div>
+
+                <div hidden={this.state.globalview.is_Briefcase_hidden}>
+                    <AssessorBriefcase />
+                </div>
+                <div hidden={this.state.globalview.is_Instruction_hidden}>
+                    <AssessorInstruction />
+                </div>
+                <div hidden={this.state.globalview.is_TS_hidden}>
+                    <AssessorTrainingSchedule />
+                </div>
+                <div hidden={this.state.globalview.is_SFD_hidden}>
+                    <AssessorScheduleToday />
+                </div>
+                <div hidden={this.state.globalview.is_TR_hidden}>
+                    <AssessorTestReport />
+                </div>
+                <div hidden={this.state.globalview.is_PR_hidden}>
+                    <AssessorProgressReport />
+                </div>
+                <div hidden={this.state.globalview.is_RATING_hidden}>
+                    <AssessorRating />
+                </div>
+                <div hidden={this.state.globalview.is_ACCOUNT_hidden}>
+                    <AssessorAccount />
+                </div>
+                <div hidden={this.state.globalview.is_STATISTICS_hidden}>
+                    <AssessorStatistics />
+                </div>
+                <div hidden={this.state.globalview.is_Home_hidden}>
+                    <div className='container-fluid'>
+                        <hr />
+                        <p>Assessor Home Content Will Show Here.</p>
+                    </div>
                 </div>
             </div>
-            <br />
-            <div className='row container-fluid'>
-                <div className='col'>
-                    <span className='float-left'>Welcome, Mr. Shubham </span>
-                    <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
-                    <br />
-                    <hr />
-                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
-                </div>
-            </div>
-
-            <div hidden={this.state.globalview.is_Briefcase_hidden}>
-                <AssessorBriefcase />
-            </div>
-            <div hidden={this.state.globalview.is_Instruction_hidden}>
-                <AssessorInstruction />
-            </div>
-            <div hidden={this.state.globalview.is_TS_hidden}>
-                <AssessorTrainingSchedule />
-            </div>
-            <div hidden={this.state.globalview.is_SFD_hidden}>
-                <AssessorScheduleToday />
-            </div>
-            <div hidden={this.state.globalview.is_TR_hidden}>
-                <AssessorTestReport />
-            </div>
-            <div hidden={this.state.globalview.is_PR_hidden}>
-                <AssessorProgressReport />
-            </div>
-            <div hidden={this.state.globalview.is_RATING_hidden}>
-                <AssessorRating />
-            </div>
-            <div hidden={this.state.globalview.is_ACCOUNT_hidden}>
-                <AssessorAccount />
-            </div>
-            <div hidden={this.state.globalview.is_STATISTICS_hidden}>
-                <AssessorStatistics />
-            </div>
-            <div hidden={this.state.globalview.is_Home_hidden}>
-                <div className='container-fluid'>
-                    <hr />
-                    <p>Assessor Home Content Will Show Here.</p>
-                </div>
-            </div>
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default AssessorMain;

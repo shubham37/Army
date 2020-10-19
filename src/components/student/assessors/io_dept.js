@@ -13,7 +13,6 @@ class StudentAssessorIO extends Component {
             <div className='row'>
               <div className='col'>
                 <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180" alt='User_Image' />
                   <Card.Body>
                     <Card.Title>Col Mr. XXXX</Card.Title>
                     <Card.Text>
@@ -25,7 +24,6 @@ class StudentAssessorIO extends Component {
               </div>
               <div className='col'>
                 <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src="holder.js/100px180" alt='User_Image' />
                   <Card.Body>
                     <Card.Title>Col Mr. XXXX</Card.Title>
                     <Card.Text>

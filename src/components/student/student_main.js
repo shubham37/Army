@@ -28,15 +28,19 @@ import StudentTrainingSchedule from './training_schedule.js'
 import StudentPIQForm from './piq_form.js'
 
 import '../../assets/css/student.css'
-import {NavDropdown, Navbar,Nav, Button, Dropdown, Card} from 'react-bootstrap'
+import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
+
 
 class StudentMain extends Component {
     constructor(props) {
         super(props);
         this.state ={
           globalview : {},
-          logout_message: ''
+          logout_message: '',
+          is_logout: false,
+          user:''
         }
         this.view = {
             is_PIQFORM_hidden:true,
@@ -77,6 +81,30 @@ class StudentMain extends Component {
     componentWillMount() {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
+
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+
+        if (token && role == '0') {
+            this.setState({is_logout:false});
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            };
+            axios.get(`/student_api/profile/`, {
+                headers: headers
+            })
+            .then((data) => {
+                this.setState({
+                    user:data.data.first_name
+                });
+                console.log(data);
+            })
+            .catch(error => console.log(error.message));
+        } else {
+            localStorage.clear();
+            this.setState({is_logout:true});
+        }
     }
     
     onClickOption(title) {
@@ -157,18 +185,23 @@ class StudentMain extends Component {
         this.setState({globalview :view_local});
     }
 
-    logout(){
+    
+    logout(e){
+        e.preventDefault()
         const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
         axios.get(`/api/logout/`,  {
-            headers: {
-                'Authorization': `Token ${token}`
-            }
+            headers: headers
         })
         .then((data) =>{
             if (data.status === 200){
                 localStorage.clear();
-                window.localStorage.clear();
-                window.location = '/';
+                this.setState({
+                    is_logout:true
+                });
             } else {
                 console.log(data.data)
                 this.setState({
@@ -181,178 +214,173 @@ class StudentMain extends Component {
 
 
     render() {
-    return (
-        <div className='StudentMain'>
-            <div className='row student_navigation'>
-                <div className='col'>
-                    <Navbar bg="light" expand="lg">
-                        <Navbar.Brand href="/student">
-                            <img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} />
-                        </Navbar.Brand>
-                        <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="mr-auto">    
-                                <NavDropdown title="Dashboard" id="basic-nav-dropdown">
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PIQFORM")}>PIQ Form</Button></NavDropdown.Item>
-                                    <Dropdown key='right' drop='right'>
-                                        <Dropdown.Toggle variant="none" style={{width:'100%'}} id="dropdown-basic">
-                                            Psych Tests
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item href="/tat_test">TAT-1</Dropdown.Item>
-                                            <Dropdown.Item href="/wat_test">WAT-1</Dropdown.Item>
-                                            <Dropdown.Item href="/srt_test">SRT-1</Dropdown.Item>
-                                            <Dropdown.Item href="/sd_test">SD-1</Dropdown.Item>
-                                            <Dropdown.Item href="/psych_test">PSYCH Test Complete</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IO')}>IO Tests</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTO')}>GTO Tests</Button></NavDropdown.Item>
-                                </NavDropdown>
+        if  (this.state.is_logout) {
+            return <Redirect to='/' />
+        }
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instruction</Nav.Link>
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PIQ')}>PIQ</Nav.Link>
+        return (
+            <div className='StudentMain'>
+                <div className='row student_navigation'>
+                    <div className='col'>
+                        <Navbar bg="light" expand="lg">
+                            <Navbar.Brand href="/student">
+                                <img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} />
+                            </Navbar.Brand>
+                            <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="mr-auto">
+                                    <NavDropdown title="Dashboard" id="basic-nav-dropdown">
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PIQFORM")}>PIQ Form</Button></NavDropdown.Item>
+                                        <Dropdown key='right' drop='right'>
+                                            <Dropdown.Toggle variant="none" style={{width:'100%'}} id="dropdown-basic">
+                                                Psych Tests
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item href="/tat_test">TAT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/wat_test">WAT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/srt_test">SRT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/sd_test">SD-1</Dropdown.Item>
+                                                <Dropdown.Item href="/psych_test">PSYCH Test Complete</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IO')}>IO Tests</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTO')}>GTO Tests</Button></NavDropdown.Item>
+                                    </NavDropdown>
 
-                                <NavDropdown title="Assessors" id="basic-nav-dropdown">
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTOA')}>GTO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOA")}>IO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHA")}>Psych Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDA")}>PD Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITA")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                </NavDropdown>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instruction</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PIQ')}>PIQ</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TS')}>Training Schedule</Nav.Link>
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
+                                    <NavDropdown title="Assessors" id="basic-nav-dropdown">
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTOA')}>GTO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOA")}>IO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHA")}>Psych Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDA")}>PD Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITA")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                    </NavDropdown>
 
-                                <NavDropdown title="Tests" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href='/gto_dept_test'>GTO Dept</NavDropdown.Item>
-                                    <NavDropdown.Item href='/io_dept_test'>IO Dept</NavDropdown.Item>
-                                    <NavDropdown.Item href='/psych_dept_test'>Psych Dept</NavDropdown.Item>
-                                    <NavDropdown.Item href='/pd_dept_test'>PD Dept</NavDropdown.Item>
-                                    <NavDropdown.Item href='/itd_dept_test'>Intt Test Dept</NavDropdown.Item>
-                                </NavDropdown>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TS')}>Training Schedule</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
 
-                                <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
+                                    <NavDropdown title="Tests" id="basic-nav-dropdown">
+                                        <NavDropdown.Item href='/gto_dept_test'>GTO Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/io_dept_test'>IO Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/psych_dept_test'>Psych Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/pd_dept_test'>PD Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/itd_dept_test'>Intt Test Dept</NavDropdown.Item>
+                                    </NavDropdown>
 
-                                <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOTR")}>GTO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOTR")}>IO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHTR")}>Psych Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDTR")}>PD Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITTR")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                </NavDropdown>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
 
-                                <NavDropdown title="Progress Report" id="basic-nav-dropdown">
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOPR")}>GTO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOPR")}>IO Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHPR")}>Psych Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDPR")}>PD Dept</Button></NavDropdown.Item>
-                                    <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITPR")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                </NavDropdown>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Navbar>
+                                    <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOTR")}>GTO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOTR")}>IO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHTR")}>Psych Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDTR")}>PD Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITTR")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                    </NavDropdown>
+
+                                    <NavDropdown title="Progress Report" id="basic-nav-dropdown">
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOPR")}>GTO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOPR")}>IO Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHPR")}>Psych Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDPR")}>PD Dept</Button></NavDropdown.Item>
+                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITPR")}>Intt Test</Button> Dept</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Navbar>
+                    </div>
+                </div>
+                <br />
+                <div className='row container-fluid'>
+                    <div className='col'>
+                        <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
+                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
+                        <br />
+                        <hr />
+                        <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
+                    </div>
+                </div>
+                <div hidden={this.state.globalview.is_GTO_hidden}>
+                    <StudentDashboardGTO />
+                </div>
+                <div hidden={this.state.globalview.is_IO_hidden}>
+                    <StudentDashboardIO />
+                </div>
+                <div hidden={this.state.globalview.is_PIQFORM_hidden}>
+                    <StudentDashboardPIQ />
+                </div>
+                <div hidden={this.state.globalview.is_Instruction_hidden}>
+                    <StudentIntruction />
+                </div>
+                <div hidden={this.state.globalview.is_PIQ_hidden}>
+                    <StudentPIQForm />
+                </div>
+                <div hidden={this.state.globalview.is_GTOA_hidden}>
+                    <StudentAssessorGTO />
+                </div>
+                <div hidden={this.state.globalview.is_ITA_hidden}>
+                    <StudentAssessorITD />
+                </div>
+                <div hidden={this.state.globalview.is_IOA_hidden}>
+                    <StudentAssessorIO />
+                </div>
+                <div hidden={this.state.globalview.is_PDA_hidden}>
+                    <StudentAssessorPD />
+                </div>
+                <div hidden={this.state.globalview.is_PSYCHA_hidden}>
+                    <StudentAssessorPsych />
+                </div>
+                <div hidden={this.state.globalview.is_GTOPR_hidden}>
+                    <StudentProgressReportGTO />
+                </div>
+                <div hidden={this.state.globalview.is_ITPR_hidden}>
+                    <StudentProgressReportITD />
+                </div>
+                <div hidden={this.state.globalview.is_IOPR_hidden}>
+                    <StudentProgressReportIO />
+                </div>
+                <div hidden={this.state.globalview.is_PDPR_hidden}>
+                    <StudentProgressReportPD />
+                </div>
+                <div hidden={this.state.globalview.is_PSYCHPR_hidden}>
+                    <StudentProgressReportPsych />
+                </div>
+                <div hidden={this.state.globalview.is_GTOTR_hidden}>
+                    <StudentTestReportGTO />
+                </div>
+                <div hidden={this.state.globalview.is_ITTR_hidden}>
+                    <StudentTestReportITD />
+                </div>
+                <div hidden={this.state.globalview.is_IOTR_hidden}>
+                    <StudentTestReportIO />
+                </div>
+                <div hidden={this.state.globalview.is_PDTR_hidden}>
+                    <StudentTestReportPD />
+                </div>
+                <div hidden={this.state.globalview.is_PSYCHTR_hidden}>
+                    <StudentTestReportPsych />
+                </div>
+
+                <div hidden={this.state.globalview.is_SFD_hidden}>
+                    <StudentScheduleToday />
+                </div>
+                <div hidden={this.state.globalview.is_TSS_hidden}>
+                    <StudentTestPending />
+                </div>
+                <div hidden={this.state.globalview.is_TS_hidden}>
+                    <StudentTrainingSchedule />
+                </div>
+                <div hidden={this.state.globalview.is_Home_hidden}>
+                    <div className='container-fluid'>
+                        <p>
+                            Home Content Will Showed Here.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <br />
-            <div className='row container-fluid'>
-                <div className='col'>
-                    <span className='float-left'>Welcome, Mr. Shubham </span>
-                    <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
-                    <br />
-                    <hr />
-                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
-                </div>
-            </div>
-
-            <div hidden={this.state.globalview.is_GTO_hidden}>
-                <StudentDashboardGTO />
-            </div>
-            <div hidden={this.state.globalview.is_IO_hidden}>
-                <StudentDashboardIO />
-            </div>
-            <div hidden={this.state.globalview.is_PIQFORM_hidden}>
-                <StudentDashboardPIQ />
-            </div>
-
-            <div hidden={this.state.globalview.is_Instruction_hidden}>
-                <StudentIntruction />
-            </div>
-
-            <div hidden={this.state.globalview.is_PIQ_hidden}>
-                <StudentPIQForm />
-            </div>
-
-            <div hidden={this.state.globalview.is_GTOA_hidden}>
-                <StudentAssessorGTO />
-            </div>
-            <div hidden={this.state.globalview.is_ITA_hidden}>
-                <StudentAssessorITD />
-            </div>
-            <div hidden={this.state.globalview.is_IOA_hidden}>
-                <StudentAssessorIO />
-            </div>
-            <div hidden={this.state.globalview.is_PDA_hidden}>
-                <StudentAssessorPD />
-            </div>
-            <div hidden={this.state.globalview.is_PSYCHA_hidden}>
-                <StudentAssessorPsych />
-            </div>
-
-
-            <div hidden={this.state.globalview.is_GTOPR_hidden}>
-                <StudentProgressReportGTO />
-            </div>
-            <div hidden={this.state.globalview.is_ITPR_hidden}>
-                <StudentProgressReportITD />
-            </div>
-            <div hidden={this.state.globalview.is_IOPR_hidden}>
-                <StudentProgressReportIO />
-            </div>
-            <div hidden={this.state.globalview.is_PDPR_hidden}>
-                <StudentProgressReportPD />
-            </div>
-            <div hidden={this.state.globalview.is_PSYCHPR_hidden}>
-                <StudentProgressReportPsych />
-            </div>
-
-            <div hidden={this.state.globalview.is_GTOTR_hidden}>
-                <StudentTestReportGTO />
-            </div>
-            <div hidden={this.state.globalview.is_ITTR_hidden}>
-                <StudentTestReportITD />
-            </div>
-            <div hidden={this.state.globalview.is_IOTR_hidden}>
-                <StudentTestReportIO />
-            </div>
-            <div hidden={this.state.globalview.is_PDTR_hidden}>
-                <StudentTestReportPD />
-            </div>
-            <div hidden={this.state.globalview.is_PSYCHTR_hidden}>
-                <StudentTestReportPsych />
-            </div>
-
-            <div hidden={this.state.globalview.is_SFD_hidden}>
-                <StudentScheduleToday />
-            </div>
-            <div hidden={this.state.globalview.is_TSS_hidden}>
-                <StudentTestPending />
-            </div>
-            <div hidden={this.state.globalview.is_TS_hidden}>
-                <StudentTrainingSchedule />
-            </div>
-
-            <div hidden={this.state.globalview.is_Home_hidden}>
-                <div className='container-fluid'>
-                    <p>
-                        Home Content Will Showed Here.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default StudentMain;
