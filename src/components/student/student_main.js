@@ -31,7 +31,7 @@ import '../../assets/css/student.css'
 import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 class StudentMain extends Component {
     constructor(props) {
@@ -295,7 +295,7 @@ class StudentMain extends Component {
                 <div className='row container-fluid'>
                     <div className='col'>
                         <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
-                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
+                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <br />
                         <hr />
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>

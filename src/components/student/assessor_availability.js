@@ -3,6 +3,13 @@ import { ScheduleComponent, WorkWeek, Week, Month, Inject, ViewsDirective, ViewD
 
 
 class AssessorAvailablityCheck extends Component {
+    constructor(props) {
+        super(props);
+        this.props = props;
+        console.log("this.props");
+        console.log(this.props);
+    }
+
   render() {
     return (
         <div>
@@ -11,7 +18,7 @@ class AssessorAvailablityCheck extends Component {
                     <div class="modal-content">
                         <div class="modal-header">
                             <p class="modal-title" id="exampleModalLabel">
-                                <b>Col XXX,</b><br />
+                                <b>Col,</b><br />
                                 Hi Mr/Ms XXX, <br />
                                 I'am available here to train you on green area's, click and book, Once you book it wiil turn into Red.<br /> 
                                 Best Wishes. <br />

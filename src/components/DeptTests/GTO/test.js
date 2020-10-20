@@ -34,7 +34,7 @@ class GTODT extends Component {
 
   componentWillMount() {
     this.setState({
-      seconds_part1:4,
+      seconds_part1:400,
     })
   }
 

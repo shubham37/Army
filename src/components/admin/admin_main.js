@@ -10,7 +10,7 @@ import '../../assets/css/admin.css'
 import { Navbar,Nav } from 'react-bootstrap'
 import { Redirect } from 'react-router';
 import axios  from 'axios'
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 class AdminMain extends Component {
     constructor(props, context){
@@ -143,7 +143,7 @@ class AdminMain extends Component {
                 <div className='row container-fluid'>
                     <div className='col'>
                         <span className='float-left'>Welcome Admin Office</span>
-                        <span className='float-right'><button className='btn-danger' onClick={this.logout} >Logout</button></span> 
+                        <span className='float-right'><button className='btn-danger' onClick={this.logout} >Logout <ExitToAppIcon /></button></span> 
                         <br />
                         <hr />
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>                                                

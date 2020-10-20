@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class TATTest extends Component {
 
@@ -14,7 +16,11 @@ class TATTest extends Component {
       
       time_part2: {},
       seconds_part2: 10,
-      is_disable:true
+      is_disable:true,
+      is_user:false,
+      answer:"",
+      is_test_submit:false,
+      test_submit_response:''
     }
     this.timer_part1= 0;
     this.timer_part2= 0;
@@ -22,8 +28,22 @@ class TATTest extends Component {
     this.onTestStart = this.onTestStart.bind(this);
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
+    this.onTestSubmit = this.onTestSubmit.bind(this);
 
   }
+
+
+  componentWillMount(){
+    if (localStorage.getItem('token') && (localStorage.getItem('role') === '0')){
+        this.setState({
+          is_user:true
+        });
+    }
+    else {
+        this.setState({is_user:false});
+    }
+  }
+
 
   secondsToTime(secs){
     let hours = Math.floor(secs / (60 * 60));
@@ -97,7 +117,46 @@ class TATTest extends Component {
     }
   }
 
+  onTestSubmit() {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    const data = {
+      answer: this.state.answer,
+      code: 'TAT'
+    }
+
+    axios.post(`/student_api/tests/`,  data, {
+        headers: headers
+    })
+    .then((data) =>{
+        if (data.status === 200){
+          this.setState({
+            is_test_submit:true,
+            test_submit_response:data.data.detail
+          });
+        } else {
+          this.setState({
+            test_submit_response:data.data.detail
+          });
+        }
+    })
+    .catch((error) => {
+      console.log(error.message);
+      this.setState({
+        test_submit_response:"Please Try Again."
+      });
+    });
+  }
+
   render() {
+    if (!this.state.is_user) {
+      return <Redirect to='/' />
+    } else if(this.state.is_test_submit) {
+      return <Redirect to='/student' />
+    }
     return (
       <div>
 
@@ -157,12 +216,14 @@ class TATTest extends Component {
           <br />
           <div className='row container'>
             <div className='col'>
-              <textarea cols='100' rows='15' placeholder='Write Your Story Here ...' disabled={this.state.is_disable} />
+              <textarea cols='100' rows='15' placeholder='Write Your Story Here ...' value={this.state.answer} disabled={this.state.is_disable} onChange={(e) => this.setState({answer:e.target.value})} />
             </div>
           </div>
           <div className='row'>
             <div className='col-md' style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
-              <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true}>SUBMIT TEST</button>
+              <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
+              <br />
+    <p>{this.state.test_submit_response}</p>
             </div>
           </div>
         </div>

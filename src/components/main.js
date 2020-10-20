@@ -27,13 +27,24 @@ class Main extends Component {
     this.verify_otp = this.verify_otp.bind(this);
   }
 
+  componentWillMount(){
+    if (localStorage.getItem('token') && localStorage.getItem('role')){
+        this.setState({
+          role:localStorage.getItem('role')
+        });
+    }
+    else {
+        localStorage.clear();
+        this.setState({role:null});
+    }
+}
+
 
   loginFormSubmit (e) {
     e.preventDefault();
     axios.post(`/api/login/`,{username: this.state.username, password: this.state.password})
     .then((data) => {
       if (data.status === 200) {
-        console.log(data);
         localStorage.setItem('token', data.data.access_token);
         localStorage.setItem('role', data.data.role);
         this.setState({
@@ -41,7 +52,7 @@ class Main extends Component {
           password:"",
           role:data.data.role
         });
-        return true
+        console.log(this.state);
       } else {
           console.log(data);
         }

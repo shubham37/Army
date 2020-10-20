@@ -12,7 +12,7 @@ import { Navbar,Nav } from 'react-bootstrap'
 import '../../assets/css/assesor.css'
 import { Redirect } from 'react-router';
 import axios from 'axios';
-
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 class AssessorMain extends Component {
     constructor(props, context){
@@ -153,7 +153,7 @@ class AssessorMain extends Component {
                 <div className='row container-fluid'>
                     <div className='col'>
                         <span className='float-left'>Welcome, Mr. Shubham </span>
-                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout</button></span>
+                        <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <br />
                         <hr />
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>

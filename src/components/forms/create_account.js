@@ -225,14 +225,16 @@ export default function CreateAccount() {
             axios.post(`/api/signup/`,params)
             .then((data) =>{
                 if (data.status === 201) {
-                    console.log(data);
-                    localStorage.setItem('token', data.data.token);
-                    localStorage.setItem('role', data.data.role);
+                    console.log(data)
+                    const local_data = JSON.parse(data.data);
+
+                    localStorage.setItem('token', local_data.token);
+                    localStorage.setItem('role', local_data.role);
                     setNofilled(false);
                     setHide(false);
                 }
                 else {
-                    setError(data.data.error);
+                    setError(data.data);
                 }
             })
             .catch(error => console.log(error.message));

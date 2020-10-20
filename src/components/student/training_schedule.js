@@ -1,48 +1,74 @@
 import React, { Component } from 'react';
 import { ScheduleComponent, WorkWeek, Week, Month, Inject, Day, Agenda, MonthAgenda, TimelineViews, TimelineMonth } from '@syncfusion/ej2-react-schedule';
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
+import axios from 'axios'
+import CachedIcon from '@material-ui/icons/Cached';
 
 class StudentTrainingSchedule extends Component {
   
-  componentWillMount() {    
-    this.data = [{
-      // Id: 2,
-      Subject: 'Paris',
-      StartTime: new Date(2020, 9, 15, 10, 0),
-      EndTime: new Date(2020, 9, 15, 12, 30),
-  }];
+  constructor(props) {
+    super(props);
+    this.state = {
+      data : []
+    }
+    this.fetchData = this.fetchData.bind(this);
   }
 
-  onClickAdd() {
-    this.scheduleObj.eventsData.map((day) => {
-      this.data = []
-      console.log(day.Guid);
-      this.data.push({
-        // Id: day.Id,
-        Subject: day.Subject,
-        StartTime: new Date(day.StartTime),
-        EndTime: new Date(day.EndTime),
-      })
+  // onClickAdd() {
+  //   this.scheduleObj.eventsData.map((day) => {
+  //     this.data = []
+  //     console.log(day.Guid);
+  //     this.data.push({
+  //       // Id: day.Id,
+  //       Subject: day.Subject,
+  //       StartTime: new Date(day.StartTime),
+  //       EndTime: new Date(day.EndTime),
+  //     })
+  //   });
+  //   this.scheduleObj.saveEvent(this.data);
+  // }
+
+  fetchData() {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    axios.get(`/student_api/assessor_stream_schedule/student_list`, {
+      headers: headers
+    })
+    .then((data) => {
+      const schedules = []
+      data.data.StreamSchedules.map((schedule) => {
+        schedules.push({
+          Subject: schedule.subject,
+          StartTime: new Date(schedule.start_time),
+          EndTime: new Date(schedule.end_time)    
+        })
+      });
+      this.setState({ data: schedules })
+    })
+    .catch((error) => {
+      this.setState({ data: [] })
+      console.log(error.message);
     });
-    this.scheduleObj.saveEvent(this.data);
   }
 
   render() {
     return (
       <div className='container-fluid'>
-          <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.data }}>
-            {/* <Inject services={[WorkWeek, Week, Month, Agenda]}/>  
-            <ViewsDirective>
-            <ViewDirective option='Week' startHour='08:00' endHour='20:00'/>
-            <ViewDirective option='Month' showWeekend={false}/>
-          </ViewsDirective> */}
-            <Inject services={[Day, Week, WorkWeek, Month, Agenda, MonthAgenda, TimelineViews, TimelineMonth ]} />
-          </ScheduleComponent>
-
-        <div className='container' style={{textAlign:'center', width:'100%'}}>
-          <ButtonComponent id='add' title='Add'  style={{padding:'2% 5%', margin:'3% 0', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}} onClick={this.onClickAdd.bind(this)}>Submit</ButtonComponent>
-        </div>
-      </div>
+        <button className='btn btn-warning float-right' onClick={this.fetchData}><CachedIcon /></button>
+        <br /> <br /> 
+        <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.data }}>
+          {/* <Inject services={[WorkWeek, Week, Month, Agenda]}/>  
+          <ViewsDirective>
+          <ViewDirective option='Week' startHour='08:00' endHour='20:00'/>
+          <ViewDirective option='Month' showWeekend={false}/>
+        </ViewsDirective> */}
+          <Inject services={[Day, Week, WorkWeek, Month, Agenda, MonthAgenda, TimelineViews, TimelineMonth ]} />
+        </ScheduleComponent>
+        <br />
+      </div>  
     );
   }
 }
