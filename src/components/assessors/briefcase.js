@@ -1,8 +1,38 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap'
 import UploadDocument from './upload_dcument.js'
+import axios from 'axios';
+
 
 class AssessorBriefcase extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      videos : [],
+      documents : []
+    }
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    axios.get(`/assessor_api/breifcase/`, {
+      headers : headers
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+  }
+
   render() {
     return (
       <div className="row container-fluid">

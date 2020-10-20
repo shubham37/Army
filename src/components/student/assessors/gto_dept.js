@@ -51,13 +51,19 @@ class StudentAssessorGTO extends Component {
 
   openModal (e) {
     e.preventDefault();
-    axios.get(`/assessor_api/availablity/2/assessor_list`)
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+
+    axios.get(`/assessor_api/availablity/2/assessor_list`, {headers:headers})
     .then((data) =>{
-      const assessor_data = {
-        available: data.data.availabilities,
-        freeze: data.data.not_availabilities
-      }
       if (data.status === 200){
+        const assessor_data = {
+          available: data.data.availabilities,
+          freeze: data.data.not_availabilities
+        }
         this.setState({
           current_assessor:assessor_data
         });

@@ -16,15 +16,19 @@ class Main extends Component {
       password:"",
       email_number:"",
       otp:"",
-      otp_msg:"",
       free_test_disable:false,
       is_disable:true,
       role:null,
-      is_free_test_now:false
+      is_free_test_now:false,
+      login_error:'',
+      free_test_error:'',
+      time_part1: {},
+      seconds_part1: 0
     }
     this.loginFormSubmit = this.loginFormSubmit.bind(this);
     this.onSendOtp = this.onSendOtp.bind(this);
     this.verify_otp = this.verify_otp.bind(this);
+    this.countDown = this.countDown.bind(this);
   }
 
   componentWillMount(){
@@ -54,30 +58,86 @@ class Main extends Component {
         });
         console.log(this.state);
       } else {
-          console.log(data);
+        this.setState({
+          login_error: "Please Try Again."
+        });
+        console.log(data);
         }
       })
-      .catch(error => {
+      .catch((error) => {
+        this.setState({
+          login_error: error.message
+        });
         console.log(error);
       })
     }
 
+  secondsToTime(secs){
+    let hours = Math.floor(secs / (60 * 60));
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "h": hours,
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
+  }
+  
   onSendOtp(e) {
     e.preventDefault();
     axios.post(`/api/send_otp/`, 
       {email: this.state.email_number}
     ).then((data) => {
         if (data.status === 200) {
+          this.setState({seconds_part1:30});
+          let timeLeftVar = this.secondsToTime(this.state.seconds_part1);
           this.setState({
-            otp_msg: data.data.detail,
-            is_disable:false
-          })
+            free_test_error: data.data.detail,
+            is_disable:false,
+            time_part1: timeLeftVar
+          });
+      
+          if (this.timer_part1 === 0 && this.state.seconds_part1 > 0) {
+            this.timer_part1 = setInterval(this.countDown, 1000);
+          }
+
           localStorage.setItem('otp', data.data.OTP)
         } else {
-            console.log(data);
+          this.setState({
+            free_test_error: "Please Try Again."
+          });
+          console.log(data);
         }
       })
-      .catch(error => console.log(error.message))
+      .catch((error) => {
+        this.setState({
+          free_test_error: error.message
+        });
+        console.log(error.message)
+      });
+  }
+
+  countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.seconds_part1 - 1;
+    this.setState({
+      time_part1: this.secondsToTime(seconds),
+      seconds_part1: seconds,
+    });
+
+    // Check if we're at zero.
+    if (seconds === 0) { 
+      clearInterval(this.timer_part1);
+      this.setState({
+        is_disable:false,
+      });
+    }
   }
 
   verify_otp(e) {
@@ -89,7 +149,7 @@ class Main extends Component {
       });
     } else {
       this.setState({
-        otp_msg: "OTP  Not Matched. Please Try Again.",
+        free_test_error: "OTP  Not Matched. Please Try Again.",
         otp: "",
         is_disable: true
       });
@@ -172,6 +232,12 @@ class Main extends Component {
                       <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' disabled={!this.state.is_disable} />
                     </div>
                   </div>
+                  <div className='row' hidden={!this.state.is_disable}>
+                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'green'}}>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
+                  </div>
+                  <div className='row'>
+                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'red'}}>{this.state.free_test_error}</p>
+                  </div>
               </form>
             </div>
 
@@ -228,6 +294,9 @@ class Main extends Component {
                     <div className='col'>
                       <a href='/create_account'><button className='btn btn-info create'>Create Account</button></a>
                     </div>
+                </div>
+                <div className='row'>
+                  <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'red'}}>{this.state.login_error}</p>
                 </div>
             </Card>
         </div>

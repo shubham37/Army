@@ -21,7 +21,8 @@ class AssessorMain extends Component {
             error:null,
             globalview : {},
             logout_message: '',
-            is_logout:false
+            is_logout:false,
+            user:''
         };
         this.logout = this.logout.bind(this);
         this.view = {
@@ -42,10 +43,26 @@ class AssessorMain extends Component {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
 
-        if (localStorage.getItem('token') && localStorage.getItem('role') == 1){
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+
+        if (token && role == '1') {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            };
+            axios.get(`/assessor_api/profile/`, {
+                headers: headers
+            })
+            .then((data) => {
+                this.setState({
+                    user:data.data.first_name
+                });
+                console.log(data);
+            })
+            .catch(error => console.log(error.message));
             this.setState({is_logout:false});
-        }
-        else {
+        } else {
             localStorage.clear();
             this.setState({is_logout:true});
         }
@@ -152,7 +169,7 @@ class AssessorMain extends Component {
                 <br />
                 <div className='row container-fluid'>
                     <div className='col'>
-                        <span className='float-left'>Welcome, Mr. Shubham </span>
+                        <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <br />
                         <hr />

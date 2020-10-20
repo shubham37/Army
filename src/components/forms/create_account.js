@@ -237,7 +237,10 @@ export default function CreateAccount() {
                     setError(data.data);
                 }
             })
-            .catch(error => console.log(error.message));
+            .catch((error) => {
+                setError(data.data);
+                console.log(error.message);
+            });
         }
         else {
             setError("Password and Confirm Password Should Be Same. Please Check")
@@ -467,6 +470,9 @@ export default function CreateAccount() {
                                 <input type='submit' className='btn register' value='REGISTER' />
                             </div>
                         </div>
+                        <div className='row container'>
+                            <p style={{textAlign:'center', color:'red', fontSize:'larger',fontWeight:'bolder'}}> ** {error}</p>
+                        </div>
                     </form>
                     </div>
                 </div>
@@ -496,9 +502,6 @@ export default function CreateAccount() {
                     <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{errorplan}</p>
                 </div>
             }
-            <div className='row container'>
-                <p style={{textAlign:'center', color:'red', fontSize:'small'}}>{error}</p>
-            </div>
         </div>
     );
 }

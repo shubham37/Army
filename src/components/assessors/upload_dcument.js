@@ -2,50 +2,69 @@ import  React, { Component } from  'react'
 import axios from 'axios'
 
 class UploadDocument extends Component {
-    state = { 
-          selectedFile: null
-    };
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        selectedFile: null,
+        isUploaded: false
+      };
+    }
 
     onFileChange(event) {
         this.setState({selectedFile : event.target.files[0]});
     }
 
     onUploadFile() {
-        const formData = new FormData();
-        formData.append(this.state.selectedFile);
+      const formData = new FormData();
+      formData.append(this.state.selectedFile);
 
-        axios.post(`/assessor/uploadfile`, {file:formData})
-        .then((response) => {
-            console.log(response)
-        })
-        .error(error => console.log(error.message));
+      const token = localStorage.getItem('token');
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      };
+
+      axios.post(`/assessor_api/briefcase/uploadfile`, {file:formData}, {headers:headers})
+      .then((response) => {
+          console.log(response);
+          this.setState({isUploaded : true});
+      })
+      .error((error) => {
+        console.log(error.message);
+      });
     }
 
-    fileData = () => { 
-     
-        if (this.state.selectedFile) { 
-            
-          return ( 
-            <div>
-              <br />                
-              <h4>File Details:</h4> 
-              <p>File Name: {this.state.selectedFile.name}</p> 
-              <p>File Type: {this.state.selectedFile.type}</p> 
-              <p> 
-                Last Modified:{" "} 
-                {this.state.selectedFile.lastModifiedDate.toDateString()} 
-              </p> 
-            </div> 
-          ); 
-        } else { 
-          return ( 
-            <div> 
-              <br /> 
-              <h6>Choose before Pressing the Upload button</h6> 
-            </div> 
-          ); 
-        } 
-      };
+    fileData = () => {
+      if (this.state.selectedFile) {
+        return ( 
+          <div>
+            <br />                
+            <h4>File Details:</h4> 
+            <p>File Name: {this.state.selectedFile.name}</p> 
+            <p>File Type: {this.state.selectedFile.type}</p> 
+            <p> 
+              Last Modified:{" "} 
+              {this.state.selectedFile.lastModifiedDate.toDateString()} 
+            </p> 
+          </div>
+        ); 
+      } else if(this.state.isUploaded) { 
+        return (
+          <div>
+            <br />
+            <h6>Your File Has Been Uploaded Successfully.</h6> 
+          </div> 
+        );
+      } else { 
+        return ( 
+          <div>
+            <br />
+            <h6>Choose before Pressing the Upload button</h6>
+          </div>
+        ); 
+      } 
+    };
 
     render () {
         return (
@@ -59,7 +78,7 @@ class UploadDocument extends Component {
                                 </p>
                             </div>
                             <div class="modal-body">
-                                <div className='forgot_password'>
+                                <div className='forgot_password' hidden={this.state.isUploaded}>
                                     <input type="file" onChange={(event) => this.onFileChange(event)} style={{border:'2px solid black', borderRadius:'5px', width:'100%'}} />
                                 </div>
                                 {this.fileData()}
