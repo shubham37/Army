@@ -15,16 +15,17 @@ class Main extends Component {
       username:"",
       password:"",
       email_number:"",
-      otp:"",
+      otp:null,
       free_test_disable:false,
       is_disable:true,
       role:null,
-      is_free_test_now:false,
       login_error:'',
       free_test_error:'',
+      is_free_test_error_hidden:true,
       time_part1: {},
       seconds_part1: 0
     }
+    this.timer_part1 = 0;
     this.loginFormSubmit = this.loginFormSubmit.bind(this);
     this.onSendOtp = this.onSendOtp.bind(this);
     this.verify_otp = this.verify_otp.bind(this);
@@ -56,7 +57,6 @@ class Main extends Component {
           password:"",
           role:data.data.role
         });
-        console.log(this.state);
       } else {
         this.setState({
           login_error: "Please Try Again."
@@ -66,7 +66,7 @@ class Main extends Component {
       })
       .catch((error) => {
         this.setState({
-          login_error: error.message
+          login_error: 'Username or Password Not Match.'
         });
         console.log(error);
       })
@@ -91,35 +91,34 @@ class Main extends Component {
   
   onSendOtp(e) {
     e.preventDefault();
-    axios.post(`/api/send_otp/`, 
+    axios.post(`/api/send_otp/`,
       {email: this.state.email_number}
     ).then((data) => {
-        if (data.status === 200) {
-          this.setState({seconds_part1:30});
-          let timeLeftVar = this.secondsToTime(this.state.seconds_part1);
-          this.setState({
-            free_test_error: data.data.detail,
-            is_disable:false,
-            time_part1: timeLeftVar
-          });
-      
-          if (this.timer_part1 === 0 && this.state.seconds_part1 > 0) {
-            this.timer_part1 = setInterval(this.countDown, 1000);
-          }
+      if (data.status === 200) {
+        // let timeLeftVar = 30
+        // this.setState({seconds_part1:30});
+        let timeLeftVar = this.secondsToTime(30);
+        this.setState({
+          free_test_error: data.data.detail,
+          is_disable:false,
+          time_part1: timeLeftVar,
+          seconds_part1: 30
+        });
+        localStorage.setItem('otp', data.data.OTP)
 
-          localStorage.setItem('otp', data.data.OTP)
-        } else {
+        if (this.timer_part1 === 0 && this.state.seconds_part1 > 0) {
+          this.timer_part1 = setInterval(this.countDown, 1000);
+        }
+      } else {
           this.setState({
             free_test_error: "Please Try Again."
           });
-          console.log(data);
         }
       })
       .catch((error) => {
         this.setState({
-          free_test_error: error.message
+          free_test_error: "Incorrect Email Address."
         });
-        console.log(error.message)
       });
   }
 
@@ -132,10 +131,11 @@ class Main extends Component {
     });
 
     // Check if we're at zero.
-    if (seconds === 0) { 
-      clearInterval(this.timer_part1);
+    if (seconds === 0) {
+      this.timer_part1 = 0;
       this.setState({
-        is_disable:false,
+        is_disable:true,
+        free_test_error: ''
       });
     }
   }
@@ -149,8 +149,8 @@ class Main extends Component {
       });
     } else {
       this.setState({
-        free_test_error: "OTP  Not Matched. Please Try Again.",
-        otp: "",
+        free_test_error: "OTP Not Matched.Please Try Again.",
+        otp: null,
         is_disable: true
       });
       localStorage.removeItem('otp');
@@ -206,37 +206,35 @@ class Main extends Component {
                         <label for="email_number" className='email_label'>Email/Mobile Number </label>
                       </div>
                       <div className='col-md'>
-                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." value={this.state.email_number} onChange={(e) => this.setState({email_number:e.target.value})} required />
+                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." value={this.state.email_number} disabled={!this.state.is_disable} onChange={(e) => this.setState({email_number:e.target.value})} required />
                       </div>
                   </div>
-                  <div className='row otp-block'>
+                  <div className='row otp-block' hidden={this.state.is_disable}>
                     <div className='col-md'>
                       <label for="otp" className='otp_label'>Password/OTP</label>
                     </div>
-                      <div className='col-md'>
-                        <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." value={this.state.otp} disabled={this.state.is_disable}  onChange={(e) => this.setState({otp:e.target.value})} />
-                      </div>
+                    <div className='col-md'>
+                      <input type="text" id="otp" name="otp" placeholder="Your password/OTP..." value={this.state.otp} onChange={(e) => this.setState({otp:e.target.value})} />
+                    </div>
                   </div>
 
                   <br />
 
-                  <div className='row'>
+                  <div className='row' hidden={this.state.is_disable}>
                     <div className='col-md' style={{textAlign:'center'}}>
-                      {/* <a href='/free_test'> */}
-                      <button className='btn btn-info' id='login_btn' onClick={this.verify_otp} disabled={this.state.is_disable} >Login</button>
-                      {/* </a> */}
-                    </div>
-                  </div>
-                  <div className='row'>
-                    <div className='col-md' style={{textAlign:'center'}}>
-                      <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' disabled={!this.state.is_disable} />
+                      <button className='btn btn-info' id='login_btn' onClick={this.verify_otp} >Login</button>
                     </div>
                   </div>
                   <div className='row' hidden={!this.state.is_disable}>
-                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'green'}}>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
+                    <div className='col-md' style={{textAlign:'center'}}>
+                      <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' />
+                    </div>
                   </div>
-                  <div className='row'>
-                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'red'}}>{this.state.free_test_error}</p>
+                  <div className='row container' style={{textAlign:'center', width:'100%'}} hidden={this.state.is_disable}>
+                    <p style={{textAlign:'center', fontWeight:'bolder', width:'100%', fontSize:'small', color:'white'}}>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
+                  </div>
+                  <div className='row' hidden={this.state.free_test_error?false:true}>
+                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'small', color:'white'}}>{this.state.free_test_error}</p>
                   </div>
               </form>
             </div>
@@ -285,7 +283,7 @@ class Main extends Component {
                     </form>
                     <ForgotPasswordForm />
                 </div>
-                <br />
+                  <p style={{textAlign:'center',width:'100%', fontWeight:'bolder', fontSize:'small', color:'red'}}>{this.state.login_error}</p>
 
                 <div className='row'>
                     <div className='col'>
@@ -294,9 +292,6 @@ class Main extends Component {
                     <div className='col'>
                       <a href='/create_account'><button className='btn btn-info create'>Create Account</button></a>
                     </div>
-                </div>
-                <div className='row'>
-                  <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'larger', color:'red'}}>{this.state.login_error}</p>
                 </div>
             </Card>
         </div>

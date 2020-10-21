@@ -13,7 +13,7 @@ class StudentAssessorGTO extends Component {
       display_message:'',
       current_assessor: {}
     }
-    this.openModal = this.openModal.bind(this);
+    // this.openModal = this.openModal.bind(this);
   }
 
   componentWillMount() {
@@ -49,34 +49,34 @@ class StudentAssessorGTO extends Component {
     });
   }
 
-  openModal (e) {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`
-    }
+  // openModal (e) {
+  //   e.preventDefault();
+  //   const token = localStorage.getItem('token');
+  //   const headers = {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Token ${token}`
+  //   }
 
-    axios.get(`/assessor_api/availablity/2/assessor_list`, {headers:headers})
-    .then((data) =>{
-      if (data.status === 200){
-        const assessor_data = {
-          available: data.data.availabilities,
-          freeze: data.data.not_availabilities
-        }
-        this.setState({
-          current_assessor:assessor_data
-        });
-      } else {
-        this.setState({
-          current_assessor:{}
-        });
-      }
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
-  }
+  //   axios.get(`/assessor_api/availablity/2/assessor_list`, {headers:headers})
+  //   .then((data) =>{
+  //     if (data.status === 200){
+  //       const assessor_data = {
+  //         available: data.data.availabilities,
+  //         freeze: data.data.not_availabilities
+  //       }
+  //       this.setState({
+  //         current_assessor:assessor_data
+  //       });
+  //     } else {
+  //       this.setState({
+  //         current_assessor:{}
+  //       });
+  //     }
+  // })
+  // .catch((error) => {
+  //   console.log(error.message);
+  // });
+  // }
 
   render() {
     return (
@@ -93,12 +93,12 @@ class StudentAssessorGTO extends Component {
                       <Card.Text>
                         BioData Details.
                       </Card.Text>
-                      <Button variant="primary" data-toggle="modal" data-target="#availabilityModal" data-id={assessor.id} onClick={this.openModal}>See Availability</Button>
+                      <Button variant="primary" data-toggle="modal" data-target="#availabilityModal" data-id={assessor.id}>See Availability</Button>
                     </Card.Body>
                   </Card>
                 </div>
               )}
-              <AssessorAvailablityCheck assessor={this.state.current_assessor} is_data={false} />
+              <AssessorAvailablityCheck />
             </div>
           </Card.Body>
         </Card>

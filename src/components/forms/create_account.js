@@ -238,7 +238,7 @@ export default function CreateAccount() {
                 }
             })
             .catch((error) => {
-                setError(data.data);
+                setError(error.message);
                 console.log(error.message);
             });
         }

@@ -171,8 +171,6 @@ class AssessorMain extends Component {
                     <div className='col'>
                         <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
-                        <br />
-                        <hr />
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
                     </div>
                 </div>
