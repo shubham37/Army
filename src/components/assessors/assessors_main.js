@@ -82,6 +82,7 @@ class AssessorMain extends Component {
             if (data.status === 200){
                 localStorage.clear();
                 this.setState({is_logout:true});
+                window.location = '/'
             } else {
                 console.log(data.data)
                 this.setState({

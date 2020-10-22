@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import { ScheduleComponent, WorkWeek, Week, Month, Inject, Day, Agenda } from '@syncfusion/ej2-react-schedule';
+import { ScheduleComponent, Inject, Day } from '@syncfusion/ej2-react-schedule';
 import axios from 'axios'
+import CachedIcon from '@material-ui/icons/Cached';
+import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 class AssessorScheduleToday extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      schedules : []
+      data : []
     }
+    this.fetchData = this.fetchData.bind(this);
+    this.editorTemplate = this.editorTemplate.bind(this);
   }
 
-  componentDidMount() {
+  fetchData() {
     const token = localStorage.getItem('token');
 
     const headers = {
@@ -19,44 +23,57 @@ class AssessorScheduleToday extends Component {
       'Authorization': `Token ${token}`
     };
 
-    axios.get(`/assessor_api/availablity/`, {headers:headers})
+    axios.get(`/assessor_api/availablity/today/`, {headers:headers})
     .then((data) =>{
       if (data.status === 200){
         const schedules = [];
-        data.data.availabilities.map((schedule) => {
+        data.data.schedules.map((schedule) => {
           schedules.push({
-            Subject: schedule.subject,
+            Id: schedule.id,
+            Subject: schedule.subject+ " || " + schedule.student.first_name,
             StartTime: new Date(schedule.start_time),
-            EndTime: new Date(schedule.end_time)    
+            EndTime: new Date(schedule.end_time)
           })
         });
-        data.data.not_availabilities.map((schedule) => {
-          schedules.push({
-            Subject: schedule.subject,
-            StartTime: new Date(schedule.start_time),
-            EndTime: new Date(schedule.end_time)    
-          })
-        });
-
         this.setState({
-          schedules:schedules
+          data:schedules
         });
       } else {
         this.setState({
-          schedules: []
+          data: []
         });
       }
     })
     .catch((error) => {
+      this.setState({ data: [] });
       console.log(error.message);
     });
   }
 
+  editorTemplate(props) {
+    
+    return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
+    <tr><td className="e-textlabel">Summary</td><td colSpan={4}>
+      <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
+    </td></tr>
+    <tr><td className="e-textlabel">From</td><td colSpan={4}>
+      <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
+    </td></tr>
+    <tr><td className="e-textlabel">To</td><td colSpan={4}>
+      <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
+    </td></tr></tbody></table> : <div></div>);
+  }
+
+
   render() {
     return (
       <div className='container-fluid'>
-        <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.schedules }}>
-          <Inject services={[WorkWeek, Day, Week, Month, Agenda]}/>        
+        <hr />
+        <button className='btn btn-warning float-right' onClick={this.fetchData}><CachedIcon /></button>
+        <br /> <br /> 
+        <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.data }}
+          editorTemplate={this.editorTemplate} showQuickInfo={false}>
+          <Inject services={[Day]}/>
         </ScheduleComponent>
         <br />
       </div>

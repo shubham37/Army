@@ -202,6 +202,8 @@ class StudentMain extends Component {
                 this.setState({
                     is_logout:true
                 });
+                // window.location = '/'
+                window.location.href = '/'
             } else {
                 console.log(data.data)
                 this.setState({

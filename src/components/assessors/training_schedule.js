@@ -38,7 +38,7 @@ class AssessorTrainingSchedule extends Component {
         data.data.availabilities.map((schedule) => {
           schedules.push({
             Id: schedule.id,
-            Subject: 'Free',
+            Subject: 'Available',
             StartTime: new Date(schedule.start_time),
             EndTime: new Date(schedule.end_time)    
           })
@@ -111,20 +111,6 @@ class AssessorTrainingSchedule extends Component {
   }
 
   editorTemplate(props) {
-    
-    // const sche = () => {
-    //   if (props.IsAllDay === false) {
-    //     console.log(props)
-    //     return true;
-    //   }
-    //   else {
-    //     if (props.EventType === 'Available') {
-    //       return true;
-    //     } else {
-    //       return false;
-    //     }
-    //   }
-    // }
     return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
     <tr><td className="e-textlabel">Status</td><td colSpan={4}>
       <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Scheduled']} value={props.EventType || null}></DropDownListComponent>
@@ -167,7 +153,7 @@ class AssessorTrainingSchedule extends Component {
     })
     .catch((error) => {
       console.log(error.message);
-    })
+    });
   }
 
   render() {

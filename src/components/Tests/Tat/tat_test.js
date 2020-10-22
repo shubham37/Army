@@ -223,7 +223,7 @@ class TATTest extends Component {
             <div className='col-md' style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
               <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
               <br />
-    <p>{this.state.test_submit_response}</p>
+              <p>{this.state.test_submit_response}</p>
             </div>
           </div>
         </div>

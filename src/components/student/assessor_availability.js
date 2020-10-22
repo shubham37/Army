@@ -11,7 +11,7 @@ class AssessorAvailablityCheck extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            schedules : [],
+          availabilities : [],
             action_info:''
         }
         this.onAddClick = this.onAddClick.bind(this);
@@ -30,33 +30,26 @@ class AssessorAvailablityCheck extends Component {
         'Authorization': `Token ${token}`
       };
       
-      axios.get(`/assessor_api/availablity/`, {headers:headers})  
+      axios.post(`/assessor_api/availablity/assessor_dept_list/`, {'assessor':1}, {headers:headers})  
       .then((data) =>{
         debugger
         if (data.status === 200){
-          const schedules = [];
-          data.data.availabilities.map((schedule) => {
-            schedules.push({
-              Id: schedule.id,
-              Subject: 'Free',
-              StartTime: new Date(schedule.start_time),
-              EndTime: new Date(schedule.end_time)    
-            })
-          });
-          data.data.not_availabilities.map((schedule) => {
-            schedules.push({
-              Id: schedule.id,
-              Subject: schedule.subject,
-              StartTime: new Date(schedule.start_time),
-              EndTime: new Date(schedule.end_time)    
+          const availabilities = [];
+          data.data.availabilities.map((availability) => {
+            availabilities.push({
+              Id: availability.id,
+              Subject: 'Available',
+              StartTime: new Date(availability.start_time),
+              EndTime: new Date(availability.end_time),
+              EventType: 'Available'
             })
           });
           this.setState({
-            schedules:schedules
+            availabilities:availabilities
           });
         } else {
           this.setState({
-            schedules: []
+            availabilities: []
           });
         }
       })
@@ -66,41 +59,15 @@ class AssessorAvailablityCheck extends Component {
     }
   
     onActionBegin(action) {
-        if (action.requestType === 'eventRemove') {
-          const delete_ids = []; 
-          action.deletedRecords.map((record) => {
-            delete_ids.push(record.Id);
-          });
-          const token = localStorage.getItem('token');
-    
-          axios.post(`/assessor_api/availablity/delete_availabilities`, {'schedules_ids': delete_ids}, 
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Token ${token}`    
-            }
-          })
-          .then((data) => {
-              console.log(data);
-          })
-          .catch((error) => {
-            action.deletedRecords = [];
-            console.log(error.message);
-          });
-        }
-        else if (action.requestType === 'eventCreate') {
-          const data = []
-          action.addedRecords.map((record) => {
-            if (record.EventType === 'Available') {
-              record.Subject  = 'Available'
-            } else {
-              record = {}
-            }
-          })
-        }
-        else if (action.requestType === 'eventChange') {
-          const data = action.changedRecords
-        } 
+        // if (action.requestType === 'eventRemove') {
+        //   const token = localStorage.getItem('token');    
+        // }
+        // else if (action.requestType === 'eventCreate') {
+        //   const data = [];
+        // }
+        // else if (action.requestType === 'eventChange') {
+        //   const data = action.changedRecords
+        // } 
     }
     
     onPopupOpen(args) {
@@ -113,21 +80,50 @@ class AssessorAvailablityCheck extends Component {
     editorTemplate(props) {
       return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
       <tr><td className="e-textlabel">Status</td><td colSpan={4}>
-        <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Scheduled']} value={props.EventType || null}></DropDownListComponent>
+        <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Schedule']} value={props.EventType}></DropDownListComponent>
       </td></tr>
-      <tr><td className="e-textlabel">Summary</td><td colSpan={4}>
+      <tr><td className="e-textlabel">Subject</td><td colSpan={4}>
         <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
       </td></tr>
       <tr><td className="e-textlabel">From</td><td colSpan={4}>
-        <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
+        <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field" disabled={true} ></DateTimePickerComponent>
       </td></tr>
       <tr><td className="e-textlabel">To</td><td colSpan={4}>
-        <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
+        <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field" disabled={true}></DateTimePickerComponent>
       </td></tr></tbody></table> : <div></div>);
     }
     
     onAddClick() {
-        console.log(this.scheduleObj);
+      console.log(this.scheduleObj);
+      const data = []
+      // actually code needed
+      this.scheduleObj.eventsData.map((slot) => {
+        if (slot.EventType === 'Schedule') {
+          data.push({
+            Id: slot.Id,
+            Subject: 'Schedule',
+            StartTime: slot.StartTime,
+            EndTime: slot.EndTime,
+          });
+        }
+      });
+      const token = localStorage.getItem('token');
+  
+      axios.post(`/student_api/assessor_stream_schedule/add_test_schedule/`, {'schedules':data, 'assessor':1},
+      {
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        {this.onRefresh()};
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+    
     }
 
     render() {
@@ -148,7 +144,7 @@ class AssessorAvailablityCheck extends Component {
                             </div>
                             <div class="modal-body">
                                 <div className='forgot_password'>
-                                <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.schedules }} 
+                                <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.availabilities }} 
                                     editorTemplate={this.editorTemplate} showQuickInfo={false} popupOpen={this.onPopupOpen}  
                                     actionBegin={this.onActionBegin} >
                                 <Inject services={[Day, WorkWeek, Month]}/> 
@@ -161,7 +157,7 @@ class AssessorAvailablityCheck extends Component {
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <ButtonComponent data-dismiss="modal">Close</ButtonComponent>
                                 <ButtonComponent id='add' title='Add' ref={t => this.buttonObj = t} onClick={this.onAddClick}>Confirm</ButtonComponent>
                             </div>
                         </div>

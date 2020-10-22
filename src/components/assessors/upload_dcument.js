@@ -9,28 +9,40 @@ class UploadDocument extends Component {
         selectedFile: null,
         isUploaded: false
       };
+      this.onUploadFile = this.onUploadFile.bind(this);
     }
 
     onFileChange(event) {
         this.setState({selectedFile : event.target.files[0]});
     }
 
-    onUploadFile() {
-      const formData = new FormData();
-      formData.append(this.state.selectedFile);
-
+    onUploadFile(e) {
+      e.preventDefault();
+      
+      // const formData = new FormData();
+      // formData.append('dshi',this.state.selectedFile);
+      // debugger
+      const file_data = {
+        'file_name': this.state.selectedFile.name,
+        'file_size': this.state.selectedFile.size,
+        'file_type': this.state.selectedFile.type,
+        'file_url': 'http://localhost:3000/assessor'
+      }
       const token = localStorage.getItem('token');
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`
       };
 
-      axios.post(`/assessor_api/briefcase/uploadfile`, {file:formData}, {headers:headers})
+      axios.post(`/assessor_api/breifcase/uploadfile/`, 
+        file_data, 
+        {headers:headers}
+      )
       .then((response) => {
           console.log(response);
-          this.setState({isUploaded : true});
+          this.setState({selectedFile: null, isUploaded : true});
       })
-      .error((error) => {
+      .catch((error) => {
         console.log(error.message);
       });
     }

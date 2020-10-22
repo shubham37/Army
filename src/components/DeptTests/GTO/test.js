@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
-
+import VideoApp from './video.js'
 
 class GTODT extends Component {
 
@@ -34,7 +34,7 @@ class GTODT extends Component {
 
   componentWillMount() {
     this.setState({
-      seconds_part1:400,
+      seconds_part1:4,
     })
   }
 
@@ -77,7 +77,7 @@ class GTODT extends Component {
     // Check if we're at zero.
     if (seconds === 0) { 
       clearInterval(this.timer_part1);
-      this.setState({seconds_part2:5});
+      this.setState({seconds_part2:50});
 
       let timeLeftVar = this.secondsToTime(this.state.seconds_part2);
       this.setState({
@@ -165,8 +165,9 @@ class GTODT extends Component {
         <div className='container-fluid' hidden={this.state.is_hidden_part2}>
           <div className='row container'>
             <div className='col-md' style={{textAlign:'center'}}>
-              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
-              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}}>Live</span>
+              <VideoApp />
+              {/* <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.m} : {this.state.time_part2.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}}>Live</span> */}
             </div>
           </div>
           <br />
