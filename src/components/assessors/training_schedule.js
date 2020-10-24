@@ -61,7 +61,7 @@ class AssessorTrainingSchedule extends Component {
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
   
@@ -94,7 +94,7 @@ class AssessorTrainingSchedule extends Component {
       })
       .catch((error) => {
         this.setState({action_info: 'Please Try Again.'})
-        console.log(error.message);
+        // console.log(error.message);
       });
     }
     else if (action.requestType === 'eventCreate') {
@@ -143,7 +143,7 @@ class AssessorTrainingSchedule extends Component {
   }
 
   onAddClick() {
-    console.log(this.scheduleObj);
+    // console.log(this.scheduleObj);
     const data = []
     this.scheduleObj.eventsData.map((slot) => {
       if (slot.EventType === 'Available') {
@@ -165,15 +165,15 @@ class AssessorTrainingSchedule extends Component {
       }
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
   render() {
-    // console.log(this.state.schedules);
+    // // console.log(this.state.schedules);
     return (
       <div className='container-fluid'>
         <hr />

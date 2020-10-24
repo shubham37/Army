@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
-import VideoApp from './video.js'
 import axios from 'axios'
+import VideoApp from './video.js'
 
 class GTODT extends Component {
 
@@ -30,7 +30,6 @@ class GTODT extends Component {
     this.timer_part1= 0;
     this.timer_part2= 0;
 
-    // this.onTestStart = this.onTestStart.bind(this);
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
     this.feedbackSubmit = this.feedbackSubmit.bind(this);
@@ -58,7 +57,7 @@ class GTODT extends Component {
       });
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
   
@@ -153,11 +152,11 @@ class GTODT extends Component {
       }
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       this.setState({is_submit : true});
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
     axios.post(`/assessor_api/instructions/add_update/`, 
     {
@@ -172,12 +171,12 @@ class GTODT extends Component {
       }
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       window.location = '/';
     })
     .catch((error) => {
       this.setState({submission_error:"Please Try Again."})
-      console.log(error.message);
+      // console.log(error.message);
     });
   
   }

@@ -58,9 +58,11 @@ class AssessorMain extends Component {
                 this.setState({
                     user:data.data.first_name
                 });
-                console.log(data);
+                // console.log(data);
             })
-            .catch(error => console.log(error.message));
+            .catch((error) =>  {
+                console.log(error.message)
+            });
             this.setState({is_logout:false});
         } else {
             localStorage.clear();
@@ -84,13 +86,15 @@ class AssessorMain extends Component {
                 this.setState({is_logout:true});
                 window.location = '/'
             } else {
-                console.log(data.data)
+                // console.log(data.data)
                 this.setState({
                     logout_message: data.data
                 });
             }
         })
-        .catch(error => console.log(error.message));
+        .catch((error) => {
+            console.log(error.message)
+        });
     }
 
     onClickOption(title) {

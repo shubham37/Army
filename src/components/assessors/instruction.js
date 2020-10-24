@@ -26,7 +26,7 @@ class AssessorInstruction extends Component {
     })
     .then((data) => {
       if (data.data.is_success) {
-        console.log(data)
+        // console.log(data)
         var local_ins = []
         data.data.streams.map((instruction) => {
           local_ins.push({
@@ -39,13 +39,13 @@ class AssessorInstruction extends Component {
 
         this.setState({instructions:local_ins});
       } else {
-        console.log(data.data.detail);
+        // console.log(data.data.detail);
         this.setState({instructions:[]});
       }
     })
     .catch((error) => {
       this.setState({instructions:[]});
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 

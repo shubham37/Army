@@ -98,9 +98,11 @@ class StudentMain extends Component {
                 this.setState({
                     user:data.data.first_name
                 });
-                console.log(data);
+                // console.log(data);
             })
-            .catch(error => console.log(error.message));
+            .catch((error) => {
+                console.log(error.message)
+            });
         } else {
             localStorage.clear();
             this.setState({is_logout:true});
@@ -187,7 +189,7 @@ class StudentMain extends Component {
 
     
     logout(e){
-        e.preventDefault()
+        e.preventDefault(e);
         const token = localStorage.getItem('token');
         const headers = {
             'Content-Type': 'application/json',
@@ -205,13 +207,15 @@ class StudentMain extends Component {
                 // window.location = '/'
                 window.location.href = '/'
             } else {
-                console.log(data.data)
+                // console.log(data.data)
                 this.setState({
                     logout_message: data.data
                 });
             }
         })
-        .catch(error => console.log(error.message));
+        .catch((error) => {
+            console.log(error.message)
+        });
     }
 
 
@@ -319,10 +323,11 @@ class StudentMain extends Component {
                     <StudentPIQForm />
                 </div>
                 <div hidden={this.state.globalview.is_GTOA_hidden}>
-                    <StudentAssessorGTO />
+                    <StudentAssessorGTO code='GTO' />
                 </div>
                 <div hidden={this.state.globalview.is_ITA_hidden}>
-                    <StudentAssessorITD />
+                    <StudentAssessorGTO code='ITD' />
+                    {/* <StudentAssessorITD /> */}
                 </div>
                 <div hidden={this.state.globalview.is_IOA_hidden}>
                     <StudentAssessorIO />

@@ -10,11 +10,17 @@ class SRTTest extends Component {
       is_hidden_part3:true,
 
       time_part1: {},
-      seconds_part1: 10,
+      seconds_part1: 0,
       
       time_part2: {},
-      seconds_part2: 10,
-      is_disable:true
+      seconds_part2: 0,
+      is_disable:true,
+      is_user:false,
+      test:null,
+      answer:"",
+      is_test_submit:false,
+      test_submit_response:'',
+      test_submit_error:''
     }
     this.timer_part1= 0;
     this.timer_part2= 0;
@@ -22,8 +28,49 @@ class SRTTest extends Component {
     this.onTestStart = this.onTestStart.bind(this);
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
-
+    this.onTestSubmit = this.onTestSubmit.bind(this);
   }
+
+
+  componentWillMount(){
+    if (localStorage.getItem('token') && (localStorage.getItem('role') === '0')){
+        this.setState({
+          is_user:true
+        });
+    }
+    else {
+        this.setState({is_user:false});
+    }
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    axios.get(`/student_api/tests/SRT/dept/`, {
+        headers: headers
+    })
+    .then((data) =>{
+      // console.log(data)
+        if (data.data.is_data){
+          this.setState({
+            seconds_part1: data.data.test.question_display_time,
+            seconds_part2: data.data.test.answer_display_time,
+            test: data.data.test.question.word
+          });
+        } else {
+          this.setState({
+            is_hidden_part1:true,
+            is_hidden_part2:true,
+            is_hidden_part3:true,
+            test_submit_response: data.data.detail
+          })
+        }
+    })
+    .catch((error) => {
+      // console.log(error.message);
+    });
+  }
+
 
   secondsToTime(secs){
     let hours = Math.floor(secs / (60 * 60));
@@ -43,6 +90,10 @@ class SRTTest extends Component {
   }
 
   onTestStart() {
+    if (!this.state.test) {
+      window.location = '/'
+    }
+    // Get Test Object By Test Code
     let timeLeftVar = this.secondsToTime(this.state.seconds_part1);
     this.setState({
       is_hidden_part1:true,
@@ -88,7 +139,7 @@ class SRTTest extends Component {
       time_part2: this.secondsToTime(seconds),
       seconds_part2: seconds,
     });
-    console.log(seconds)
+    // console.log(seconds)
     if (seconds === 0) { 
       clearInterval(this.timer_part2);
       this.setState({
@@ -97,7 +148,45 @@ class SRTTest extends Component {
     }
   }
 
+  onTestSubmit() {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    const data = {
+      answer: this.state.answer,
+      code: 'TAT'
+    }
+
+    axios.post(`/student_api/tests/test_submit/`,  data, {
+        headers: headers
+    })
+    .then((data) =>{
+        if (data.status === 200){
+          this.setState({
+            is_test_submit:true,
+            test_submit_response:data.data.detail,
+            is_hidden_part3:true
+          });
+        } else {
+          this.setState({
+            test_submit_error:data.data.detail
+          });
+        }
+    })
+    .catch((error) => {
+      // console.log(error.message);
+      this.setState({
+        test_submit_error:"Please Try Again."
+      });
+    });
+  }
+
   render() {
+    if (!this.state.is_user) {
+      return <Redirect to='/' />
+    }
     return (
       <div>
 
@@ -162,9 +251,16 @@ class SRTTest extends Component {
           </div>
           <div className='row'>
             <div className='col-md' style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
-              <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true}>SUBMIT TEST</button>
+              <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
+              <br />
+              <p>{this.state.test_submit_error}</p>
             </div>
           </div>
+        </div>
+
+        <div className='container-fluid' hidden={this.state.test_submit_response?false:true}>
+          <p>{this.state.test_submit_response}</p>
+          <a href='/student'>Go Back To Home</a>
         </div>
       </div>
     );

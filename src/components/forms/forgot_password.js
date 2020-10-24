@@ -13,16 +13,16 @@ export default function ForgotPasswordForm() {
         axios.post(`/api/forgot_password/`, {email: contact})
         .then((data) => {
             debugger
-            console.log(data)
+            // console.log(data)
             if (data.status === 200) {
                 setSuccess(data.data.detail);
                 setLinksent(true);
                 setContact("");
-            } else {
-                console.log(data)
             }
         })
-        .catch(error => console.log(error.message))
+        .catch((error) =>  {
+            console.log(error.message)
+        })
     }
 
     function close() {

@@ -28,14 +28,14 @@ class StudentProgressReportGTO extends Component {
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
 
   render() {
-    return (
-      <div className="row container-fluid">
+    const reports_content = (
+      <div className='row'>
         <div className='col'>
           <Card body>
             {this.state.reports.map((report) => (
@@ -46,11 +46,27 @@ class StudentProgressReportGTO extends Component {
                 </blockquote>
                 <br />
                 {report.reporting_date}
-             </p>
+            </p>
             ))}
           </Card>
           <br />
         </div>
+      </div>
+    )
+
+    const no_content = (
+      <div className='row'>
+        <div className='col' style={{width:'100%', textAlign:'center'}}>
+          <p>No Report Exist From GTO Department</p>
+        </div>
+      </div>
+    )
+
+    return (
+      <div className="container-fluid">
+        {this.state.reports.length > 0
+        ? reports_content :
+        no_content}
       </div>
     );
   }

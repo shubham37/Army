@@ -47,7 +47,7 @@ class AssessorScheduleToday extends Component {
     })
     .catch((error) => {
       this.setState({ data: [] });
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 

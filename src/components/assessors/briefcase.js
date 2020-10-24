@@ -61,7 +61,7 @@ class AssessorBriefcase extends Component {
       });
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 

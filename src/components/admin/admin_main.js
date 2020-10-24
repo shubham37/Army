@@ -96,13 +96,15 @@ class AdminMain extends Component {
                 localStorage.clear();
                 this.setState({is_logout:true});
             } else {
-                console.log(data.data)
+                // console.log(data.data)
                 this.setState({
                     logout_message: data.data
                 });
             }
         })
-        .catch(error => console.log(error.message));
+        .catch((error) => {
+            console.log(error.message)
+        });
     }
 
     render() {

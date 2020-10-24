@@ -30,7 +30,7 @@ class StudentTrainingSchedule extends Component {
     .then((data) => {
       const schedules = []
       data.data.StreamSchedules.map((schedule) => {
-        // console.log(schedule.assessor.department)
+        // // console.log(schedule.assessor.department)
         
         schedules.push({
           Id: schedule.id,
@@ -43,7 +43,7 @@ class StudentTrainingSchedule extends Component {
     })
     .catch((error) => {
       this.setState({ data: [] })
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 

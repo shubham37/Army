@@ -2,25 +2,69 @@ import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 
 class StudentProgressReportPD extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      'reports': []
+    }
+  }
+
+  componentWillMount() {
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    axios.get(`/student_api/dept_wise/GTO/reports/`, {
+      headers: headers
+    })
+    .then((data) => {
+      if (data.data.is_data) {
+        this.setState({'reports':data.data.reports})
+      } else {
+        this.setState({'reports':[]})
+      }
+    })
+    .catch((error) => {
+      // console.log(error.message);
+    });
+  }
+
   render() {
-    return (
-      <div className="row container-fluid">
+    const reports_content = (
+      <div className='row'>
         <div className='col'>
           <Card body>
-            <p>
-              <blockquote>
-                <b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                It has survived not only five centuries, but also the leap into electronic typesetting, 
-                remaining essentially unchanged. 
-                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-              </blockquote>
+            {this.state.reports.map((report) => (
+              <p>
+                <blockquote>
+                  <b>{report.assessor.department.code}</b> 
+                  {report.report}
+                </blockquote>
+                <br />
+                {report.reporting_date}
             </p>
+            ))}
           </Card>
           <br />
         </div>
+      </div>
+    )
+
+    const no_content = (
+      <div className='row'>
+        <div className='col' style={{width:'100%', textAlign:'center'}}>
+          <p>No Report Exist From GTO Department</p>
+        </div>
+      </div>
+    )
+
+    return (
+      <div className="container-fluid">
+        {this.state.reports.length > 0
+        ? reports_content :
+        no_content}
       </div>
     );
   }

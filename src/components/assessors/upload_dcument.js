@@ -39,11 +39,11 @@ class UploadDocument extends Component {
         {headers:headers}
       )
       .then((response) => {
-          console.log(response);
+          // console.log(response);
           this.setState({selectedFile: null, isUploaded : true});
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
     }
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/css/create_account.css'
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import { Spinner } from 'react-bootstrap';
 
 
 export default function CreateAccount() {
@@ -24,6 +25,7 @@ export default function CreateAccount() {
 
     const [error, setError] = useState("");
     const [notfilled, setNofilled] = useState(true);
+    const [inprocess, setInprocess] = useState(false);
 
     const [statet, setStatet] = useState("")
     const [city, setCity] = useState("")
@@ -44,7 +46,6 @@ export default function CreateAccount() {
 
     const [plan,setPlan] =  useState(0);
     const [hide,setHide] =  useState(false);
-    const [errorplan, setErrorplan] = useState("")
     let history = useHistory();
 
 
@@ -59,7 +60,7 @@ export default function CreateAccount() {
         })
         .catch((error) => {
             setStates([]);
-            console.log(error.message)
+            // console.log(error.message)
         });
 
         axios.get(`/student_api/squestion/`)
@@ -68,7 +69,7 @@ export default function CreateAccount() {
         })
         .catch((error) => {
             setSquestions([]);
-            console.log(error.message)
+            // console.log(error.message)
         });
 
         axios.get(`/student_api/occupation/`)
@@ -77,7 +78,7 @@ export default function CreateAccount() {
         })
         .catch((error) => {
             setOccupations([]);
-            console.log(error.message)
+            // console.log(error.message)
         });
 
     }, []);
@@ -174,7 +175,9 @@ export default function CreateAccount() {
                 setCities([]);
             }
         })
-        .catch(error => console.log(error.message))
+        .catch((error) =>  {
+            console.log(error.message)
+        })
 
         setStatet(e.target.value)
     }
@@ -189,7 +192,9 @@ export default function CreateAccount() {
                 setPincodes([]);
             }
         })
-        .catch(error => console.log(error.message))
+        .catch((error) =>  {
+            console.log(error.message)
+        })
 
         setCity(e.target.value)
     }
@@ -204,7 +209,9 @@ export default function CreateAccount() {
                 setPostoffices([]);
             }
         })
-        .catch(error => console.log(error.message))
+        .catch((error) =>  {
+            console.log(error.message)
+        })
 
         setPincode(e.target.value)
     }
@@ -216,7 +223,8 @@ export default function CreateAccount() {
 
 
     function onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault(e);
+        setInprocess(true);
         let params = {
             username:username, password:password,
             confirmpassword:confirmpassword,
@@ -231,14 +239,14 @@ export default function CreateAccount() {
             pincode:pincode, postoffice:postoffice,
             phone:phone
         }
-        console.log(params);
+        // console.log(params);
         if (password === confirmpassword) {
             axios.post(`/api/signup/`,params)
             .then((data) =>{
                 if (data.status === 201) {
-                    console.log(data)
+                    // console.log(data)
                     // const local_data = JSON.parse(data.data);
-
+                    setInprocess(false);
                     localStorage.setItem('token', data.data.token);
                     localStorage.setItem('role', data.data.role);
                     setNofilled(false);
@@ -249,8 +257,9 @@ export default function CreateAccount() {
                 }
             })
             .catch((error) => {
+                setInprocess(false);
                 setError(error.message);
-                console.log(error.message);
+                // console.log(error.message);
             });
         }
         else {
@@ -259,7 +268,8 @@ export default function CreateAccount() {
     }
 
     function onChoosePlan(e) {
-        e.preventDefault();
+        e.preventDefault(e);
+        setInprocess(true);
         const token = localStorage.getItem('token');
         const headers = {
             'Content-Type': 'application/json',
@@ -276,15 +286,18 @@ export default function CreateAccount() {
         )
         .then((data) =>{
             if (data.status === 200) {
-                console.log(data);
+                // console.log(data);
+                setInprocess(false);
                 setNofilled(true);
                 setHide(true);
                 history.push('/student');
-            } else {
-                setErrorplan(data.data);
             }
         })
-        .catch(error => console.log(error.message));
+        .catch((error) => {
+            // console.log(error.message)
+            setInprocess(true);
+            setError(error.message);
+        });
     }
 
 
@@ -305,7 +318,7 @@ export default function CreateAccount() {
                 <hr />
                 </div>
             </div>
-            {
+            { 
                 notfilled
                 ?
                 <div className='row'>
@@ -483,9 +496,6 @@ export default function CreateAccount() {
                                 <input type='submit' className='btn register' value='REGISTER' />
                             </div>
                         </div>
-                        <div className='row container'>
-                            <p style={{textAlign:'center', color:'red', fontSize:'larger',fontWeight:'bolder'}}> ** {error}</p>
-                        </div>
                     </form>
                     </div>
                 </div>
@@ -511,10 +521,14 @@ export default function CreateAccount() {
                             <input type='submit' className='btn' value='Get Started' style={{marginTop:'20px', backgroundColor:'lightseagreen', padding:'2%, 0', color:'white', boxShadow:"3px 3px 3px 3px lightgray", fontWeight:'bolder'}} />
                         </form>
                     </p>
-                    <br />
-                    <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{errorplan}</p>
                 </div>
             }
+            <div className='row container'>
+                <div className='col' style={{width:'100%',color:'red', fontSize:'larger',fontWeight:'bolder', textAlign:'center'}}>
+                    <p hidden={!inprocess}><Spinner animation='border' /></p>
+                    <p hidden={error?false:true} > ** {error}</p>
+                </div>
+            </div>
         </div>
     );
 }

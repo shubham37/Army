@@ -52,7 +52,7 @@ class TATTest extends Component {
         headers: headers
     })
     .then((data) =>{
-      console.log(data)
+      // console.log(data)
         if (data.data.is_data){
           this.setState({
             seconds_part1: data.data.test.question_display_time,
@@ -69,7 +69,7 @@ class TATTest extends Component {
         }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
@@ -141,7 +141,7 @@ class TATTest extends Component {
       time_part2: this.secondsToTime(seconds),
       seconds_part2: seconds,
     });
-    console.log(seconds)
+    // console.log(seconds)
     if (seconds === 0) { 
       clearInterval(this.timer_part2);
       this.setState({
@@ -178,7 +178,7 @@ class TATTest extends Component {
         }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
       this.setState({
         test_submit_error:"Please Try Again."
       });

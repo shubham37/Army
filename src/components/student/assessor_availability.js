@@ -55,7 +55,7 @@ class AssessorAvailablityCheck extends Component {
         }
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
     }
   
@@ -95,7 +95,7 @@ class AssessorAvailablityCheck extends Component {
     }
     
     onAddClick() {
-      console.log(this.scheduleObj);
+      // console.log(this.scheduleObj);
       const data = []
       // actually code needed
       this.scheduleObj.eventsData.map((slot) => {
@@ -118,11 +118,11 @@ class AssessorAvailablityCheck extends Component {
         }
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         {this.onRefresh()};
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       })
     
     }

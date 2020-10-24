@@ -21,7 +21,7 @@ class StudentTestPending extends Component {
       headers: headers
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.data.is_data) {
         this.setState({'status':data.data.status})
       } else {
@@ -29,7 +29,7 @@ class StudentTestPending extends Component {
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 

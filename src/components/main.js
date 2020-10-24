@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../assets/css/main.css'
 import ForgotPasswordForm from './forms/forgot_password.js'
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Spinner } from 'react-bootstrap';
 import axios from "axios";
 import {Redirect} from'react-router-dom';
 
@@ -23,7 +23,8 @@ class Main extends Component {
       free_test_error:'',
       is_free_test_error_hidden:true,
       time_part1: {},
-      seconds_part1: 0
+      seconds_part1: 0,
+      is_spinner_hidden: true
     }
     this.timer_part1 = 0;
     this.loginFormSubmit = this.loginFormSubmit.bind(this);
@@ -46,9 +47,11 @@ class Main extends Component {
 
 
   loginFormSubmit (e) {
-    e.preventDefault();
+    this.setState({is_spinner_hidden:false});
+    e.preventDefault(e);
     axios.post(`/api/login/`,{username: this.state.username, password: this.state.password})
     .then((data) => {
+      this.setState({is_spinner_hidden:true});
       if (data.status === 200) {
         localStorage.setItem('token', data.data.access_token);
         localStorage.setItem('role', data.data.role);
@@ -61,14 +64,15 @@ class Main extends Component {
         this.setState({
           login_error: "Please Try Again."
         });
-        console.log(data);
+        // console.log(data);
         }
       })
       .catch((error) => {
         this.setState({
-          login_error: 'Username or Password Not Match.'
+          login_error: 'Username or Password Not Match.',
+          is_spinner_hidden: true
         });
-        console.log(error);
+        // console.log(error);
       })
     }
 
@@ -90,13 +94,13 @@ class Main extends Component {
   }
   
   onSendOtp(e) {
-    e.preventDefault();
+    this.setState({is_spinner_hidden:false});
+    e.preventDefault(e);
     axios.post(`/api/send_otp/`,
       {email: this.state.email_number}
     ).then((data) => {
+      this.setState({is_spinner_hidden:true});
       if (data.status === 200) {
-        // let timeLeftVar = 30
-        // this.setState({seconds_part1:30});
         let timeLeftVar = this.secondsToTime(30);
         this.setState({
           free_test_error: data.data.detail,
@@ -117,7 +121,8 @@ class Main extends Component {
       })
       .catch((error) => {
         this.setState({
-          free_test_error: "Incorrect Email Address."
+          free_test_error: "Incorrect Email Address.",
+          is_spinner_hidden: true
         });
       });
   }
@@ -230,11 +235,10 @@ class Main extends Component {
                       <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' />
                     </div>
                   </div>
-                  <div className='row container' style={{textAlign:'center', width:'100%'}} hidden={this.state.is_disable}>
-                    <p style={{textAlign:'center', fontWeight:'bolder', width:'100%', fontSize:'small', color:'white'}}>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
-                  </div>
-                  <div className='row' hidden={this.state.free_test_error?false:true}>
-                    <p style={{textAlign:'center', fontWeight:'bolder', fontSize:'small', color:'white'}}>{this.state.free_test_error}</p>
+                  <div className='row container' style={{textAlign:'center', fontWeight:'bolder', width:'100%', fontSize:'small', color:'white'}} hidden={this.state.is_disable}>
+                    <p><Spinner animation='border' hidden={this.state.is_spinner_hidden} /></p>
+                    <p>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
+                    <p hidden={this.state.free_test_error?false:true}>{this.state.free_test_error}</p>
                   </div>
               </form>
             </div>
@@ -283,7 +287,12 @@ class Main extends Component {
                     </form>
                     <ForgotPasswordForm />
                 </div>
-                  <p style={{textAlign:'center',width:'100%', fontWeight:'bolder', fontSize:'small', color:'red'}}>{this.state.login_error}</p>
+                <div className='row'>
+                  <div className='col'>
+                    <p  hidden={this.state.is_spinner_hidden}><Spinner animation='border' /></p>
+                    <p style={{textAlign:'center',width:'100%', fontWeight:'bolder', fontSize:'small', color:'red'}}>{this.state.login_error}</p>
+                  </div>
+                </div>
 
                 <div className='row'>
                     <div className='col'>

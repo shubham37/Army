@@ -21,7 +21,7 @@ class StudentTestReportGTO extends Component {
       headers: headers
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.data.is_data) {
         this.setState({'reports':data.data.reports})
       } else {
@@ -29,7 +29,7 @@ class StudentTestReportGTO extends Component {
       }
     })
     .catch((error) => {
-      console.log(error.message);
+      // console.log(error.message);
     });
   }
 
