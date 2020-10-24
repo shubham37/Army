@@ -40,6 +40,15 @@ class GeneralMain extends Component {
     this.state ={
       globalview : {}
     }
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+    if (token && (role === '0')) {
+      window.location.href = '/student'
+    } else if (token && (role === '1')) {
+      window.location.href = '/assessor'
+    } else if (token && (role === '2')) {
+      window.location.href = '/admin_user'
+    }
     this.view = {
       is_Vision_hidden:true,
       is_Mission_hidden:true,

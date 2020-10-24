@@ -10,9 +10,10 @@ import CachedIcon from '@material-ui/icons/Cached';
 class AssessorAvailablityCheck extends Component {
     constructor(props) {
         super(props);
+        this.props = props;
         this.state = {
           availabilities : [],
-            action_info:''
+          action_info:' Refresh To See Changes'
         }
         this.onAddClick = this.onAddClick.bind(this);
         this.onPopupOpen = this.onPopupOpen.bind(this);
@@ -30,9 +31,9 @@ class AssessorAvailablityCheck extends Component {
         'Authorization': `Token ${token}`
       };
       
-      axios.post(`/assessor_api/availablity/assessor_dept_list/`, {'assessor':1}, {headers:headers})  
+      axios.post(`/assessor_api/availablity/assessor_dept_list/`, {'assessor':this.props.id}, {headers:headers})  
       .then((data) =>{
-        debugger
+        // debugger
         if (data.status === 200){
           const availabilities = [];
           data.data.availabilities.map((availability) => {
@@ -157,6 +158,7 @@ class AssessorAvailablityCheck extends Component {
                                 </div>
                             </div>
                             <div class="modal-footer">
+                              <span>{this.state.action_info}</span>
                                 <ButtonComponent data-dismiss="modal">Close</ButtonComponent>
                                 <ButtonComponent id='add' title='Add' ref={t => this.buttonObj = t} onClick={this.onAddClick}>Confirm</ButtonComponent>
                             </div>

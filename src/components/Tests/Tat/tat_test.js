@@ -12,15 +12,17 @@ class TATTest extends Component {
       is_hidden_part3:true,
 
       time_part1: {},
-      seconds_part1: 10,
+      seconds_part1: 0,
       
       time_part2: {},
-      seconds_part2: 10,
+      seconds_part2: 0,
       is_disable:true,
       is_user:false,
+      test:null,
       answer:"",
       is_test_submit:false,
-      test_submit_response:''
+      test_submit_response:'',
+      test_submit_error:''
     }
     this.timer_part1= 0;
     this.timer_part2= 0;
@@ -29,7 +31,6 @@ class TATTest extends Component {
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
     this.onTestSubmit = this.onTestSubmit.bind(this);
-
   }
 
 
@@ -42,6 +43,34 @@ class TATTest extends Component {
     else {
         this.setState({is_user:false});
     }
+    const token = localStorage.getItem('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+    }
+    axios.get(`/student_api/tests/TAT/dept/`, {
+        headers: headers
+    })
+    .then((data) =>{
+      console.log(data)
+        if (data.data.is_data){
+          this.setState({
+            seconds_part1: data.data.test.question_display_time,
+            seconds_part2: data.data.test.answer_display_time,
+            test: data.data.test.question.word
+          });
+        } else {
+          this.setState({
+            is_hidden_part1:true,
+            is_hidden_part2:true,
+            is_hidden_part3:true,
+            test_submit_response: data.data.detail
+          })
+        }
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   }
 
 
@@ -63,6 +92,10 @@ class TATTest extends Component {
   }
 
   onTestStart() {
+    if (!this.state.test) {
+      window.location = '/'
+    }
+    // Get Test Object By Test Code
     let timeLeftVar = this.secondsToTime(this.state.seconds_part1);
     this.setState({
       is_hidden_part1:true,
@@ -128,25 +161,26 @@ class TATTest extends Component {
       code: 'TAT'
     }
 
-    axios.post(`/student_api/tests/`,  data, {
+    axios.post(`/student_api/tests/test_submit/`,  data, {
         headers: headers
     })
     .then((data) =>{
         if (data.status === 200){
           this.setState({
             is_test_submit:true,
-            test_submit_response:data.data.detail
+            test_submit_response:data.data.detail,
+            is_hidden_part3:true
           });
         } else {
           this.setState({
-            test_submit_response:data.data.detail
+            test_submit_error:data.data.detail
           });
         }
     })
     .catch((error) => {
       console.log(error.message);
       this.setState({
-        test_submit_response:"Please Try Again."
+        test_submit_error:"Please Try Again."
       });
     });
   }
@@ -154,8 +188,6 @@ class TATTest extends Component {
   render() {
     if (!this.state.is_user) {
       return <Redirect to='/' />
-    } else if(this.state.is_test_submit) {
-      return <Redirect to='/student' />
     }
     return (
       <div>
@@ -198,7 +230,7 @@ class TATTest extends Component {
 
         <div className='row container'>
           <div className='col-md'>
-            <img src={require('../../../assets/images/meter.jpg')} alt='TAT-PIC-1' width={600} height={400} />
+            <p>{this.state.test}</p>
           </div>
         </div>
       </div>
@@ -223,9 +255,14 @@ class TATTest extends Component {
             <div className='col-md' style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
               <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
               <br />
-              <p>{this.state.test_submit_response}</p>
+              <p>{this.state.test_submit_error}</p>
             </div>
           </div>
+        </div>
+
+        <div className='container-fluid' hidden={this.state.test_submit_response?false:true}>
+          <p>{this.state.test_submit_response}</p>
+          <a href='/student'>Go Back To Home</a>
         </div>
       </div>
     );

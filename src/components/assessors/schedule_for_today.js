@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ScheduleComponent, Inject, Day } from '@syncfusion/ej2-react-schedule';
+import { ScheduleComponent, Inject, Day, ViewDirective, ViewsDirective } from '@syncfusion/ej2-react-schedule';
 import axios from 'axios'
 import CachedIcon from '@material-ui/icons/Cached';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
+import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 
 class AssessorScheduleToday extends Component {
 
@@ -51,9 +52,11 @@ class AssessorScheduleToday extends Component {
   }
 
   editorTemplate(props) {
-    
-    return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
-    <tr><td className="e-textlabel">Summary</td><td colSpan={4}>
+    return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }} id='content'><tbody>
+    <tr><td className="e-textlabel">Status</td><td colSpan={4}>
+      <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Scheduled']} value={props.EventType || null}></DropDownListComponent>
+    </td></tr>
+    <tr hidden={true}><td className="e-textlabel">Summary</td><td colSpan={4}>
       <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
     </td></tr>
     <tr><td className="e-textlabel">From</td><td colSpan={4}>
@@ -62,6 +65,17 @@ class AssessorScheduleToday extends Component {
     <tr><td className="e-textlabel">To</td><td colSpan={4}>
       <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
     </td></tr></tbody></table> : <div></div>);
+
+    // return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
+    // <tr><td className="e-textlabel">Summary</td><td colSpan={4}>
+    //   <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
+    // </td></tr>
+    // <tr><td className="e-textlabel">From</td><td colSpan={4}>
+    //   <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
+    // </td></tr>
+    // <tr><td className="e-textlabel">To</td><td colSpan={4}>
+    //   <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
+    // </td></tr></tbody></table> : <div></div>);
   }
 
 
@@ -74,6 +88,9 @@ class AssessorScheduleToday extends Component {
         <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.data }}
           editorTemplate={this.editorTemplate} showQuickInfo={false}>
           <Inject services={[Day]}/>
+          <ViewsDirective>
+            <ViewDirective option='Day' startHour='09:00' endHour='18:00' readonly={true} />
+          </ViewsDirective>
         </ScheduleComponent>
         <br />
       </div>

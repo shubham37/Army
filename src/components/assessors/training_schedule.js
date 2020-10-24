@@ -11,7 +11,7 @@ class AssessorTrainingSchedule extends Component {
     super(props);
     this.state = {
       schedules : [],
-      action_info:''
+      action_info:'Click Confirm after Selection'
     }
 
     this.onAddClick = this.onAddClick.bind(this);
@@ -32,7 +32,6 @@ class AssessorTrainingSchedule extends Component {
     
     axios.get(`/assessor_api/availablity/`, {headers:headers})  
     .then((data) =>{
-      debugger
       if (data.status === 200){
         const schedules = [];
         data.data.availabilities.map((schedule) => {
@@ -44,9 +43,10 @@ class AssessorTrainingSchedule extends Component {
           })
         });
         data.data.not_availabilities.map((schedule) => {
+          // debugger
           schedules.push({
             Id: schedule.id,
-            Subject: schedule.subject,
+            Subject: schedule.subject + " || " +schedule.student.first_name,
             StartTime: new Date(schedule.start_time),
             EndTime: new Date(schedule.end_time)    
           })
@@ -68,12 +68,16 @@ class AssessorTrainingSchedule extends Component {
   onActionBegin(action) {
     if (action.requestType === 'eventRemove') {
       const delete_ids = []; 
+      const deleted_reco = [];
       action.deletedRecords.map((record) => {
-        delete_ids.push(record.Id);
+        if (record.Subject === 'Available'){
+          delete_ids.push(record.Id);
+          deleted_reco.push(record);
+        }
       });
       const token = localStorage.getItem('token');
 
-      axios.post(`/assessor_api/availablity/delete_availabilities`, {'schedules_ids': delete_ids}, 
+      axios.post(`/assessor_api/availablity/delete_availabilities/`, {'schedules_ids': delete_ids}, 
       {
         headers: {
           'Content-Type': 'application/json',
@@ -81,10 +85,15 @@ class AssessorTrainingSchedule extends Component {
         }
       })
       .then((data) => {
-          console.log(data);
+        // this.setState({action_info:''})
+        if (data.data.is_delete) {
+          this.setState({action_info: data.data.detail})
+        } else {
+          this.setState({action_info: data.data.detail + 'Please Refresh It.'})
+        }
       })
       .catch((error) => {
-        action.deletedRecords = [];
+        this.setState({action_info: 'Please Try Again.'})
         console.log(error.message);
       });
     }
@@ -94,7 +103,8 @@ class AssessorTrainingSchedule extends Component {
         if (record.EventType === 'Available') {
           record.Subject  = 'Available'
         } else {
-          record = {}
+          this.setState({action_info:'You can not Schedule. It will be remove once you click confirm or leave page.'})
+          record = null
         }
       })
     }
@@ -104,14 +114,20 @@ class AssessorTrainingSchedule extends Component {
   }
 
   onPopupOpen(args) {
+    // debugger
     if (args.type === 'Editor') {
-        let statusElement = args.element.querySelector('#EventType');
-        statusElement.setAttribute('name', 'EventType');
+        if (args.data.Subject != 'Available'){
+          let bodyElement = args.element.querySelector('#content');
+          // bodyElement.innerHTML = "You are Not Allowed"
+        } else {
+          let statusElement = args.element.querySelector('#EventType');
+          statusElement.setAttribute('name', 'EventType');
+        }
     }
   }
 
   editorTemplate(props) {
-    return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
+    return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }} id='content'><tbody>
     <tr><td className="e-textlabel">Status</td><td colSpan={4}>
       <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Scheduled']} value={props.EventType || null}></DropDownListComponent>
     </td></tr>

@@ -34,6 +34,9 @@ export default function CreateAccount() {
     const [occupation, setOccupation] = useState("")
     const [marital, setMarital] = useState("")    
 
+
+    const [occupations, setOccupations] = useState([]);
+    const [squestions, setSquestions] = useState([]);
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [pincodes, setPincodes] = useState([]);
@@ -54,20 +57,30 @@ export default function CreateAccount() {
                 setStates([]);
             }
         })
-        .catch(error => console.log(error.message))
-     }, []);
+        .catch((error) => {
+            setStates([]);
+            console.log(error.message)
+        });
 
-    function SecurityQuestion(){
-        const security_questions = [ 
-            {id:"", value:'Choose One'},
-            {id:1, value:'SQ1'},
-            {id:2, value:'SQ2'}
-        ];
-        const squestions = security_questions.map((sq) =>
-            <option value={sq.id}>{sq.value}</option>        
-        );
-        return squestions
-    }
+        axios.get(`/student_api/squestion/`)
+        .then((response) => {
+            setSquestions(response.data.squestions);
+        })
+        .catch((error) => {
+            setSquestions([]);
+            console.log(error.message)
+        });
+
+        axios.get(`/student_api/occupation/`)
+        .then((response) => {
+            setOccupations(response.data.occupations);
+        })
+        .catch((error) => {
+            setOccupations([]);
+            console.log(error.message)
+        });
+
+    }, []);
 
     function Gender(){
         const gender_choices = [ 
@@ -81,51 +94,6 @@ export default function CreateAccount() {
         return genders
     }
 
-    function Occupation(){
-        const occupation_choices = [ 
-            {id:"", value:'Choose One'},
-            {id:1,value:'Software Enginner'},
-            {id:2,value:'Software Developer'}
-        ];
-        const occupations = occupation_choices.map((occupation) =>
-            <option value={occupation.id}>{occupation.value}</option>        
-        );
-        return occupations
-    }
-
-
-    function StateOption(){
-        const st = states.map((state) =>
-            <option value={state.id} >{state.state_name}</option>        
-        );
-        return st
-    }
-
-
-    function CityOption(){
-        const ct = cities.map((city) =>
-            <option value={city.id}>{city.city_name}</option>        
-        );
-        return ct
-    }
-
-
-    function PincodeOption(){
-        const pc = pincodes.map((pincode) =>
-            <option value={pincode.id}>{pincode.pincode}</option>        
-        );
-        return pc
-    }
-
-
-    function PostofficeOption(){
-        const po = postoffices.map((postoffice) =>
-            <option value={postoffice.id}>{postoffice.po_name}</option>        
-        );
-        return po
-    }
-
-
     function MaritalOption(){
         const marital_choices = [
             {id:0, name:'Choose One'},
@@ -137,6 +105,49 @@ export default function CreateAccount() {
         );
         return maritals
     }
+
+    function SquestionOption(){
+        const st = squestions.map((sq) =>
+            <option value={sq.id} >{sq.question}</option>        
+        );
+        return st
+    }
+
+    function OccupationOption(){
+        const st = occupations.map((occupation) =>
+            <option value={occupation.id} >{occupation.occupation}</option>        
+        );
+        return st
+    }
+
+    function StateOption(){
+        const st = states.map((state) =>
+            <option value={state.id} >{state.state_name}</option>        
+        );
+        return st
+    }
+
+    function CityOption(){
+        const ct = cities.map((city) =>
+            <option value={city.id}>{city.city_name}</option>        
+        );
+        return ct
+    }
+
+    function PincodeOption(){
+        const pc = pincodes.map((pincode) =>
+            <option value={pincode.id}>{pincode.pincode}</option>        
+        );
+        return pc
+    }
+
+    function PostofficeOption(){
+        const po = postoffices.map((postoffice) =>
+            <option value={postoffice.id}>{postoffice.po_name}</option>        
+        );
+        return po
+    }
+
 
     function onSelectGender(e) {
         setGender(e.target.value)
@@ -226,10 +237,10 @@ export default function CreateAccount() {
             .then((data) =>{
                 if (data.status === 201) {
                     console.log(data)
-                    const local_data = JSON.parse(data.data);
+                    // const local_data = JSON.parse(data.data);
 
-                    localStorage.setItem('token', local_data.token);
-                    localStorage.setItem('role', local_data.role);
+                    localStorage.setItem('token', data.data.token);
+                    localStorage.setItem('role', data.data.role);
                     setNofilled(false);
                     setHide(false);
                 }
@@ -327,7 +338,8 @@ export default function CreateAccount() {
                             <div className='col-md block_view'>
                                 <label for='security_question'>Security Question <span className='required_symbol'>*</span> : </label>
                                 <select value={squestion} id="security_question" className='input_take'  onChange={onSelectSquestion} required>
-                                    <SecurityQuestion />
+                                    <option value="">Choose One</option>
+                                    <SquestionOption />
                                 </select>
                             </div>
                             <div className='col-md block_view'>
@@ -373,7 +385,8 @@ export default function CreateAccount() {
                             <div className='col-md block_view'>
                                 <label for='occupation'>Occupation <span className='required_symbol'>*</span> : </label>
                                 <select value={occupation} id="occupation" className='input_take' onChange={onSelectOccupation} required >
-                                    <Occupation />
+                                    <option value="">Choose One</option>
+                                    <OccupationOption />
                                 </select>
                             </div>
                         </div>

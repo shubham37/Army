@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScheduleComponent, Inject, Day } from '@syncfusion/ej2-react-schedule';
+import { ScheduleComponent, Inject, Day, ViewDirective, ViewsDirective } from '@syncfusion/ej2-react-schedule';
 import axios from 'axios'
 import CachedIcon from '@material-ui/icons/Cached';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
@@ -65,7 +65,11 @@ class StudentScheduleToday extends Component {
         <br /> <br /> 
         <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.data }}
         editorTemplate={this.editorTemplate} showQuickInfo={false}>
-          <Inject services={[Day]}/>        
+          <Inject services={[Day]}/>
+          <ViewsDirective>
+            <ViewDirective option='Day' startHour='09:00' endHour='18:00' readonly={true} />
+          </ViewsDirective>
+ 
         </ScheduleComponent>
         <br />
       </div>

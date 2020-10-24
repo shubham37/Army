@@ -11,7 +11,7 @@ class StudentAssessorGTO extends Component {
       is_assessor : false,
       assessors : [],
       display_message:'',
-      current_assessor: {}
+      current_assessor: null
     }
     // this.openModal = this.openModal.bind(this);
   }
@@ -91,14 +91,15 @@ class StudentAssessorGTO extends Component {
                     <Card.Body>
                       <Card.Title>{assessor.first_name} {assessor.middle_name}</Card.Title>
                       <Card.Text>
-                        BioData Details.
+                        <p>Gender : {assessor.gender === 1? 'Male' : 'FeMale'}</p>
+                        <p>Designation : {assessor.position.designation}</p>
                       </Card.Text>
-                      <Button variant="primary" data-toggle="modal" data-target="#availabilityModal" data-id={assessor.id}>See Availability</Button>
+                      <Button variant="primary" data-toggle="modal" data-target="#availabilityModal" data-id={assessor.id} onClick={(e) => this.setState({current_assessor:assessor.id})}>See Availability</Button>
                     </Card.Body>
-                  </Card>
+                  </Card> 
                 </div>
               )}
-              <AssessorAvailablityCheck />
+              <AssessorAvailablityCheck id={this.state.current_assessor} />
             </div>
           </Card.Body>
         </Card>
