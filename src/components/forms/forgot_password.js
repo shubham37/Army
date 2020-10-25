@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/forgot_password.css';
 import axios from 'axios';
+import { Spinner } from 'react-bootstrap';
 
 
 export default function ForgotPasswordForm() {
@@ -8,20 +9,24 @@ export default function ForgotPasswordForm() {
     const [contact, setContact] = useState("");
     const [linksent, setLinksent] = useState(false);
     const [success, setSuccess] = useState('');
+    const [isprocessing, setIsprocessing] = useState(false);
+    const [error, setError] = useState('');
 
-    function goHome() {
+    function goHome(e) {
+        setIsprocessing(true);
+        e.preventDefault(e);
         axios.post(`/api/forgot_password/`, {email: contact})
         .then((data) => {
-            debugger
-            // console.log(data)
             if (data.status === 200) {
+                setIsprocessing(false);
                 setSuccess(data.data.detail);
-                setLinksent(true);
                 setContact("");
+                setLinksent(true);
             }
         })
         .catch((error) =>  {
-            console.log(error.message)
+            setIsprocessing(false);
+            setError("Email Address Is Not Found.")
         })
     }
 
@@ -57,10 +62,16 @@ export default function ForgotPasswordForm() {
                                     </div>
                                     <br />
                                     <div class='row'>
-                                        <div class='col col-sm-12'>
-                                            <span>
+                                        <div class='col'>
+                                            <span hidden={isprocessing}>
                                                 <input type='submit' className='btn btn-danger' value="Send Link" />
                                             </span>
+                                            <span hidden={!isprocessing}>
+                                                <Spinner animation='border' />
+                                            </span>
+                                            <spen>
+                                                <p hidden={error?false:true}>{error}</p>
+                                            </spen>
                                         </div>
                                     </div>
                                 </form>

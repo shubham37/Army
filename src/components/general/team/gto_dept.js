@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap'
-imp
+import axios from 'axios'
+
 
 class TeamGTO extends Component {
 
@@ -73,8 +74,9 @@ class TeamGTO extends Component {
             no_content}
           </Card.Body>
         </Card>
+        <br />
       </div>
-      );
+    );
   }
 }
 

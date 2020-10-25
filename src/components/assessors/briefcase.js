@@ -33,7 +33,6 @@ class AssessorBriefcase extends Component {
       const videos = []
       const documents = []
       data.data.briefcases.map((file) => {
-        // debugger
         if (file.file_type === 1) {
           videos.push({
             'file_url':file.file_url,
@@ -41,7 +40,7 @@ class AssessorBriefcase extends Component {
             'file_size':file.file_size
           })
         } else if (file.file_type === 3) {
-          documents.push({
+          images.push({
             'file_url':file.file_url,
             'file_name':file.file_name,
             'file_size':file.file_size
@@ -61,7 +60,7 @@ class AssessorBriefcase extends Component {
       });
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
     });
   }
 
@@ -77,7 +76,6 @@ class AssessorBriefcase extends Component {
             <div className="row">
               {this.state.Video.map((video) => (
                 <div className="col">
-                  <h4>File Details:</h4> 
                   <p>File Name: {video.file_name}</p> 
                   <p>File Location: {video.file_url}</p> 
                   <p>File Size: {video.file_size}</p> 
@@ -101,7 +99,6 @@ class AssessorBriefcase extends Component {
             <div className="row">
               {this.state.Document.map((doc) => (
                 <div className="col">
-                  <h4>File Details:</h4> 
                   <p>File Name: {doc.file_name}</p> 
                   <p>File Location: {doc.file_url}</p> 
                   <p>File Size: {doc.file_size}</p> 
@@ -125,7 +122,6 @@ class AssessorBriefcase extends Component {
             <div className="row">
               {this.state.Image.map((image) => (
                 <div className="col">
-                  <h4>File Details:</h4> 
                   <p>File Name: {image.file_name}</p> 
                   <p>File Location: {image.file_url}</p> 
                   <p>File Size: {image.file_size}</p> 

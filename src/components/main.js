@@ -62,9 +62,8 @@ class Main extends Component {
         });
       } else {
         this.setState({
-          login_error: "Please Try Again."
+          login_error: data.data.reason
         });
-        // console.log(data);
         }
       })
       .catch((error) => {
@@ -72,7 +71,6 @@ class Main extends Component {
           login_error: 'Username or Password Not Match.',
           is_spinner_hidden: true
         });
-        // console.log(error);
       })
     }
 
@@ -94,7 +92,7 @@ class Main extends Component {
   }
   
   onSendOtp(e) {
-    this.setState({is_spinner_hidden:false});
+    this.setState({is_spinner_hidden :false});
     e.preventDefault(e);
     axios.post(`/api/send_otp/`,
       {email: this.state.email_number}
@@ -150,6 +148,7 @@ class Main extends Component {
     const local_otp = localStorage.getItem('otp');
     if (local_otp === this.state.otp) {
       this.setState({
+        free_test_error: '',
         is_free_test_now: true
       });
     } else {
@@ -208,10 +207,10 @@ class Main extends Component {
               <form onSubmit={this.onSendOtp}>
                   <div className='row mobile-block'>
                       <div className='col-md'>
-                        <label for="email_number" className='email_label'>Email/Mobile Number </label>
+                        <label for="email_number" className='email_label'>Email Address </label>
                       </div>
                       <div className='col-md'>
-                        <input type="text" id="email_number" name="email_number" placeholder="Your email/mobile number..." value={this.state.email_number} disabled={!this.state.is_disable} onChange={(e) => this.setState({email_number:e.target.value})} required />
+                        <input type="text" id="email_number" name="email_number" placeholder="Your email address..." pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  value={this.state.email_number} disabled={!this.state.is_disable} onChange={(e) => this.setState({email_number:e.target.value})} required />
                       </div>
                   </div>
                   <div className='row otp-block' hidden={this.state.is_disable}>
@@ -235,10 +234,12 @@ class Main extends Component {
                       <input className='btn' type="button" onClick={this.onSendOtp} value="Request OTP" id='otp_btn' />
                     </div>
                   </div>
-                  <div className='row container' style={{textAlign:'center', fontWeight:'bolder', width:'100%', fontSize:'small', color:'white'}} hidden={this.state.is_disable}>
-                    <p><Spinner animation='border' hidden={this.state.is_spinner_hidden} /></p>
-                    <p>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
-                    <p hidden={this.state.free_test_error?false:true}>{this.state.free_test_error}</p>
+                  <div className='row'>
+                    <div className='col' style={{textAlign:'center', width:'100%', fontWeight:'bolder', fontSize:'small', color:'white'}}>
+                      <p><Spinner animation='border' hidden={this.state.is_spinner_hidden} /></p>
+                      <p hidden={this.state.free_test_error?false:true}>{this.state.free_test_error}</p>                     
+                      <p hidden={this.state.is_disable}>Remaining Time {this.state.time_part1.m} : {this.state.time_part1.s}</p>
+                    </div>
                   </div>
               </form>
             </div>
@@ -288,9 +289,9 @@ class Main extends Component {
                     <ForgotPasswordForm />
                 </div>
                 <div className='row'>
-                  <div className='col'>
+                  <div className='col' style={{textAlign:'center',width:'100%'}}>
                     <p  hidden={this.state.is_spinner_hidden}><Spinner animation='border' /></p>
-                    <p style={{textAlign:'center',width:'100%', fontWeight:'bolder', fontSize:'small', color:'red'}}>{this.state.login_error}</p>
+                    <p style={{fontWeight:'bolder', fontSize:'small', color:'red'}}>{this.state.login_error}</p>
                   </div>
                 </div>
 

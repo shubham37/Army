@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap'
+import axios from 'axios'
 
 class TeamPD extends Component {
 
@@ -57,7 +58,7 @@ class TeamPD extends Component {
     const no_content = (
       <div className='row'>
         <div className='col' style={{width:'100%', textAlign:'center'}}>
-          <p>No Assessor For GTO</p>
+          <p>No Assessor For PD</p>
         </div>
       </div>
     )
@@ -73,6 +74,7 @@ class TeamPD extends Component {
 
           </Card.Body>
         </Card>
+        <br />
       </div>
       );
   }

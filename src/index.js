@@ -15,7 +15,6 @@ import PSYCHDT from './components/DeptTests/PSYCH/test.js'
 
 import './index.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -66,4 +65,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.unregister();

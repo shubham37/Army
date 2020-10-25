@@ -28,26 +28,20 @@ class AssessorRating extends Component {
       }
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
     });
   }
 
   render() {
     const ratings_content = (
-      <div>
+      <div className='row'>
         {this.state.ratings.map((rating) => (
           <div className='col'>
-            <Card body style={{padding:'2%'}}>
-              <p>{rating.student.first_name}</p>
-              <p>{rating.student.gender===1?'Male':'Female'}</p>
-              <p>{rating.rating}</p>
+            <Card text style={{padding:'5%'}}>
+              <p>Name : {rating.student.first_name}</p>
+              <p>Gender : {rating.student.gender===1?'Male':'Female'}</p>
+              <p> Rating : {rating.rating}</p>
             </Card>
-            <Card body style={{padding:'2%'}}>
-              <p>{rating.student.first_name}</p>
-              <p>{rating.student.gender===1?'Male':'Female'}</p>
-              <p>{rating.rating}</p>
-            </Card>
-
           </div>
         ))}
       </div>
@@ -59,16 +53,13 @@ class AssessorRating extends Component {
     )
 
     return (
-      <div className='row container-fluid'>
-        <div className='col'>
-          <hr />
+      <div className='container-fluid'>
+        <hr />
           {
             this.state.ratings.length > 0 
             ? ratings_content :
             no_content          
           }
-        </div>
-        <br />
         <br />
       </div>
     );

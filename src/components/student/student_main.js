@@ -323,11 +323,10 @@ class StudentMain extends Component {
                     <StudentPIQForm />
                 </div>
                 <div hidden={this.state.globalview.is_GTOA_hidden}>
-                    <StudentAssessorGTO code='GTO' />
+                    <StudentAssessorGTO />
                 </div>
                 <div hidden={this.state.globalview.is_ITA_hidden}>
-                    <StudentAssessorGTO code='ITD' />
-                    {/* <StudentAssessorITD /> */}
+                        <StudentAssessorITD />
                 </div>
                 <div hidden={this.state.globalview.is_IOA_hidden}>
                     <StudentAssessorIO />

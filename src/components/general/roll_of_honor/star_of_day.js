@@ -4,20 +4,25 @@ import { Card } from 'react-bootstrap'
 class RollOfHonorStarDay extends Component {
   render() {
     return (
-      <div className='container-fluid'>
+      <div className='container'>
         <Card>
           <Card.Header>Star of the day</Card.Header>
           <Card.Body>
             <div className='row'>
-              <div className='col float-right'>
-                <h4>Image</h4>
+              <div className='col-md'>
+                <img class="img-fluid rounded-circle" src={require('../../../assets/images/meter.jpg')} alt="Chania" />
               </div>
-              <div className='col float-left'>
-                <h4>Bio Data</h4>
+              <div className='col-md'>
+              <ol>
+                <li>Full Name</li><br />
+                <li>Date of Birth || Date of Joining</li><br />
+                <li>Gender || Department || Designation</li><br />
+              </ol>
               </div>
             </div>
           </Card.Body>
         </Card>
+        <br />
       </div>
     );
   }

@@ -5,23 +5,19 @@ class CoursesAgain extends Component {
     return (
       <div className='container-fluid'>
         <Card>
-          <Card.Header>Courses</Card.Header>
+          <Card.Header>Courses Available</Card.Header>
           <Card.Body>
-            <blockquote className="blockquote mb-0">
+            <p>
               <ol>
                 <li>One to one - Diamond</li><br />
                 <li>Group of 3 - Platinum</li><br />
                 <li>Group of 10 - Gold</li><br />
                 <li>Group of 20 - Silver</li><br />
               </ol>
-              <p>
-              </p>
-              <footer className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </footer>
-            </blockquote>
+            </p>
           </Card.Body>
         </Card>
+        <br />
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap'
+import axios from 'axios'
+
 
 class TeamPsych extends Component {
   constructor(props) {
@@ -56,7 +58,7 @@ class TeamPsych extends Component {
     const no_content = (
       <div className='row'>
         <div className='col' style={{width:'100%', textAlign:'center'}}>
-          <p>No Assessor For GTO</p>
+          <p>No Assessor For PSYCH</p>
         </div>
       </div>
     )
@@ -72,6 +74,7 @@ class TeamPsych extends Component {
 
           </Card.Body>
         </Card>
+        <br  />
       </div>
       );
   }

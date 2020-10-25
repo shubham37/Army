@@ -9,8 +9,10 @@ class AssessorInstruction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      instructions : []
+      instructions : [],
+      text: ''
     }
+    this.updatecontent = this.updatecontent.bind(this);
   }
 
   componentWillMount() {
@@ -26,7 +28,6 @@ class AssessorInstruction extends Component {
     })
     .then((data) => {
       if (data.data.is_success) {
-        // console.log(data)
         var local_ins = []
         data.data.streams.map((instruction) => {
           local_ins.push({
@@ -39,39 +40,44 @@ class AssessorInstruction extends Component {
 
         this.setState({instructions:local_ins});
       } else {
-        // console.log(data.data.detail);
         this.setState({instructions:[]});
       }
     })
     .catch((error) => {
       this.setState({instructions:[]});
-      // console.log(error.message);
     });
+  }
+
+  updatecontent = (e, id) => {
+    console.log(id)
+  }
+
+  changecontent = (e, id) => {
+    console.log(id)
   }
 
   render() {
     const instructions = (
       <Accordion defaultActiveKey="0">
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          Instructions
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <div className="row">
-              {this.state.instructions.map((instruction) => (
-                <div className="col">
-                  <h4>{instruction.student_name} - {instruction.student_gender}</h4> 
-                  <p><button> Update </button></p>
-                  <textarea placeholder='Instruction Mention Here...'></textarea>
-                </div>
-              ))}
-            </div>
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
-
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="0">
+            Instructions
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <div className="row">
+                {this.state.instructions.map((instruction) => (
+                  <div className="col" name={instruction.id}>
+                    <h4>{instruction.student_name} - {instruction.student_gender}</h4>
+                    <p><button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button></p>
+                    <textarea placeholder='Instruction Mention Here...' onChange={(e) => {this.changecontent(e, instruction.student)}}></textarea>
+                  </div>
+                ))}
+              </div>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
     )
     return (
       <div className='row container-fluid'>
@@ -81,8 +87,8 @@ class AssessorInstruction extends Component {
           ? instructions :
           <div>No Data Found</div>
           }
+          <br />
         </div>
-        <br />
       </div>
     );
   }
