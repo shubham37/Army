@@ -58,37 +58,46 @@ class AssessorInstruction extends Component {
 
   render() {
     const instructions = (
-      <Accordion defaultActiveKey="0">
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            Instructions
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <div className="row">
-                {this.state.instructions.map((instruction) => (
-                  <div className="col" name={instruction.id}>
-                    <h4>{instruction.student_name} - {instruction.student_gender}</h4>
-                    <p><button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button></p>
-                    <textarea placeholder='Instruction Mention Here...' onChange={(e) => {this.changecontent(e, instruction.student)}}></textarea>
+
+      // <div className='row container-fluid'>
+      //   <div className='col'>
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                Instructions
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <div className="row">
+                    {this.state.instructions.map((instruction) => (
+                      <div className="col" name={instruction.id}>
+                        <p>
+                          Name : {instruction.student_name} ||  
+                          Gender : {instruction.student_gender}
+                          <span>
+                            <button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button>
+                          </span>
+                        </p>
+                        {/* <p><button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button></p> */}
+                        <textarea placeholder='Instruction Mention Here...' onChange={(e) => {this.changecontent(e, instruction.student)}}></textarea>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+      //   </div>
+      // </div>
     )
     return (
-      <div className='row container-fluid'>
-        <div className='col'>
-          <hr />
-          {this.state.instructions.length > 0
-          ? instructions :
-          <div>No Data Found</div>
-          }
-          <br />
-        </div>
+      <div className='container-fluid'>
+        <hr />
+        {this.state.instructions.length > 0
+        ? instructions :
+        <div>No Data Found</div>
+        }
+        <br />
       </div>
     );
   }
