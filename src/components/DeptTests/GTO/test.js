@@ -50,6 +50,7 @@ class GTODT extends Component {
       }
     })
     .then((response) => {
+      console.log(response.data)
       this.setState({
         training_data:response.data.training,
         // seconds_part1: 10
@@ -101,8 +102,11 @@ class GTODT extends Component {
 
     // Check if we're at zero.
     if (seconds === 0) { 
-      clearInterval(this.timer_part1);
-      this.setState({seconds_part2:10});
+      this.timer_part1 = 0;
+      this.setState({
+        time_part1: {},
+        seconds_part2:10
+      });
 
       let timeLeftVar = this.secondsToTime(this.state.seconds_part2);
       this.setState({

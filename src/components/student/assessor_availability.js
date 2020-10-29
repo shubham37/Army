@@ -5,6 +5,7 @@ import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import axios from 'axios'
 import CachedIcon from '@material-ui/icons/Cached';
+import { Spinner } from 'react-bootstrap';
 
 
 class AssessorAvailablityCheck extends Component {
@@ -13,7 +14,8 @@ class AssessorAvailablityCheck extends Component {
         this.props = props;
         this.state = {
           availabilities : [],
-          action_info:' Refresh To See Changes'
+          action_info:' Refresh To See Changes',
+          in_processing: false
         }
         this.onAddClick = this.onAddClick.bind(this);
         this.onPopupOpen = this.onPopupOpen.bind(this);
@@ -95,6 +97,9 @@ class AssessorAvailablityCheck extends Component {
     }
     
     onAddClick() {
+      this.setState({
+        in_processing: true
+      });
       // console.log(this.scheduleObj);
       const data = []
       // actually code needed
@@ -118,20 +123,22 @@ class AssessorAvailablityCheck extends Component {
         }
       })
       .then((data) => {
-        // console.log(data);
-        {this.onRefresh()};
+        console.log(data)
       })
       .catch((error) => {
-        // console.log(error.message);
+        console.log(error.message);
       })
-    
+      this.setState({
+        in_processing: true
+      });
+  
     }
 
     render() {
         return (
             <div>
                 <div class="modal fade bd-example-modal-lg" id="availabilityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <p class="modal-title" id="exampleModalLabel">
@@ -159,6 +166,7 @@ class AssessorAvailablityCheck extends Component {
                             </div>
                             <div class="modal-footer">
                               <span>{this.state.action_info}</span>
+                              <span hidden={this.state.in_processing}><Spinner /></span>
                                 <ButtonComponent data-dismiss="modal">Close</ButtonComponent>
                                 <ButtonComponent id='add' title='Add' ref={t => this.buttonObj = t} onClick={this.onAddClick}>Confirm</ButtonComponent>
                             </div>

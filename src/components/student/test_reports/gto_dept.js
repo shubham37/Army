@@ -21,7 +21,6 @@ class StudentTestReportGTO extends Component {
       headers: headers
     })
     .then((data) => {
-      // console.log(data);
       if (data.data.is_data) {
         this.setState({'reports':data.data.reports})
       } else {
@@ -29,7 +28,7 @@ class StudentTestReportGTO extends Component {
       }
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
     });
   }
 
@@ -45,9 +44,9 @@ class StudentTestReportGTO extends Component {
         </tr>
       </thead>
       <tbody>
-        {this.state.reports.map((report) => (
+        {this.state.reports.map((report, i) => (
           <tr>
-            <td>{report.id}</td>
+            <td>{i +1}</td>
             <td>{report.test.code}</td>
             <td>{report.remark}</td>
             <td>{report.comment}</td>
@@ -57,10 +56,11 @@ class StudentTestReportGTO extends Component {
     </Table>
     )
     return (
-      <div className="row container-fluid">
-        <div className='col'>
-            {reports_content}    
-        </div>
+      <div className="container">
+        { this.state.reports.length > 0 
+          ? reports_content :
+          <div> No Data</div>    
+        }
       </div>
     );
   }

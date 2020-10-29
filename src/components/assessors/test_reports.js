@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CachedIcon from '@material-ui/icons/Cached';
 import axios from 'axios'
+import {Card} from 'react-bootstrap'
 
 class AssessorTestReport extends Component {
   constructor(props) {
@@ -34,12 +35,17 @@ class AssessorTestReport extends Component {
     const tests_content = (
       <div className='row'>
         {this.state.tests.map((test) => (
-          <div className='col'>
-              <p>{test.student.first_name}</p>
-              <p>{test.student.gender===1?'Male':'Female'}</p>
-              <p>{test.answer}</p>
-              <p>Enter Your Remark: <input type='text' /></p>
-              <p>Enter Any Comment: <input type='text' /></p>
+          <div className='col-md-6'>
+            <Card text style={{padding:'5%'}}>
+              <p>
+                <span>{test.student.first_name}</span>
+                <span>{test.student.gender===1?'Male':'Female'}</span>
+              </p>
+              <p style={{border:'1px solid grey', padding:'2%'}}>{test.answer}</p>
+              <p> Remark: <input type='text' /></p>
+              <p> Comment: <input type='text' /></p>
+              <button> Submit</button>
+            </Card>
           </div>
         ))}
       </div>
@@ -63,6 +69,7 @@ class AssessorTestReport extends Component {
             ? tests_content :
             no_content          
           }
+        <br />
       </div>
     );
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Accordion, Card } from 'react-bootstrap'
 import EditIcon from '@material-ui/icons/Edit';
-
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 
 class AssessorInstruction extends Component {
 
@@ -31,9 +31,9 @@ class AssessorInstruction extends Component {
         var local_ins = []
         data.data.streams.map((instruction) => {
           local_ins.push({
-            'student': instruction.student.id,
-            'student_name': instruction.student.first_name,
-            'student_gender': instruction.student.gender===1?'Male':'FEMALE',
+            'student': instruction.id,
+            'student_name': instruction.first_name + " " + instruction.middle_name + " " + instruction.last_name,
+            'student_gender': instruction.gender===1?'Male':'FEMALE',
             'text': ''
           })
         })
@@ -73,12 +73,12 @@ class AssessorInstruction extends Component {
                       <div className="col" name={instruction.id}>
                         <p>
                           Name : {instruction.student_name} ||  
-                          Gender : {instruction.student_gender}
                           <span>
-                            <button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button>
+                            <button onClick={(e) => {this.updatecontent(e, instruction)}}><SpellcheckIcon /> </button>
                           </span>
+                          <br />
+                          Gender : {instruction.student_gender}
                         </p>
-                        {/* <p><button onClick={(e) => {this.updatecontent(e, instruction)}}>Update </button></p> */}
                         <textarea placeholder='Instruction Mention Here...' onChange={(e) => {this.changecontent(e, instruction.student)}}></textarea>
                       </div>
                     ))}

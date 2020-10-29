@@ -18,6 +18,7 @@ yarn-error.log*
 
 package-lock.json
 
+
 # 1. Training Session Schedule By Student go through department wise assessor. We saved in DB as Stream Scheduled. we Know student and assessor both.
 
 # 2. Tests In Which Student submit answer as PSYCH test. WE saves in DB as TestSubmission. We know student and answer and question but Don't know assessor who assessed this test.
@@ -33,3 +34,4 @@ package-lock.json
 # 5. An Assessor will give  intruction to which student on which basis and can he give only single time or multiple tme or what. 
 # and these intruction shown to student dashboard in which tab and which format.
 
+# 6. In Test Reports Is It really Test On mis confusion with Training Session.

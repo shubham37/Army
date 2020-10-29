@@ -34,7 +34,7 @@ class StudentTestPending extends Component {
 
   render() {
     const status_content = (
-      <Table bordered size="md">
+      <Table>
         <thead>
           <tr style={{backgroundColor:'brown', color:'white'}}>
             <th>S/NO</th>
@@ -44,28 +44,27 @@ class StudentTestPending extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.status.map((st) => (
-            <tr>
-              <td style={{fontWeight:'bolder'}}>1</td>
-              <td>{st.code}</td>
-              <td>{st.testsubmission__submission_date?new Date(st.testsubmission__submission_date): 'Not Yet'}</td>
-              <td>{st.testsubmission__submission_date?"No":"YES"}</td>
-            </tr>
+          {this.state.status.map((st, i) => {
+            return (
+              <tr>
+                <td style={{fontWeight:'bolder'}}>{i+1}</td>
+                <td> {st.code} </td>
+                <td>{st.testsubmission__submission_date? st.testsubmission__submission_date: 'Not Yet'}</td>
+                <td>{st.testsubmission__submission_date?"No":'YES'}</td> 
+              </tr>
             )
-          )}
+          })}
         </tbody>
     </Table>
     )
 
     
     return (
-      <div className="container-fluid">
-        <div className='col'>
-          { this.state.status.length > 0 
-            ? status_content :
-            <div> No Data</div>    
-          }
-        </div>
+      <div className="container">
+        { this.state.status.length > 0 
+          ? status_content :
+          <div> No Data</div>    
+        }
       </div>
     );
   }
