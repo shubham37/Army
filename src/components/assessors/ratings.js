@@ -38,7 +38,7 @@ class AssessorRating extends Component {
         <hr />
         <Card body style={{padding: '2% 5%', margin: '2%'}}>
           <p>
-            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>No Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.ZERO}</span>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>0 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.ZERO}</span>
           </p>
           <p>
             <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>1 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.ONE}</span>

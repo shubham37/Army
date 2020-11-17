@@ -89,7 +89,7 @@ class AssessorTestReport extends Component {
     )
     const no_content = (
       <div className='col'>
-            <p>No Data Exists</p>
+        <p style={{fontSize: 'larger', color: 'gray'}}>No Test For Assessment</p>
       </div>
     )
 
@@ -104,7 +104,7 @@ class AssessorTestReport extends Component {
           {
             this.state.tests.length > 0 
             ? tests_content :
-            no_content          
+            no_content
           }
         <br />
       </div>

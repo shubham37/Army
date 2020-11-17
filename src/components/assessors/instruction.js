@@ -74,7 +74,8 @@ class AssessorInstruction extends Component {
                   <div className="row" style={{height: '500px', width: '100%', textAlign: 'center'}}>
                     <div className='col'>
                       <textarea placeholder='Write Your Instruction Here...' style={{width:'100%', height: '70%'}} value={this.state.instructions} onChange={(e) => {this.setState({instructions: e.target.value})}}></textarea><br /><br />
-                      <button onClick={(e) => {this.updatecontent(e)}} style={{padding: '2%', border:'none', fontWeight: 'bolder', fontSize: 'larger', backgroundColor: 'rgb(260, 160, 0)', color: 'white'}}>Submit</button>
+                      <button onClick={(e) => {this.updatecontent(e)}} style={{padding: '1% 3%', border:'none', fontWeight: 'bolder', fontSize: 'larger', backgroundColor: 'rgb(260, 160, 0)', color: 'white'}}>Submit</button><br />
+                      <p className='float-right' style={{fontSize: 'small', color: 'gray'}}>** This Instructions For All Assigned Student</p>
                     </div>
 
                   </div>

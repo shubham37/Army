@@ -181,12 +181,10 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">Courses</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>One to one - Diamond</li><br />
-            <li>Group of 3 - Platinum</li><br />
-            <li>Group of 10 - Gold</li><br />
-            <li>Group of 20 - Silver</li><br />
-          </ol>
+            <span>One to one - Diamond</span><br />
+            <span>Group of 3 - Platinum</span><br />
+            <span>Group of 10 - Gold</span><br />
+            <span>Group of 20 - Silver</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -195,12 +193,10 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">FEES</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>One to one - Diamond - 12,000 Per Head</li><br />
-            <li>Group of 3 - Platinum 9,000 Per Head</li><br />
-            <li>Group of 10 - Gold - 8,500 Per Head</li><br />
-            <li>Group of 20 - Silver - 7,500 Per Head</li><br />
-          </ol>
+            <span>One to one - Diamond - 12,000 Per Head</span><br />
+            <span>Group of 3 - Platinum 9,000 Per Head</span><br />
+            <span>Group of 10 - Gold - 8,500 Per Head</span><br />
+            <span>Group of 20 - Silver - 7,500 Per Head</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -209,11 +205,9 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">Star Of The Day</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>Full Name</li><br />
-            <li>Date of Birth || Date of Joining</li><br />
-            <li>Gender || Department || Designation</li><br />
-          </ol>
+            <span>Full Name</span><br />
+            <span>Date of Birth || Date of Joining</span><br />
+            <span>Gender || Department || Designation</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -222,11 +216,9 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">Evergreen Star's</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>Full Name</li><br />
-            <li>Date of Birth || Date of Joining</li><br />
-            <li>Gender || Department || Designation</li><br />
-          </ol>
+            <span>Full Name</span><br />
+            <span>Date of Birth || Date of Joining</span><br />
+            <span>Gender || Department || Designation</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -235,11 +227,9 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">CMO</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>Full Name</li><br />
-            <li>Date of Birth || Date of Joining</li><br />
-            <li>Gender || Department || Designation</li><br />
-          </ol>
+            <span>Full Name</span><br />
+            <span>Date of Birth || Date of Joining</span><br />
+            <span>Gender || Department || Designation</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -248,11 +238,9 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">COO</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>Full Name</li><br />
-            <li>Date of Birth || Date of Joining</li><br />
-            <li>Gender || Department || Designation</li><br />
-          </ol>
+            <span>Full Name</span><br />
+            <span>Date of Birth || Date of Joining</span><br />
+            <span>Gender || Department || Designation</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -261,11 +249,9 @@ class GeneralMain extends Component {
       <Popover id="popover-basic">
         <Popover.Title as="h3">CEO</Popover.Title>
         <Popover.Content>
-          <ol>
-            <li>Full Name</li><br />
-            <li>Date of Birth || Date of Joining</li><br />
-            <li>Gender || Department || Designation</li><br />
-          </ol>
+            <span>Full Name</span><br />
+            <span>Date of Birth || Date of Joining</span><br />
+            <span>Gender || Department || Designation</span><br />
         </Popover.Content>
       </Popover>
     );
@@ -281,22 +267,22 @@ class GeneralMain extends Component {
               <Nav className="mr-auto">
 
                 <NavDropdown title="Home" id="basic-nav-dropdown">
-                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={visionPopover}>
+                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={visionPopover}>
                       <Button variant="none" style={{width:'100%'}}>Vision</Button>
                     </OverlayTrigger>
                     <br />
 
-                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={missionPopover}>
+                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={missionPopover}>
                       <Button variant="none" style={{width:'100%'}}>Mission</Button>
                     </OverlayTrigger>
                     <br />
 
-                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={wiuPopover}>
+                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={wiuPopover}>
                       <Button variant="none" style={{width:'100%'}}>Why Its Unique</Button>
                     </OverlayTrigger>
                     <br />
 
-                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={coursesPopover}>
+                    <OverlayTrigger trigger="click" rootClose placement="right" overlay={coursesPopover}>
                       <Button variant="none" style={{width:'100%'}}>Courses</Button>
                     </OverlayTrigger>
 
@@ -339,35 +325,35 @@ class GeneralMain extends Component {
                 </NavDropdown>
 
                 <NavDropdown title="Courses" id="basic-nav-dropdown">
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={coursesPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={coursesPopover}>
                     <Button variant="none" style={{width:'100%'}}>Courses</Button>
                   </OverlayTrigger>
                   <br />
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={fsPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={fsPopover}>
                     <Button variant="none" style={{width:'100%'}}>Fee Structure</Button>
                   </OverlayTrigger>
                 </NavDropdown> 
 
                 <NavDropdown title="Roll of Honor" id="basic-nav-dropdown">
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={sotdPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={sotdPopover}>
                     <Button variant="none" style={{width:'100%'}}>Start Of The Day</Button>
                   </OverlayTrigger>
                   <br />
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={esPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={esPopover}>
                     <Button variant="none" style={{width:'100%'}}>Evergreen Star's</Button>
                   </OverlayTrigger>
                 </NavDropdown>
 
                 <NavDropdown title="Contact us" id="basic-nav-dropdown">
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={ceoPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={ceoPopover}>
                     <Button variant="none" style={{width:'100%'}}>CEO</Button>
                   </OverlayTrigger>
                   <br />
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={cooPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={cooPopover}>
                     <Button variant="none" style={{width:'100%'}}>COO</Button>
                   </OverlayTrigger>
                   <br />
-                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={cmoPopover}>
+                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={cmoPopover}>
                     <Button variant="none" style={{width:'100%'}}>CMO</Button>
                   </OverlayTrigger>
                 </NavDropdown>
