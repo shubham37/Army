@@ -57,9 +57,10 @@ class StudentTestReportIO extends Component {
     </Table>
     )
     return (
-      <div className="row container-fluid">
+      <div className="row container">
         <div className='col'>
-            {reports_content}    
+            {reports_content}
+            <br />
         </div>
       </div>
     );

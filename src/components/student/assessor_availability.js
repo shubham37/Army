@@ -6,6 +6,7 @@ import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import axios from 'axios'
 import CachedIcon from '@material-ui/icons/Cached';
 import { Spinner } from 'react-bootstrap';
+import '../../App.css';
 
 
 class AssessorAvailablityCheck extends Component {
@@ -172,7 +173,7 @@ class AssessorAvailablityCheck extends Component {
                             </div>
                         </div>
                     </div>
-                </div>                    
+                </div>
             </div>
         );
     }

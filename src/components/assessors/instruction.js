@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { Accordion, Card } from 'react-bootstrap'
-import EditIcon from '@material-ui/icons/Edit';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+// import './../../assets/css/assessor.css'
 
 class AssessorInstruction extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      instructions : [],
-      text: ''
+      instructions : '',
+      id: ''
     }
     this.updatecontent = this.updatecontent.bind(this);
   }
@@ -28,75 +28,61 @@ class AssessorInstruction extends Component {
     })
     .then((data) => {
       if (data.data.is_success) {
-        var local_ins = []
-        data.data.streams.map((instruction) => {
-          local_ins.push({
-            'student': instruction.id,
-            'student_name': instruction.first_name + " " + instruction.middle_name + " " + instruction.last_name,
-            'student_gender': instruction.gender===1?'Male':'FEMALE',
-            'text': ''
-          })
-        })
-
-        this.setState({instructions:local_ins});
+        this.setState({instructions:data.data.instruction.instruction, id: data.data.instruction.id});
       } else {
-        this.setState({instructions:[]});
+        this.setState({instructions:''});
       }
     })
     .catch((error) => {
-      this.setState({instructions:[]});
+      this.setState({instructions:''});
     });
   }
 
-  updatecontent = (e, id) => {
-    console.log(id)
-  }
+  updatecontent = (e) => {
+    const token = localStorage.getItem('token');
 
-  changecontent = (e, id) => {
-    console.log(id)
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    axios.post(`/assessor_api/instructions/add_update/`, {
+      id: this.state.id,
+      instruction: this.state.instructions
+    },
+    {
+      headers : headers
+    })
+    .then((data) => {
+      if (data.status == 200) {
+        console.log("Data Updated");
+    }
+    }).catch((error) => console.log(error))
   }
 
   render() {
-    const instructions = (
-
-      // <div className='row container-fluid'>
-      //   <div className='col'>
-          <Accordion defaultActiveKey="0">
+    return (
+      <div className='container-fluid'>
+        <hr />
+        <Accordion defaultActiveKey="0">
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
                 Instructions
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  <div className="row">
-                    {this.state.instructions.map((instruction) => (
-                      <div className="col" name={instruction.id}>
-                        <p>
-                          Name : {instruction.student_name} ||  
-                          <span>
-                            <button onClick={(e) => {this.updatecontent(e, instruction)}}><SpellcheckIcon /> </button>
-                          </span>
-                          <br />
-                          Gender : {instruction.student_gender}
-                        </p>
-                        <textarea placeholder='Instruction Mention Here...' onChange={(e) => {this.changecontent(e, instruction.student)}}></textarea>
-                      </div>
-                    ))}
+                  <div className="row" style={{height: '500px', width: '100%', textAlign: 'center'}}>
+                    <div className='col'>
+                      <textarea placeholder='Write Your Instruction Here...' style={{width:'100%', height: '70%'}} value={this.state.instructions} onChange={(e) => {this.setState({instructions: e.target.value})}}></textarea><br /><br />
+                      <button onClick={(e) => {this.updatecontent(e)}} style={{padding: '2%', border:'none', fontWeight: 'bolder', fontSize: 'larger', backgroundColor: 'rgb(260, 160, 0)', color: 'white'}}>Submit</button>
+                    </div>
+
                   </div>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
           </Accordion>
-      //   </div>
-      // </div>
-    )
-    return (
-      <div className='container-fluid'>
-        <hr />
-        {this.state.instructions.length > 0
-        ? instructions :
-        <div>No Data Found</div>
-        }
+
         <br />
       </div>
     );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Table} from 'react-bootstrap'
 import axios from 'axios'
 
+
 class StudentTestReportGTO extends Component {
 
   constructor(props) {
@@ -57,10 +58,8 @@ class StudentTestReportGTO extends Component {
     )
     return (
       <div className="container">
-        { this.state.reports.length > 0 
-          ? reports_content :
-          <div> No Data</div>    
-        }
+        {reports_content}
+        <br />
       </div>
     );
   }

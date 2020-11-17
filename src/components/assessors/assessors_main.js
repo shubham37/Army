@@ -58,43 +58,25 @@ class AssessorMain extends Component {
                 this.setState({
                     user:data.data.first_name
                 });
-                // console.log(data);
             })
             .catch((error) =>  {
                 console.log(error.message)
             });
             this.setState({is_logout:false});
+        } else if (token && role == '0') {
+            window.location.href = '/student';
         } else {
             localStorage.clear();
             this.setState({is_logout:true});
+            window.location.href = '/';
         }
     }
 
     logout(e){
         e.preventDefault();
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        }
-        axios.get(`/api/logout/`,  {
-            headers: headers
-        })
-        .then((data) =>{
-            if (data.status === 200){
-                localStorage.clear();
-                this.setState({is_logout:true});
-                window.location = '/'
-            } else {
-                // console.log(data.data)
-                this.setState({
-                    logout_message: data.data
-                });
-            }
-        })
-        .catch((error) => {
-            console.log(error.message)
-        });
+        localStorage.clear();
+        this.setState({is_logout:true});
+        window.location.href = '/'
     }
 
     onClickOption(title) {
@@ -135,9 +117,6 @@ class AssessorMain extends Component {
     }
 
     render() {
-        if (this.state.is_logout) {
-            return <Redirect to='/' />
-        }
         return (
             <div className='AssessorMain'>
                 <div className='row assessor_navigation'>

@@ -4,6 +4,8 @@ import axios from 'axios'
 import CachedIcon from '@material-ui/icons/Cached';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
+import '../../App.css';
+
 
 class AssessorScheduleToday extends Component {
 
@@ -65,17 +67,6 @@ class AssessorScheduleToday extends Component {
     <tr><td className="e-textlabel">To</td><td colSpan={4}>
       <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
     </td></tr></tbody></table> : <div></div>);
-
-    // return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }}><tbody>
-    // <tr><td className="e-textlabel">Summary</td><td colSpan={4}>
-    //   <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
-    // </td></tr>
-    // <tr><td className="e-textlabel">From</td><td colSpan={4}>
-    //   <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
-    // </td></tr>
-    // <tr><td className="e-textlabel">To</td><td colSpan={4}>
-    //   <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="EndTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
-    // </td></tr></tbody></table> : <div></div>);
   }
 
 

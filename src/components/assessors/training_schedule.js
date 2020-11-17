@@ -4,6 +4,7 @@ import axios from 'axios';
 import CachedIcon from '@material-ui/icons/Cached';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
+import '../../App.css';
 
 class AssessorTrainingSchedule extends Component {
 

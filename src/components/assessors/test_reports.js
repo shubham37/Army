@@ -10,6 +10,7 @@ class AssessorTestReport extends Component {
       tests: []
     }
     this.onRefresh = this.onRefresh.bind(this);
+    this.submitReport = this.submitReport.bind(this);
   }
 
   onRefresh() {
@@ -22,11 +23,41 @@ class AssessorTestReport extends Component {
     })
     .then((response) => {
       if (response.data.is_data) {
+        console.log(response.data.tests);
         this.setState({ tests: response.data.tests})
       }
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
+    });
+  }
+
+  submitReport(event) {
+    event.preventDefault();
+    let remark = event.target.remark.value;
+    let comment = event.target.comment.value;
+    let id = event.target.id.value;
+
+    const token = localStorage.getItem('token')
+    axios.post(`/assessor_api/tests_check/update_reports/`, 
+    {
+      'id': id,
+      'remark': remark,
+      'comment': comment
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`  
+      }
+    })
+    .then((response) => {
+      if (response.data.is_update) {
+        console.log("Data Updated");
+      }
+    })
+    .catch((error) => {
+      console.log(error.message);
     });
   }
 
@@ -38,13 +69,19 @@ class AssessorTestReport extends Component {
           <div className='col-md-6'>
             <Card text style={{padding:'5%'}}>
               <p>
-                <span>{test.student.first_name}</span>
-                <span>{test.student.gender===1?'Male':'Female'}</span>
+                <span className='float-left'><b>{test.student.first_name}</b></span>
+                <span className='float-right'>{test.student.gender===1?'Male':'Female'}</span>
               </p>
-              <p style={{border:'1px solid grey', padding:'2%'}}>{test.answer}</p>
-              <p> Remark: <input type='text' /></p>
-              <p> Comment: <input type='text' /></p>
-              <button> Submit</button>
+              <form onSubmit={this.submitReport}>
+                <input type='number' class='form-control' name='id' value={test.id} style={{display: 'none'}} />
+                <span>Answer</span><br />
+                <p style={{border:'2px solid black', color: 'gray', fontWeight: 'bolder', padding:'2%'}}>{test.answer}</p>
+                <span>Remark</span><br />
+                <p><input type='text' style={{width: '100%', textIndent:'15px', padding: '2% 0'}} class='form-control' name='remark' /></p>
+                <span>Comment</span><br />
+                <p><input type='text' style={{width: '100%', textIndent:'15px', padding: '2% 0'}} class='form-control' name='comment' /></p>
+                <button type='submit' style={{border:'none', padding: '2% 0', fontWeight: 'bolder', fontSize: 'larger', backgroundColor:'rgb(260, 160, 0)', color:'white'}}> Submit</button>
+              </form>
             </Card>
           </div>
         ))}

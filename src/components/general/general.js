@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Main from '../main.js'
-import Vision from '../general/home/vision.js'
-import Mission from '../general/home/mission.js'
-import WIU from '../general/home/wiu.js'
-import Courses from '../general/home/courses.js'
-import ContactCEO from '../general/contact_us/ceo.js'
-import ContactCMO from '../general/contact_us/cmo.js'
-import ContactCOO from '../general/contact_us/coo.js'
-import CoursesAgain from '../general/courses/courses.js'
-import CoursesFeeStructure from '../general/courses/fee_structure.js'
 import CurrentAffairDefence  from '../general/current_affair/defence.js'
 import CurrentAffairEconomy from '../general/current_affair/economy.js'
 import CurrentAffairInternational from '../general/current_affair/international.js'
@@ -18,8 +11,6 @@ import PDBodyLanguage from '../general/pd/body_langauge.js'
 import PDDAD from  '../general/pd/do_and_dont.js'
 import PDDFS1S2 from '../general/pd/dress_for_s1_s2.js'
 import PDSpokenLanguage from '../general/pd/dress_for_s1_s2.js'
-import RollOfHonorEvergreenStar from '../general/roll_of_honor/evergreen_star.js'
-import RollOfHonorStarDay from '../general/roll_of_honor/star_of_day.js'
 import Stage1DT from '../general/stage1/dt.js'
 import Stage1OIR from '../general/stage1/oir.js'
 import Stage1PP from '../general/stage1/pp.js'
@@ -33,6 +24,7 @@ import TeamPD from '../general/team/pd_dept.js'
 import TeamPsych from '../general/team/psych_dept.js'
 import {NavDropdown, Navbar,Nav, Button} from 'react-bootstrap'
 import '../../assets/css/general.css'
+
 
 class GeneralMain extends Component {
   constructor(props) {
@@ -50,10 +42,6 @@ class GeneralMain extends Component {
       window.location.href = '/admin_user'
     }
     this.view = {
-      is_Vision_hidden:true,
-      is_Mission_hidden:true,
-      is_Wiu_hidden:true,
-      is_Courses_hidden:true,
       is_GTOD_hidden:true,
       is_IOD_hidden:true,
       is_PSYCHD_hidden:true,
@@ -74,17 +62,11 @@ class GeneralMain extends Component {
       is_Economy_hidden:true,
       is_Defence_hidden:true,
       is_SAT_hidden:true,
-      is_CC_hidden:true,
-      is_FS_hidden:true,
-      is_SOD_hidden:true,
-      is_ES_hidden:true,
-      is_CEO_hidden:true,
-      is_CMO_hidden:true,
-      is_COO_hidden:true,
       is_Home_hidden:true
     };
   
   }
+
 
   componentWillMount() {
     this.state.globalview = Object.assign({}, this.view);
@@ -94,18 +76,6 @@ class GeneralMain extends Component {
   onClickOption(title) {
     const view_local = Object.assign({}, this.view);
     switch(title) {
-      case 'Vision':
-        view_local.is_Vision_hidden = false;
-        break;
-      case 'Mission':
-        view_local.is_Mission_hidden = false;
-        break;
-      case 'Wiu':
-        view_local.is_Wiu_hidden = false;
-        break;
-      case 'Courses':
-        view_local.is_Courses_hidden = false;
-        break;
       case 'GTOD':
         view_local.is_GTOD_hidden = false;
         break;
@@ -166,27 +136,6 @@ class GeneralMain extends Component {
       case 'SAT':
         view_local.is_SAT_hidden = false;
         break;
-      case 'CC':
-        view_local.is_CC_hidden = false;
-        break;        
-      case 'FS':
-        view_local.is_FS_hidden = false;
-        break;        
-      case 'SOD':
-        view_local.is_SOD_hidden = false;
-        break;        
-      case 'ES':
-        view_local.is_ES_hidden = false;
-        break;        
-      case 'CEO':
-        view_local.is_CEO_hidden = false;
-        break;        
-      case 'CMO':
-        view_local.is_CMO_hidden = false;
-        break;        
-      case 'COO':
-        view_local.is_COO_hidden = false;
-        break;
       default:
         view_local.is_Home_hidden = false;
     }
@@ -194,6 +143,133 @@ class GeneralMain extends Component {
   }
 
   render() {
+    const visionPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Vision</Popover.Title>
+        <Popover.Content>
+          To be the best Launchpad for aspirants into the career of Indian Armed Forces & Coast Guards.
+        </Popover.Content>
+      </Popover>
+    );
+
+    const missionPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Mission</Popover.Title>
+        <Popover.Content>
+          Is to provide round the clock accessible and affordable quality mentoring to the SSB aspirants for military career. 
+          Aim is imparting authentic and quality mentoring directly from experienced SSB Officer’s through one to one video based 
+          interactive sessions with Interviewing Officer, GTO and Psychologist respectively. 
+          The entire testing’s of the SSB are conducted for each aspirant along with dedicated one to one basis live interactive 
+          sessions post each technique tests so as to provide the feedback about performance and mistakes committed by aspirant 
+          while attempting the tests along with tips to overcome shortcomings, so that aspirant is confident before appearing for the SSB. 
+          At SSB experts the aspirants can make their own time table and select the mentoring Officers of their own choice and the professional 
+          quality mentoring to be provided at their door step.
+        </Popover.Content>
+      </Popover>
+    );
+
+    const wiuPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Why Its Unique</Popover.Title>
+        <Popover.Content>
+          Popover content <strong>some strong content</strong> Normal content again
+        </Popover.Content>
+      </Popover>
+    );
+
+    const coursesPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Courses</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>One to one - Diamond</li><br />
+            <li>Group of 3 - Platinum</li><br />
+            <li>Group of 10 - Gold</li><br />
+            <li>Group of 20 - Silver</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const fsPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">FEES</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>One to one - Diamond - 12,000 Per Head</li><br />
+            <li>Group of 3 - Platinum 9,000 Per Head</li><br />
+            <li>Group of 10 - Gold - 8,500 Per Head</li><br />
+            <li>Group of 20 - Silver - 7,500 Per Head</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const sotdPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Star Of The Day</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>Full Name</li><br />
+            <li>Date of Birth || Date of Joining</li><br />
+            <li>Gender || Department || Designation</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const esPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Evergreen Star's</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>Full Name</li><br />
+            <li>Date of Birth || Date of Joining</li><br />
+            <li>Gender || Department || Designation</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const cmoPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">CMO</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>Full Name</li><br />
+            <li>Date of Birth || Date of Joining</li><br />
+            <li>Gender || Department || Designation</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const cooPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">COO</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>Full Name</li><br />
+            <li>Date of Birth || Date of Joining</li><br />
+            <li>Gender || Department || Designation</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
+    const ceoPopover = (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">CEO</Popover.Title>
+        <Popover.Content>
+          <ol>
+            <li>Full Name</li><br />
+            <li>Date of Birth || Date of Joining</li><br />
+            <li>Gender || Department || Designation</li><br />
+          </ol>
+        </Popover.Content>
+      </Popover>
+    );
+
     return (
       <div className='content_home'>
 
@@ -204,16 +280,29 @@ class GeneralMain extends Component {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
 
-                {/* <HomeNavigation /> */}
                 <NavDropdown title="Home" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Vision')}>Vision</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Mission')} >Mission</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Wiu')} >Why its unique</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Courses')} >Courses</Button></NavDropdown.Item>
+                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={visionPopover}>
+                      <Button variant="none" style={{width:'100%'}}>Vision</Button>
+                    </OverlayTrigger>
+                    <br />
+
+                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={missionPopover}>
+                      <Button variant="none" style={{width:'100%'}}>Mission</Button>
+                    </OverlayTrigger>
+                    <br />
+
+                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={wiuPopover}>
+                      <Button variant="none" style={{width:'100%'}}>Why Its Unique</Button>
+                    </OverlayTrigger>
+                    <br />
+
+                    <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={coursesPopover}>
+                      <Button variant="none" style={{width:'100%'}}>Courses</Button>
+                    </OverlayTrigger>
+
                 </NavDropdown>
 
 
-                {/* <TeamNavigation /> */}
                 <NavDropdown title="Team" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTOD')} >GTO Dept</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IOD')} >IO Dept</Button></NavDropdown.Item>
@@ -222,21 +311,18 @@ class GeneralMain extends Component {
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('ITD')} >Intt Test Dept</Button></NavDropdown.Item>
                 </NavDropdown>
 
-                {/* <Stage1Navigation /> */}
                 <NavDropdown title="Stage1" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('OIR')} >OIR</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('PP')} >PP</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DT')} >DT</Button></NavDropdown.Item>
                 </NavDropdown>
  
-                {/* <Stage2Navigation /> */}
                 <NavDropdown title="Stage2" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('PSYCH')} >PSYCH</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTO')} >GTO</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IO')} >IO</Button></NavDropdown.Item>
                 </NavDropdown>
 
-                {/* <PDNavigation /> */}
                 <NavDropdown title="PD" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SE')} >SPOKEN ENGLISH</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('BL')} >BODY LANGUAGE</Button></NavDropdown.Item>
@@ -244,7 +330,6 @@ class GeneralMain extends Component {
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DAD')} >DO'S AND DON'T</Button></NavDropdown.Item>
                 </NavDropdown>
 
-                {/* <CurrentAffairNavigation /> */}
                 <NavDropdown title="Current Affairs" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('National')} >NATIONAL</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Internation')} >INTERNATIONAL</Button></NavDropdown.Item>
@@ -253,24 +338,38 @@ class GeneralMain extends Component {
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SAT')} >SCIENCE AND TECH</Button></NavDropdown.Item>
                 </NavDropdown>
 
-                {/* <CoursesNavigation /> */}
                 <NavDropdown title="Courses" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('CC')} >COURSES</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('FS')} >FEE STRUCTURE</Button></NavDropdown.Item>
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={coursesPopover}>
+                    <Button variant="none" style={{width:'100%'}}>Courses</Button>
+                  </OverlayTrigger>
+                  <br />
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={fsPopover}>
+                    <Button variant="none" style={{width:'100%'}}>Fee Structure</Button>
+                  </OverlayTrigger>
                 </NavDropdown> 
 
-                {/* <RollOfHonorNavigation /> */}
                 <NavDropdown title="Roll of Honor" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SOD')} >Star Of The Day</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('ES')} >Evergreen Star's</Button></NavDropdown.Item>
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={sotdPopover}>
+                    <Button variant="none" style={{width:'100%'}}>Start Of The Day</Button>
+                  </OverlayTrigger>
+                  <br />
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={esPopover}>
+                    <Button variant="none" style={{width:'100%'}}>Evergreen Star's</Button>
+                  </OverlayTrigger>
                 </NavDropdown>
 
-
-                {/* <ContactNavigation /> */}
                 <NavDropdown title="Contact us" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('CEO')} >Chief Executive Offier</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('COO')} >Chief Operations Offier</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('CMO')} >Chief Marketing Offier</Button></NavDropdown.Item>
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={ceoPopover}>
+                    <Button variant="none" style={{width:'100%'}}>CEO</Button>
+                  </OverlayTrigger>
+                  <br />
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={cooPopover}>
+                    <Button variant="none" style={{width:'100%'}}>COO</Button>
+                  </OverlayTrigger>
+                  <br />
+                  <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={cmoPopover}>
+                    <Button variant="none" style={{width:'100%'}}>CMO</Button>
+                  </OverlayTrigger>
                 </NavDropdown>
  
               </Nav>
@@ -286,22 +385,6 @@ class GeneralMain extends Component {
           <div className='scroll_message container-fluid'>
             <marquee behavior="scroll" direction="left">Here is some scrolling text... </marquee>
           </div>
-        </div>
-
-        <div hidden={this.state.globalview.is_Vision_hidden}>
-          <Vision />
-        </div>
-
-        <div hidden={this.state.globalview.is_Mission_hidden}>
-          <Mission />
-        </div>
-
-        <div hidden={this.state.globalview.is_Wiu_hidden}>
-          <WIU />
-        </div>
-
-        <div hidden={this.state.globalview.is_Courses_hidden}>
-          <Courses />
         </div>
 
         <div hidden={this.state.globalview.is_GTO_hidden}>
@@ -384,33 +467,6 @@ class GeneralMain extends Component {
           <PDSpokenLanguage />
         </div>
 
-        <div hidden={this.state.globalview.is_CC_hidden}>
-          <CoursesAgain />
-        </div>
-
-        <div hidden={this.state.globalview.is_FS_hidden}>
-          <CoursesFeeStructure />
-        </div>
-
-        <div hidden={this.state.globalview.is_ES_hidden}>
-          <RollOfHonorEvergreenStar />
-        </div>
-
-        <div hidden={this.state.globalview.is_SOD_hidden}>
-          <RollOfHonorStarDay />
-        </div>
-
-        <div hidden={this.state.globalview.is_CEO_hidden}>
-          <ContactCEO />
-        </div>
-
-        <div hidden={this.state.globalview.is_CMO_hidden}>
-          <ContactCMO />
-        </div>
-
-        <div hidden={this.state.globalview.is_COO_hidden}>
-          <ContactCOO />
-        </div>
       </div>
     );
   }

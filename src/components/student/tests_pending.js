@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Table} from 'react-bootstrap'
 import axios from 'axios'
 
+
 class StudentTestPending extends Component {
 
   constructor(props) {
@@ -63,8 +64,11 @@ class StudentTestPending extends Component {
       <div className="container">
         { this.state.status.length > 0 
           ? status_content :
-          <div> No Data</div>    
+          <div style={{width:'100%', padding:'2%',textAlign:'center', fontSize:'larger',color:'rgb(168, 162, 162)',backgroundColor:'rgb(236, 238, 240)', border:'1px solid rgb(172, 168, 168)', borderRadius:'5px'}}>
+            No Data Exists.
+          </div>
         }
+        <br />
       </div>
     );
   }

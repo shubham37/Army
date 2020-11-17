@@ -98,14 +98,16 @@ class StudentMain extends Component {
                 this.setState({
                     user:data.data.first_name
                 });
-                // console.log(data);
             })
             .catch((error) => {
                 console.log(error.message)
             });
+        } else if (token && role == '1') {
+            window.location.href = '/assessor';
         } else {
             localStorage.clear();
             this.setState({is_logout:true});
+            window.location.href = '/';
         }
     }
     
@@ -189,41 +191,16 @@ class StudentMain extends Component {
 
     
     logout(e){
-        e.preventDefault(e);
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        }
-        axios.get(`/api/logout/`,  {
-            headers: headers
-        })
-        .then((data) =>{
-            if (data.status === 200){
-                localStorage.clear();
-                this.setState({
-                    is_logout:true
-                });
-                // window.location = '/'
-                window.location.href = '/'
-            } else {
-                // console.log(data.data)
-                this.setState({
-                    logout_message: data.data
-                });
-            }
-        })
-        .catch((error) => {
-            console.log(error.message)
+        e.preventDefault();
+        localStorage.clear();
+        this.setState({
+            is_logout:true
         });
+        window.location.href = '/'
     }
 
 
     render() {
-        if  (this.state.is_logout) {
-            return <Redirect to='/' />
-        }
-
         return (
             <div className='StudentMain'>
                 <div className='row student_navigation'>

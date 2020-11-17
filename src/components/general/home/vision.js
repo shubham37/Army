@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
-import { Card } from 'react-bootstrap';
+import Popover from 'react-bootstrap/Popover';
 
-class Vision extends Component {
-  render() {
+function Vision() {
     return (
-      <div className='container-fluid'>
-        <Card>
-          <Card.Header><b>Vission</b></Card.Header>
-          <Card.Body>
-            <blockquote className="blockquote mb-0">
-              <p>
-                To be the best Launchpad for aspirants into the career of Indian Armed Forces & Coast Guards.
-              </p>
-            </blockquote>
-          </Card.Body>
-        </Card>
-        <br />
-      </div>
-    );
-  }
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">Vision</Popover.Title>
+        <Popover.Content>
+          To be the best Launchpad for aspirants into the career of Indian Armed Forces & Coast Guards.
+        </Popover.Content>
+      </Popover>
+  )
 }
 
 export default Vision;

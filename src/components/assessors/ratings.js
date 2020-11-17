@@ -7,7 +7,7 @@ class AssessorRating extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'ratings': []
+      'ratings': {}
     }
   }
 
@@ -24,7 +24,7 @@ class AssessorRating extends Component {
       if (data.data.is_data) {
         this.setState({'ratings':data.data.ratings})
       } else {
-        this.setState({'ratings':[]})
+        this.setState({'ratings':{}})
       }
     })
     .catch((error) => {
@@ -33,33 +33,29 @@ class AssessorRating extends Component {
   }
 
   render() {
-    const ratings_content = (
-      <div className='row'>
-        {this.state.ratings.map((rating) => (
-          <div className='col'>
-            <Card text style={{padding:'5%'}}>
-              <p>Name : {rating.student.first_name}</p>
-              <p>Gender : {rating.student.gender===1?'Male':'Female'}</p>
-              <p> Rating : {rating.rating}</p>
-            </Card>
-          </div>
-        ))}
-      </div>
-    )
-    const no_content = (
-      <div className='col'>
-            <p>No Data Exists</p>
-      </div>
-    )
-
     return (
       <div className='container-fluid'>
         <hr />
-          {
-            this.state.ratings.length > 0 
-            ? ratings_content :
-            no_content          
-          }
+        <Card body style={{padding: '2% 5%', margin: '2%'}}>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>No Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.ZERO}</span>
+          </p>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>1 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.ONE}</span>
+          </p>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>2 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.TWO}</span>
+          </p>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>3 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.THREE}</span>
+          </p>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>4 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.FOUR}</span>
+          </p>
+          <p>
+            <span style={{fontWeight: 'bolder', fontSize: 'larger', color: 'rgb(260, 160, 0)', margin: '0 2%', textAlign: 'right'}}>5 Star</span> <span style={{fontWeight: 'bolder', fontSize: 'larger'}}>{this.state.ratings.FIVE}</span>
+          </p>
+        </Card>
         <br />
       </div>
     );

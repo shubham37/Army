@@ -54,10 +54,11 @@ class StudentProgressReportIO extends Component {
     )
 
     const no_content = (
-      <div className='row'>
-        <div className='col' style={{width:'100%', textAlign:'center'}}>
+      <div className='container'>
+        <div style={{width:'100%', textAlign:'center', padding:'2%', fontSize:'larger', color:'rgb(168, 162, 162)', backgroundColor:'rgb(236, 238, 240)', border:'1px solid rgb(172, 168, 168)', borderRadius:'5px'}}>
           <p>No Report Exist From GTO Department</p>
         </div>
+        <br />
       </div>
     )
 
