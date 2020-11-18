@@ -116,7 +116,8 @@ class AdminMain extends Component {
                 <div className='row admin_navigation'>
                     <div className='col'>
                         <Navbar bg="light" expand="lg">
-                            <Navbar.Brand href="/admin_user"><img src={require('../../assets/images/logo.png')} alt="imag" width={100} height={50} /></Navbar.Brand>
+                            <Navbar.Brand href="/admin_user">
+                            </Navbar.Brand>
                             <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">

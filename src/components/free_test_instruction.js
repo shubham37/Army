@@ -11,7 +11,6 @@ class FreeTestInstruction extends Component {
                     <div className='col'>
                         <Navbar bg="light" expand="lg">
                             <Navbar.Brand href="/">
-                                <img src={require('../assets/images/logo.png')} alt="imag" width={100} height={50} />
                             </Navbar.Brand>
                             <Navbar.Text>Welcome for the Free Test</Navbar.Text>
                         </Navbar>
