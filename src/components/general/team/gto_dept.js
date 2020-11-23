@@ -12,7 +12,7 @@ class TeamGTO extends Component {
       assessors: []
     }
   }
-
+   
   componentWillMount() {
     axios.get(`/assessor_api/dept/GTO`)
     .then((data) =>{

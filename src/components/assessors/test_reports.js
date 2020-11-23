@@ -23,7 +23,6 @@ class AssessorTestReport extends Component {
     })
     .then((response) => {
       if (response.data.is_data) {
-        console.log(response.data.tests);
         this.setState({ tests: response.data.tests})
       }
     })

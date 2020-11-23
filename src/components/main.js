@@ -253,7 +253,7 @@ class Main extends Component {
             <Card body>
                 <div className='row'>
                     <div className='col'>
-                        <p className='login_title'>Login Students/Accessors</p>
+                        <p className='login_title'>Login Student/Assessor</p>
                     </div>
                 </div>
                 <div className='login'>

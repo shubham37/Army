@@ -30,8 +30,8 @@ import StudentPIQForm from './piq_form.js'
 import '../../assets/css/student.css'
 import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 
 class StudentMain extends Component {
     constructor(props) {
@@ -40,7 +40,8 @@ class StudentMain extends Component {
           globalview : {},
           logout_message: '',
           is_logout: false,
-          user:''
+          user:'',
+          image: ''
         }
         this.view = {
             is_PIQFORM_hidden:true,
@@ -77,7 +78,7 @@ class StudentMain extends Component {
 
         this.logout = this.logout.bind(this);      
     }
-    
+
     componentWillMount() {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
@@ -85,7 +86,7 @@ class StudentMain extends Component {
         const token = localStorage.getItem('token');
         const role = localStorage.getItem('role');
 
-        if (token && role == '0') {
+        if (token && role === '0') {
             this.setState({is_logout:false});
             const headers = {
                 'Content-Type': 'application/json',
@@ -96,13 +97,15 @@ class StudentMain extends Component {
             })
             .then((data) => {
                 this.setState({
-                    user:data.data.first_name
+                    user:data.data.first_name,
+                    image:data.data.image || ""
                 });
+                console.log(this.state.image)
             })
             .catch((error) => {
                 console.log(error.message)
             });
-        } else if (token && role == '1') {
+        } else if (token && role === '1') {
             window.location.href = '/assessor';
         } else {
             localStorage.clear();
@@ -127,6 +130,7 @@ class StudentMain extends Component {
                 view_local.is_Instruction_hidden = false;
                 break;
             case 'PIQ':
+                // Code For Download PIQ as PDF
                 view_local.is_PIQ_hidden = false;
                 break;
             case 'GTOA':
@@ -218,21 +222,21 @@ class StudentMain extends Component {
                                                 Psych Tests
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu>
-                                                <Dropdown.Item href="/tat_test">TAT-1</Dropdown.Item>
-                                                <Dropdown.Item href="/wat_test">WAT-1</Dropdown.Item>
-                                                <Dropdown.Item href="/srt_test">SRT-1</Dropdown.Item>
-                                                <Dropdown.Item href="/sd_test">SD-1</Dropdown.Item>
-                                                <Dropdown.Item href="/psych_test">PSYCH Test Complete</Dropdown.Item>
+                                                <Dropdown.Item href="/test/TAT">TAT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/test/WAT">WAT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/test/SRT">SRT-1</Dropdown.Item>
+                                                <Dropdown.Item href="/test/SD">SD-1</Dropdown.Item>
+                                                <Dropdown.Item href="/test/PSYCH">PSYCH Test Complete</Dropdown.Item>
                                             </Dropdown.Menu>
                                         </Dropdown>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('IO')}>IO Tests</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTO')}>GTO Tests</Button></NavDropdown.Item>
                                     </NavDropdown>
 
-                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instruction</Nav.Link>
+                                    <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('Instruction')}>Instructions</Nav.Link>
                                     <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('PIQ')}>PIQ</Nav.Link>
 
-                                    <NavDropdown title="Assessors" id="basic-nav-dropdown">
+                                    <NavDropdown title="Select Your Assessor" id="basic-nav-dropdown">
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('GTOA')}>GTO Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOA")}>IO Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHA")}>Psych Dept</Button></NavDropdown.Item>
@@ -244,11 +248,11 @@ class StudentMain extends Component {
                                     <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('SFD')}>Schedule For Today</Nav.Link>
 
                                     <NavDropdown title="Tests" id="basic-nav-dropdown">
-                                        <NavDropdown.Item href='/gto_dept_test'>GTO Dept</NavDropdown.Item>
-                                        <NavDropdown.Item href='/io_dept_test'>IO Dept</NavDropdown.Item>
-                                        <NavDropdown.Item href='/psych_dept_test'>Psych Dept</NavDropdown.Item>
-                                        <NavDropdown.Item href='/pd_dept_test'>PD Dept</NavDropdown.Item>
-                                        <NavDropdown.Item href='/itd_dept_test'>Intt Test Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/training/GTO'>GTO Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/training/IO'>IO Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/training/PSYCH'>Psych Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/training/PD'>PD Dept</NavDropdown.Item>
+                                        <NavDropdown.Item href='/training/ITD'>Intt Test Dept</NavDropdown.Item>
                                     </NavDropdown>
 
                                     <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
@@ -276,7 +280,10 @@ class StudentMain extends Component {
                 <br />
                 <div className='row container-fluid'>
                     <div className='col'>
-                        <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
+                        <span className='float-left'>Welcome, <br /> <b>Mr. {this.state.user}</b> </span>
+                        <span style={{marginLeft:'2px'}}>
+                            <img src={this.state.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
+                        </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <br />
                         <hr />

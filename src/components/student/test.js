@@ -1,8 +1,8 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios'
 
-class SRTTest extends Component {
+class Test extends Component {
 
   constructor(props) {
     super(props);
@@ -18,7 +18,11 @@ class SRTTest extends Component {
       seconds_part2: 0,
       is_disable:true,
       is_user:false,
-      test:null,
+      test:{
+        "word": "",
+        "text": "",
+        "images": []
+      },
       answer:"",
       is_test_submit:false,
       test_submit_response:'',
@@ -31,6 +35,7 @@ class SRTTest extends Component {
     this.countDown = this.countDown.bind(this);
     this.countDown2 = this.countDown2.bind(this);
     this.onTestSubmit = this.onTestSubmit.bind(this);
+    this.test_code = window.location.pathname.split('/')[2]
   }
 
 
@@ -48,16 +53,21 @@ class SRTTest extends Component {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`
     }
-    axios.get(`/student_api/tests/SRT/dept/`, {
+
+    axios.get(`/student_api/tests/${this.test_code}/dept/`, {
         headers: headers
     })
     .then((data) =>{
-      // console.log(data)
+      console.log(data)
         if (data.data.is_data){
           this.setState({
             seconds_part1: data.data.test.question_display_time,
             seconds_part2: data.data.test.answer_display_time,
-            test: data.data.test.question.word
+            test: {
+              "word": data.data.test.question.word || "",
+              "text": data.data.test.question.text || "",
+              "images": data.data.test.question.images || []
+            }
           });
         } else {
           this.setState({
@@ -69,7 +79,7 @@ class SRTTest extends Component {
         }
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
     });
   }
 
@@ -158,7 +168,7 @@ class SRTTest extends Component {
     }
     const data = {
       answer: this.state.answer,
-      code: 'TAT'
+      code: this.test_code
     }
 
     axios.post(`/student_api/tests/test_submit/`,  data, {
@@ -185,17 +195,38 @@ class SRTTest extends Component {
     });
   }
 
+  
+
   render() {
     if (!this.state.is_user) {
       return <Redirect to='/' />
     }
+
+    let content;
+    if (this.state.test.word) {
+      content = <p style={{width: '100%', fontSize:'larger', fontWeight:'bolder', padding:'2%'}}>{this.state.test.word || ""}</p>
+    } else if (this.state.test.word) {
+      content = <p style={{width: '100%', fontSize:'larger', fontWeight:'bolder', padding:'2%'}}>{this.state.test.text || ""}</p>
+    } else if (this.state.test.images.length > 0) {
+      content = 
+      <div class='row'>
+        {this.state.test.images.map((image) => 
+          <div class='col-md-6'>
+            <img src={image.image || require('../../assets/images/flag.jpg')} className='img-responsive img-thumbnail' alt='test_image' style={{width:"100%", height:'75%', padding:'2%'}} />
+          </div>
+        )}
+      </div>
+    } else {
+      content = <p style={{width: '100%', fontSize:'larger', fontWeight:'bolder', padding:'2%'}}>No Data Set</p>
+    }
+
     return (
       <div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part1} >
           <div className="row">
             <div className='col'>
-              <h3>SRT</h3>
+              <h3>{this.test_code}</h3>
             </div>
           </div>
           <div className='row container'>
@@ -218,44 +249,44 @@ class SRTTest extends Component {
         </div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part2}>
-        <br />
-        <div className="row">
-          <div className='col float-left'>
-            <h3>SRT</h3>
+          <br />
+          <div className="row">
+            <div className='col float-left'>
+              <h3>{this.test_code}</h3>
+            </div>
+            <div className='col'>
+              <h1 className='float-right'>{this.state.time_part1.m} : {this.state.time_part1.s}</h1>
+            </div>
           </div>
-          <div className='col'>
-            <h1 className='float-right'>{this.state.time_part1.m} : {this.state.time_part1.s}</h1>
-          </div>
-        </div>
+          <br />
 
-        <div className='row container'>
-          <div className='col-md'>
-            <img src={require('../../../assets/images/meter.jpg')} alt='TAT-PIC-1' width={600} height={400} />
+          <div className='row'>
+            <div className='col'>
+              {content}
+            </div>
           </div>
         </div>
-      </div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part3}>
           <br />
           <div className="row">
             <div className='col float-left'>
-              <h3>SRT</h3>
+              <h3>{this.test_code}</h3>
             </div>
             <div className='col'>
               <h1 className='float-right'> {this.state.time_part2.m} : {this.state.time_part2.s}</h1>
             </div>
           </div>
           <br />
-          <div className='row container'>
-            <div className='col'>
-              <textarea cols='100' rows='15' placeholder='Write Your Story Here ...' disabled={this.state.is_disable} />
-            </div>
-          </div>
           <div className='row'>
-            <div className='col-md' style={{width:'100%', textAlign:'center', marginTop:'5%'}}>
-              <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
+            <div className='col'>
+              <textarea cols='100' rows="30" placeholder='Write Your Story Here ...' value={this.state.answer} disabled={this.state.is_disable} onChange={(e) => this.setState({answer:e.target.value})} />
               <br />
-              <p>{this.state.test_submit_error}</p>
+              <p style={{width:'100%', textAlign:'center'}}>
+                <button className='btn btn-info  btn-rounded' disabled={this.state.is_disable?false:true} onClick={this.onTestSubmit} >SUBMIT TEST</button>
+                <br />
+                <span>{this.state.test_submit_error}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -269,4 +300,4 @@ class SRTTest extends Component {
   }
 }
 
-export default SRTTest;
+export default Test;

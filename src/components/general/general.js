@@ -22,15 +22,21 @@ import TeamITD from  '../general/team/intt_test_dept.js'
 import TeamIO  from '../general/team/io_dept.js'
 import TeamPD from '../general/team/pd_dept.js'
 import TeamPsych from '../general/team/psych_dept.js'
-import {NavDropdown, Navbar,Nav, Button} from 'react-bootstrap'
+import CoursesAgain from '../general/courses/courses.js'
+import CoursesFeeStructure from '../general/courses/fee_structure.js'
+import Contact from './contact.js'
+import { NavDropdown, Navbar,Nav, Button } from 'react-bootstrap'
 import '../../assets/css/general.css'
+import axios from 'axios';
 
 
 class GeneralMain extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      globalview : {}
+      globalview : {},
+      star : [],
+      stars : []
     }
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -58,19 +64,41 @@ class GeneralMain extends Component {
       is_DFS_hidden:true,
       is_DAD_hidden:true,
       is_National_hidden:true,
+      is_courses: true,
+      is_fee_structure: true,
+      is_contact: true,
       is_International_hidden:true,
       is_Economy_hidden:true,
       is_Defence_hidden:true,
       is_SAT_hidden:true,
       is_Home_hidden:true
     };
-  
   }
 
 
   componentWillMount() {
     this.state.globalview = Object.assign({}, this.view);
     this.state.globalview.is_Home_hidden = false;
+    axios.get(`/api/stars`)
+    .then((data) =>{
+        if (data.data.is_exist){
+          this.setState({
+            star: data.data.assessor,
+            stars:data.data.assessors
+          });
+        } else {
+          this.setState({
+            star:[],
+            stars: []
+          });
+        }
+    })
+    .catch((error) => {
+      this.setState({
+        star:[],
+        stars: []
+      });
+    });
   }
 
   onClickOption(title) {
@@ -136,6 +164,15 @@ class GeneralMain extends Component {
       case 'SAT':
         view_local.is_SAT_hidden = false;
         break;
+      case 'Courses':
+        view_local.is_courses = false;
+        break;
+      case 'FeeStructure':
+        view_local.is_fee_structure = false;
+        break;
+      case 'Contact':
+        view_local.is_contact = false;
+        break;
       default:
         view_local.is_Home_hidden = false;
     }
@@ -189,72 +226,99 @@ class GeneralMain extends Component {
       </Popover>
     );
 
-    const fsPopover = (
-      <Popover id="popover-basic">
-        <Popover.Title as="h3">FEES</Popover.Title>
-        <Popover.Content>
-            <span>One to one - Diamond - 12,000 Per Head</span><br />
-            <span>Group of 3 - Platinum 9,000 Per Head</span><br />
-            <span>Group of 10 - Gold - 8,500 Per Head</span><br />
-            <span>Group of 20 - Silver - 7,500 Per Head</span><br />
-        </Popover.Content>
-      </Popover>
-    );
+    const sotdData = (
+      <Popover.Content>
+        {this.state.star.map((assessor) =>
+          <div className='row'>
+            <div className='col-4'>
+              <img class="img-fluid img-circle" src={'/media/' + assessor.assessor__image || require('../../assets/images/bot.jpg')} alt="user" width='100%' height='100%' />
+            </div>
+            <div className='col'>
+              <span>Name: {assessor.assessor__first_name + " " + assessor.assessor__last_name}</span><br />
+              <span>Email: {assessor.assessor__user__email}</span><br />
+              <span>Mobile:</span><br />
+            </div>
+          </div>
+      )}
+      </Popover.Content>
+    )
 
     const sotdPopover = (
       <Popover id="popover-basic">
         <Popover.Title as="h3">Star Of The Day</Popover.Title>
-        <Popover.Content>
-            <span>Full Name</span><br />
-            <span>Date of Birth || Date of Joining</span><br />
-            <span>Gender || Department || Designation</span><br />
-        </Popover.Content>
+        {
+          this.state.star.length > 0
+          ? sotdData :
+          <Popover.Content>
+            <p>No Assessor Exist For Today.</p>
+          </Popover.Content>
+        }
       </Popover>
     );
+
+    const esData = (
+      <Popover.Content>
+        {this.state.stars.map((star) =>
+          <div className='row'>
+            <div className='col-4'>
+              <img class="img-fluid img-circle" src={'/media/'+ star.assessor__image || require('../../assets/images/bot.jpg')} alt="profile" width='100%' height='100%' />
+            </div>
+            <div className='col'>
+              <span>Name: {star.assessor__first_name + " " + star.assessor__last_name}</span><br />
+              <span>Email: {star.assessor__user__email}</span><br />
+              <span>Mobile:</span><br />
+            <hr />
+            </div>
+          </div>
+      )}
+      </Popover.Content>
+    )
 
     const esPopover = (
       <Popover id="popover-basic">
         <Popover.Title as="h3">Evergreen Star's</Popover.Title>
-        <Popover.Content>
-            <span>Full Name</span><br />
-            <span>Date of Birth || Date of Joining</span><br />
-            <span>Gender || Department || Designation</span><br />
-        </Popover.Content>
+        {
+          this.state.stars.length > 0
+          ? esData :
+          <Popover.Content>
+            <p>No Assessor Exist.</p>
+          </Popover.Content>
+        }
       </Popover>
     );
 
-    const cmoPopover = (
-      <Popover id="popover-basic">
-        <Popover.Title as="h3">CMO</Popover.Title>
-        <Popover.Content>
-            <span>Full Name</span><br />
-            <span>Date of Birth || Date of Joining</span><br />
-            <span>Gender || Department || Designation</span><br />
-        </Popover.Content>
-      </Popover>
-    );
+    // const cmoPopover = (
+    //   <Popover id="popover-basic">
+    //     <Popover.Title as="h3">CMO</Popover.Title>
+    //     <Popover.Content>
+    //         <span>First Name</span><br />
+    //         <span>Email Id</span><br />
+    //         <span>Mobile No</span><br />
+    //     </Popover.Content>
+    //   </Popover>
+    // );
 
-    const cooPopover = (
-      <Popover id="popover-basic">
-        <Popover.Title as="h3">COO</Popover.Title>
-        <Popover.Content>
-            <span>Full Name</span><br />
-            <span>Date of Birth || Date of Joining</span><br />
-            <span>Gender || Department || Designation</span><br />
-        </Popover.Content>
-      </Popover>
-    );
+    // const cooPopover = (
+    //   <Popover id="popover-basic">
+    //     <Popover.Title as="h3">COO</Popover.Title>
+    //     <Popover.Content>
+    //         <span>First Name</span><br />
+    //         <span>Email Id</span><br />
+    //         <span>Mobile No</span><br />
+    //     </Popover.Content>
+    //   </Popover>
+    // );
 
-    const ceoPopover = (
-      <Popover id="popover-basic">
-        <Popover.Title as="h3">CEO</Popover.Title>
-        <Popover.Content>
-            <span>Full Name</span><br />
-            <span>Date of Birth || Date of Joining</span><br />
-            <span>Gender || Department || Designation</span><br />
-        </Popover.Content>
-      </Popover>
-    );
+    // const ceoPopover = (
+    //   <Popover id="popover-basic">
+    //     <Popover.Title as="h3">CEO</Popover.Title>
+    //     <Popover.Content>
+    //         <span>First Name</span><br />
+    //         <span>Email Id</span><br />
+    //         <span>Mobile No</span><br />
+    //     </Popover.Content>
+    //   </Popover>
+    // );
 
     return (
       <div className='content_home'>
@@ -300,8 +364,8 @@ class GeneralMain extends Component {
 
                 <NavDropdown title="Stage1" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('OIR')} >OIR</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('PP')} >PP</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DT')} >DT</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('PP')} >PP/DT</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DT')} >GD(optional)</Button></NavDropdown.Item>
                 </NavDropdown>
  
                 <NavDropdown title="Stage2" id="basic-nav-dropdown">
@@ -319,25 +383,20 @@ class GeneralMain extends Component {
 
                 <NavDropdown title="Current Affairs" id="basic-nav-dropdown">
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('National')} >NATIONAL</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Internation')} >INTERNATIONAL</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('International')} >INTERNATIONAL</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Economy')} >ECONOMY</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Defence')} >DEFENCE</Button></NavDropdown.Item>
                   <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SAT')} >SCIENCE AND TECH</Button></NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Courses" id="basic-nav-dropdown">
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={coursesPopover}>
-                    <Button variant="none" style={{width:'100%'}}>Courses</Button>
-                  </OverlayTrigger>
-                  <br />
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={fsPopover}>
-                    <Button variant="none" style={{width:'100%'}}>Fee Structure</Button>
-                  </OverlayTrigger>
-                </NavDropdown> 
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Courses')} >Courses</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('FeeStructure')} >Fee Structure</Button></NavDropdown.Item>
+                </NavDropdown>
 
                 <NavDropdown title="Roll of Honor" id="basic-nav-dropdown">
                   <OverlayTrigger trigger="click" rootClose placement="right" overlay={sotdPopover}>
-                    <Button variant="none" style={{width:'100%'}}>Start Of The Day</Button>
+                    <Button variant="none" style={{width:'100%'}}>Star Of The Day</Button>
                   </OverlayTrigger>
                   <br />
                   <OverlayTrigger trigger="click" rootClose placement="right" overlay={esPopover}>
@@ -345,19 +404,9 @@ class GeneralMain extends Component {
                   </OverlayTrigger>
                 </NavDropdown>
 
-                <NavDropdown title="Contact us" id="basic-nav-dropdown">
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={ceoPopover}>
-                    <Button variant="none" style={{width:'100%'}}>CEO</Button>
-                  </OverlayTrigger>
-                  <br />
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={cooPopover}>
-                    <Button variant="none" style={{width:'100%'}}>COO</Button>
-                  </OverlayTrigger>
-                  <br />
-                  <OverlayTrigger trigger="click" rootClose placement="right" overlay={cmoPopover}>
-                    <Button variant="none" style={{width:'100%'}}>CMO</Button>
-                  </OverlayTrigger>
-                </NavDropdown>
+                {/* <NavLink id="basic"> */}
+                  <Button className='course' style={{fontWeight: 'bolder', color: 'gray'}} variant='None' onClick={(e) => this.onClickOption('Contact')} >Contact Us</Button>
+                  {/* </NavLink> */}
  
               </Nav>
             </Navbar.Collapse>
@@ -452,6 +501,18 @@ class GeneralMain extends Component {
 
         <div hidden={this.state.globalview.is_SE_hidden}>
           <PDSpokenLanguage />
+        </div>
+
+        <div hidden={this.state.globalview.is_contact}>
+          <Contact />
+        </div>
+
+        <div hidden={this.state.globalview.is_courses}>
+          <CoursesAgain />
+        </div>
+
+        <div hidden={this.state.globalview.is_fee_structure}>
+          <CoursesFeeStructure />
         </div>
 
       </div>

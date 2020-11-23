@@ -3,12 +3,13 @@ import { Card } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-import VideoApp from './video.js'
+import Iframe from 'react-iframe'
 
-class GTODT extends Component {
+class DeoartmentTraining extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       is_hidden_part1:true,
       is_hidden_part2:true,
@@ -34,6 +35,24 @@ class GTODT extends Component {
     this.countDown2 = this.countDown2.bind(this);
     this.feedbackSubmit = this.feedbackSubmit.bind(this);
     this.start = this.start.bind(this);
+    this.completeNow = this.completeNow.bind(this);
+    this.dept = window.location.pathname.split('/')[2]
+  }
+
+
+  completeNow() {
+    clearInterval(this.timer_part2);
+    this.setState({
+      seconds_part2: 0,
+      time_part2: this.secondsToTime(0)
+    });
+
+    this.setState({
+      is_hidden_part1:true,
+      is_hidden_part2:true,
+      is_hidden_part3:false,
+      is_disable:true
+    });
   }
 
   componentWillMount() {
@@ -41,7 +60,7 @@ class GTODT extends Component {
 
     axios.post(`/student_api/assessor_stream_schedule/dept_wise/`, 
     {
-      'dept_code':'GTO'
+      'dept_code':this.dept
     },
     {
       headers:{
@@ -51,14 +70,14 @@ class GTODT extends Component {
     })
     .then((response) => {
       console.log(response.data)
+      console.log(response.data.training);
       this.setState({
         training_data:response.data.training,
-        // seconds_part1: 10
         seconds_part1: Math.floor((new Date(response.data.training.start_time) - new Date())/1000)  
       });
     })
     .catch((error) => {
-      // console.log(error.message);
+      console.log(error.message);
     });
   }
   
@@ -101,11 +120,12 @@ class GTODT extends Component {
     });
 
     // Check if we're at zero.
-    if (seconds === 0) { 
+    if (seconds === 0) {
+      clearInterval(this.timer_part1);
       this.timer_part1 = 0;
       this.setState({
         time_part1: {},
-        seconds_part2:10
+        seconds_part2: Math.floor((new Date(this.state.training_data.end_time) - new Date(this.state.training_data.start_time))/1000)
       });
 
       let timeLeftVar = this.secondsToTime(this.state.seconds_part2);
@@ -132,6 +152,7 @@ class GTODT extends Component {
 
     if (seconds === 0) { 
       clearInterval(this.timer_part2);
+      this.timer_part2 = 0;
       this.setState({
         is_hidden_part1:true,
         is_hidden_part2:true,
@@ -156,31 +177,16 @@ class GTODT extends Component {
       }
     })
     .then((response) => {
-      // console.log(response.data);
-      this.setState({is_submit : true});
-    })
-    .catch((error) => {
-      // console.log(error.message);
-    });
-    axios.post(`/assessor_api/instructions/add_update/`, 
-    {
-      'instruction':'',
-      'student_id':this.state.training_data.student.id,
-      'assessor_id': this.state.training_data.assessor.id
-    },
-    {
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`
+      if (response.status === 202) {
+        this.setState({is_submit : true});
+        this.setState({submission_error:"Test Complete and Rating Submit Successfully."})
+        window.location.href= '/student';
+      } else {
+        this.setState({submission_error:"Please Try Again."})
       }
-    })
-    .then((response) => {
-      // console.log(response.data);
-      window.location = '/';
-    })
+  })
     .catch((error) => {
       this.setState({submission_error:"Please Try Again."})
-      // console.log(error.message);
     });
   
   }
@@ -191,7 +197,7 @@ class GTODT extends Component {
       return (
         <div className='row'>
           <div className='col' style={{textAlign:'center'}}>
-            <p>No Training Scheduled</p>
+      <p>No Training Scheduled for {this.dept}</p>
             <a href='/student'>Click To Home</a>
           </div>
         </div>
@@ -202,7 +208,7 @@ class GTODT extends Component {
       <div>
         <div className="row" style={{backgroundColor:'blueviolet', color:'white', padding:'1%', boxShadow:'2px 2px 2px 2px grey'}}>
           <div className='col'>
-            <h4 className='container-fluid'>GTO Department</h4>
+            <h4>{this.dept} Department</h4>
           </div>
         </div>
         <br />
@@ -213,7 +219,7 @@ class GTODT extends Component {
         </div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part1}>
-          <div className='row container'>
+          <div className='row'>
             <div className='col'>
               <Card body>
                 <p>
@@ -221,7 +227,8 @@ class GTODT extends Component {
                   Your Test is scheduled at {this.state.start_time}.<br />
                   Before appearing for the tests , you must go through the training videos given in your dashboard atleast once.<br />
                   See You after {this.state.time_part1.h} Hours {this.state.time_part1.m} Minutes {this.state.time_part1.s} Seconds <br />
-                  <footer className='float-right'>Col {this.state.training_data.assessor.first_name}</footer>
+                  <span className='float-right'>Col {this.state.training_data.assessor.first_name}</span>
+                  <br />
                   <br />
                   <a href='/student'><button className='btn btn-info'> Click To Home </button></a>
                 </p>
@@ -229,67 +236,64 @@ class GTODT extends Component {
             </div>
           </div>
           <br />
-          <div className='row container'>
+          <div className='row'>
             <div className='col' style={{textAlign:'center'}}>
               <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part1.h} : {this.state.time_part1.m} : {this.state.time_part1.s}</span>
             </div>
           </div>
           <br />
           <br />
-          <div className='row container'>
+          <div className='row'>
             <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
+              <img src={this.state.training_data.student.image ||  require('../../assets/images/bot.jpg')} alt='MrXXX' style={{width:'75%', height:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
               <h4>Mr. {this.state.training_data.student.first_name}</h4>
             </div>
             <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
-              <h4>COL {this.state.training_data.assessor.first_name}</h4>
+              <img src={this.state.training_data.assessor.image || require('../../assets/images/bot.jpg')} alt='MrXXX' style={{width:'75%', height:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
+              <h4>Mr. {this.state.training_data.assessor.first_name}</h4>
             </div>
           </div>
         </div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part2}>
-          <div className='row container'>
+          <div className='row'>
             <div className='col' style={{textAlign:'center'}}>
-              {/* <VideoApp /> */}
-              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part1.h} : {this.state.time_part2.m} : {this.state.time_part2.s}</span>
-              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}}>Live</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.h} : {this.state.time_part2.m} : {this.state.time_part2.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'red', fontWeight:'bolder', fontSize:'larger', color:'white'}}>Live</span><br /><br />
+                <button style={{border:'none', fontSize: 'larger', fontWeight: 'bolder', textDecoration: 'underline', padding:'1%'}} onClick={(e) => this.completeNow()}>Complete</button>
             </div>
           </div>
           <br />
-          <br />
-          <div className='row container'>
-            <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
-              <h4>Mr. {this.state.training_data.student.first_name}</h4>
-            </div>
-            <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
-              <h4>COL {this.state.training_data.assessor.first_name}</h4>
+          <div className='row'>
+            <div className='col' style={{textAlign:'center', margin:'0', padding:'0 20%'}}>
+              <p>
+                <Iframe allow="camera; microphone; fullscreen;" url={'https://localhost:8443/'+ this.state.training_data.video_url} width="100%" height="auto" />
+              </p>
             </div>
           </div>
         </div>
 
         <div className='container-fluid' hidden={this.state.is_hidden_part3}>
-          <div className='row container'>
+          <div className='row'>
             <div className='col' style={{textAlign:'center'}}>
-              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part1.h} : {this.state.time_part2.m} : {this.state.time_part2.s}</span>
+              <span style={{marginTop:'2%', padding:'1% 2%', backgroundColor:'blue', fontWeight:'bolder', fontSize:'larger', color:'white'}}>{this.state.time_part2.h} : {this.state.time_part2.m} : {this.state.time_part2.s}</span>
             </div>
           </div>
           <br />
           <br />
-          <div className='row container'>
+          <div className='row'>
             <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
+              <img src={this.state.training_data.student.image || require('../../assets/images/bot.jpg')} alt='MrXXX' style={{width:'75%', height:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
               <h4>Mr. {this.state.training_data.student.first_name}</h4>
             </div>
             <div className='col-md col-xs' style={{textAlign:'center'}}>
-              <img src={require('../../../assets/images/meter.jpg')} alt='MrXXX' style={{width:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
-              <h4>COL {this.state.training_data.assessor.first_name}</h4>
+              <img src={this.state.training_data.assessor.image || require('../../assets/images/bot.jpg')} alt='MrXXX' style={{width:'75%', height:'75%', border:'1px solid black', borderRadius:'4px'}} /><br />
+              <h4>Mr. {this.state.training_data.assessor.first_name}</h4>
             </div>
           </div>
 
-          <div className='row container'>
+          <div className='row'>
+            <div className='col'>
               <Card body>
                 <h4>
                   Hi {this.state.training_data.student.first_name}. What do you think about me,
@@ -297,22 +301,25 @@ class GTODT extends Component {
                   Thanks. Col {this.state.training_data.assessor.first_name}
                 </h4>
                 <br />
-                <Rating
-                  name="simple-controlled"
-                  value={this.state.rating}
-                  onChange={(event, newValue) => {
-                    this.setState({rating:newValue});
-                  }}
-                  size="large"
-                />
-                <br />
-                <Button variant="contained" color="primary" onClick={this.feedbackSubmit} disableElevation>
-                  FINISH
-                </Button>
-                <br />
+                <p style={{textAlign:'center'}}>
+                  <Rating
+                    name="simple-controlled"
+                    value={this.state.rating}
+                    onChange={(event, newValue) => {
+                      this.setState({rating:newValue});
+                    }}
+                    size="large"
+                    style={{padding:'1%'}}
+                  />
+                  <br />
+                  <Button style={{marginTop:'1%', padding:'1% 4%'}} variant="contained" color="primary" onClick={this.feedbackSubmit} disableElevation>
+                    FINISH
+                  </Button>
+                </p>
                 <p>{this.state.submission_error}</p>
               </Card>
               <br />
+            </div>
           </div>
         </div>
       </div>
@@ -320,4 +327,4 @@ class GTODT extends Component {
   }
 }
 
-export default GTODT;
+export default DeoartmentTraining;

@@ -7,7 +7,7 @@ class Stage1PP extends Component {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col'>
-            <h4>PP</h4>
+            <h4>PP/DT</h4>
             <hr />            
           </div>
         </div>

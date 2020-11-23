@@ -20,3 +20,103 @@
     padding-top: 1%;
     background-color: brown;
 }
+
+.wa {
+    width:48px;
+    height: 48px;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1;    
+    margin: 0px;
+    padding: 0px;
+    box-shadow: 2px 2px 2px 2px rgb(197, 196, 194);
+    background-color: white;
+}
+
+.wa_cancel {
+    width:48px;
+    height: 48px;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1;    
+    margin: 0px;
+    padding: 3px;
+    box-shadow: 2px 2px 2px 2px rgb(197, 196, 194);
+    background-color: white;
+
+}
+
+.bot {
+    width: 54px;
+    height: 54px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;    
+    margin: 0px;
+    padding: 0px;
+    box-shadow: 2px 2px 2px 2px rgb(197, 196, 194);
+    background-color: white;
+}
+
+.bot_cancel {
+    width: 48px;
+    height: 48px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+    margin: 0px;
+    padding: 4px;
+    box-shadow: 2px 2px 2px 2px rgb(228, 227, 226);
+    background-color: white;
+}
+
+.number {
+    width: 250px;
+    height: 155px;
+    position: fixed;
+    bottom: 65px;
+    left: 10px;
+    z-index: 1;
+    margin: 0px;
+    padding: 1%;
+    box-shadow: 2px 2px 2px 2px rgb(235, 233, 230);
+    background-color: white;
+}
+
+.bot_block {
+    width: 25%;
+    height: 75%;
+    position: fixed;
+    bottom: 65px;
+    right: 10px;
+    z-index: 1;    
+    margin: 0px;
+    padding: 0.5%;
+    box-shadow: 2px 2px 2px 2px rgb(235, 233, 230);
+    background-color: white;
+}
+
+.wainput {
+    margin: 1%;
+    width: auto;
+    padding: 1%;
+    font-size: medium;
+    font-weight: bolder;
+    color: black;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.wab {
+    border: none;
+    background-color: rgb(260,160, 0);
+    font-weight: bold;
+    font-size: larger;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {Card} from 'react-bootstrap';
 import axios from 'axios'
-import { BorderBottom } from '@material-ui/icons';
-
 
 
 class StudentIntruction extends Component {

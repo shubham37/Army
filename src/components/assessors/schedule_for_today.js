@@ -35,7 +35,8 @@ class AssessorScheduleToday extends Component {
             Id: schedule.id,
             Subject: schedule.subject+ " || " + schedule.student.first_name,
             StartTime: new Date(schedule.start_time),
-            EndTime: new Date(schedule.end_time)
+            EndTime: new Date(schedule.end_time),
+            Video: schedule.video_url
           })
         });
         this.setState({
@@ -55,11 +56,12 @@ class AssessorScheduleToday extends Component {
 
   editorTemplate(props) {
     return (props !== undefined ? <table className="custom-event-editor" style={{ width: '100%' }} id='content'><tbody>
-    <tr><td className="e-textlabel">Status</td><td colSpan={4}>
+    <tr hidden={true}><td className="e-textlabel">Status</td><td colSpan={4}>
       <DropDownListComponent id="EventType" placeholder='Choose status' data-name="EventType" className="e-field" style={{ width: '100%' }} dataSource={['Available', 'Scheduled']} value={props.EventType || null}></DropDownListComponent>
     </td></tr>
-    <tr hidden={true}><td className="e-textlabel">Summary</td><td colSpan={4}>
-      <input id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} />
+    <tr hidden={!props.Video}><td className="e-textlabel"></td><td colSpan={4}>
+      <a href={'https://localhost:8443/'+ props.Video || ""} className='e-field' name="Subject">Join Training Now</a>
+      {/* <input hidden={true} id="Summary" className="e-field e-input" type="text" name="Subject" style={{ width: '100%' }} /> */}
     </td></tr>
     <tr><td className="e-textlabel">From</td><td colSpan={4}>
       <DateTimePickerComponent format='dd/MM/yy hh:mm a' id="StartTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
@@ -80,7 +82,7 @@ class AssessorScheduleToday extends Component {
           editorTemplate={this.editorTemplate} showQuickInfo={false}>
           <Inject services={[Day]}/>
           <ViewsDirective>
-            <ViewDirective option='Day' startHour='09:00' endHour='18:00' readonly={true} />
+            <ViewDirective option='Day' startHour='09:00' endHour='18:00' readonly={false} />
           </ViewsDirective>
         </ScheduleComponent>
         <br />

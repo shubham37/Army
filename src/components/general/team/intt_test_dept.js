@@ -58,7 +58,7 @@ class TeamITD extends Component {
     const no_content = (
       <div className='row'>
         <div className='col' style={{width:'100%', textAlign:'center'}}>
-          <p>No Assessor For ITD</p>
+          <p>No Assessor For Intt Test</p>
         </div>
       </div>
     )

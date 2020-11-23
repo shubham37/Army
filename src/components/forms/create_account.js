@@ -15,6 +15,7 @@ export default function CreateAccount() {
     const [firstname, setFirstname] = useState("");
     const [middlename, setMiddlename] = useState("");
     const [lastname, setLastname] = useState("");
+    const [profile, setProfile] = useState();
     const [dob, setDob] = useState("");
     const [email, setEmail] = useState("");
     const [mobile, setMobile] = useState("");
@@ -225,27 +226,34 @@ export default function CreateAccount() {
     function onSubmit(e) {
         e.preventDefault(e);
         setInprocess(true);
-        let params = {
-            username:username, password:password,
-            confirmpassword:confirmpassword,
-            squestion:squestion, sanswer:sanswer, 
-            firstname:firstname, middlename:middlename,
-            lastname:lastname, gender:gender,
-            dob:dob, occupation:occupation,
-            marital:marital, mobile:mobile,
-            email:email, flat:flat,
-            street:street, area:area,
-            statet:statet, city:city,
-            pincode:pincode, postoffice:postoffice,
-            phone:phone
-        }
-        // console.log(params);
+        const uploadForm = new FormData();
+        uploadForm.append("username",username);
+        uploadForm.append("password",password);
+        uploadForm.append("confirmpassword",confirmpassword);
+        uploadForm.append("squestion",squestion);
+        uploadForm.append("sanswer",sanswer); 
+        uploadForm.append("firstname",firstname);
+        uploadForm.append("middlename",middlename);
+        uploadForm.append("lastname",lastname);
+        uploadForm.append("gender",gender);
+        uploadForm.append("dob",dob);
+        uploadForm.append("occupation",occupation);
+        uploadForm.append("marital",marital);
+        uploadForm.append("mobile",mobile);
+        uploadForm.append("email",email);
+        uploadForm.append("flat",flat);
+        uploadForm.append("street",street);
+        uploadForm.append("area",area);
+        uploadForm.append("statet",statet);
+        uploadForm.append("city",city);
+        uploadForm.append("pincode",pincode); 
+        uploadForm.append("postoffice",postoffice);
+        uploadForm.append("phone",phone);
+        uploadForm.append("profile",profile, profile.name);
         if (password === confirmpassword) {
-            axios.post(`/api/signup/`,params)
+            axios.post(`/api/signup/`,uploadForm)
             .then((data) =>{
                 if (data.status === 201) {
-                    // console.log(data)
-                    // const local_data = JSON.parse(data.data);
                     setInprocess(false);
                     localStorage.setItem('token', data.data.token);
                     localStorage.setItem('role', data.data.role);
@@ -259,7 +267,6 @@ export default function CreateAccount() {
             .catch((error) => {
                 setInprocess(false);
                 setError(error.message);
-                // console.log(error.message);
             });
         }
         else {
@@ -294,7 +301,6 @@ export default function CreateAccount() {
             }
         })
         .catch((error) => {
-            // console.log(error.message)
             setInprocess(true);
             setError(error.message);
         });
@@ -381,11 +387,15 @@ export default function CreateAccount() {
                         <hr  />
 
                         <div className='row'>
-                            <div className='col col-md-6 block_view'>
+                            <div className='col-md block_view'>
                                 <label for='gender'>Gender <span className='required_symbol'>*</span> : </label>
                                 <select value={gender} id="gender" className='input_take' onChange={onSelectGender} required>
                                     <Gender />
                                 </select>
+                            </div>
+                            <div className='col-md block_view'>
+                                <label for='profile'>Upload Profile <span className='required_symbol'>*</span> : </label>
+                                <input type='file' id='profile' style={{border:'2px solid black', borderRadius: '4px'}} onChange={(evt) => setProfile(evt.target.files[0])} />
                             </div>
                         </div>
                         <hr />

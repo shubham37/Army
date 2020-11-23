@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { Accordion, Card } from 'react-bootstrap'
-import SpellcheckIcon from '@material-ui/icons/Spellcheck';
-// import './../../assets/css/assessor.css'
+
 
 class AssessorInstruction extends Component {
 

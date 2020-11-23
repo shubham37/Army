@@ -6,17 +6,25 @@
     box-shadow: 2px 2px 2px 2px rgb(196, 196, 196);
 }
 
-#basic-nav-dropdown {
+#basic-nav-dropdown, .course {
     font-weight: bold;
     color: grey;
     border-bottom: 2px solid rgba(223, 222, 222, 0.0);
 }
 
-#basic-nav-dropdown:hover {
+#basic-nav-dropdown:hover, .course:hover {
     color: teal;
     border-bottom: 2px solid teal;
 }
 
 #basic-nav-dropdown:active{
     color: rgb(185, 169, 24);
+}
+
+
+.flag {
+    width: 100%;
+    height: 175px;
+    margin: 0;
+    padding: 0;
 }

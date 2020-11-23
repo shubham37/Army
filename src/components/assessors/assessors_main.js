@@ -10,7 +10,6 @@ import AssessorTestReport from './test_reports.js'
 import AssessorTrainingSchedule  from './training_schedule.js'
 import { Navbar,Nav } from 'react-bootstrap'
 import '../../assets/css/assesor.css'
-import { Redirect } from 'react-router';
 import axios from 'axios';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -22,7 +21,8 @@ class AssessorMain extends Component {
             globalview : {},
             logout_message: '',
             is_logout:false,
-            user:''
+            user:'',
+            image: ''
         };
         this.logout = this.logout.bind(this);
         this.view = {
@@ -46,7 +46,7 @@ class AssessorMain extends Component {
         const token = localStorage.getItem('token');
         const role = localStorage.getItem('role');
 
-        if (token && role == '1') {
+        if (token && role === '1') {
             const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${token}`
@@ -56,14 +56,15 @@ class AssessorMain extends Component {
             })
             .then((data) => {
                 this.setState({
-                    user:data.data.first_name
+                    user: data.data.first_name,
+                    image: data.data.image || ""
                 });
             })
             .catch((error) =>  {
                 console.log(error.message)
             });
             this.setState({is_logout:false});
-        } else if (token && role == '0') {
+        } else if (token && role === '0') {
             window.location.href = '/student';
         } else {
             localStorage.clear();
@@ -152,7 +153,10 @@ class AssessorMain extends Component {
                 <br />
                 <div className='row container-fluid'>
                     <div className='col'>
-                        <span className='float-left'>Welcome, <b>Mr. {this.state.user}</b> </span>
+                        <span className='float-left'>Welcome, <br /><b>Mr. {this.state.user}</b> </span>
+                        <span style={{marginTop:'2px'}}>
+                            <img src={this.state.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
+                        </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
                     </div>

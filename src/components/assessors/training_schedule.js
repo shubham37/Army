@@ -99,7 +99,7 @@ class AssessorTrainingSchedule extends Component {
       });
     }
     else if (action.requestType === 'eventCreate') {
-      const data = []
+      // const data = []
       action.addedRecords.map((record) => {
         if (record.EventType === 'Available') {
           record.Subject  = 'Available'
@@ -109,16 +109,17 @@ class AssessorTrainingSchedule extends Component {
         }
       })
     }
-    else if (action.requestType === 'eventChange') {
-      const data = action.changedRecords
-    } 
+    // else if (action.requestType === 'eventChange') {
+    //   const data = action.changedRecords
+    // } 
   }
 
   onPopupOpen(args) {
     // debugger
     if (args.type === 'Editor') {
-        if (args.data.Subject != 'Available'){
-          let bodyElement = args.element.querySelector('#content');
+        if (args.data.Subject !== 'Available'){
+          console.log(args.data);
+          // let bodyElement = args.element.querySelector('#content');
           // bodyElement.innerHTML = "You are Not Allowed"
         } else {
           let statusElement = args.element.querySelector('#EventType');
