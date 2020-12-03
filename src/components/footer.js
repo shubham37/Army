@@ -13,10 +13,10 @@ class Footer extends Component {
         <div className='row'>
           <div className='col'>
             <ul>
-              <li><img src={require('../assets/images/fb.png')} className='rounded' alt='Facebook' width='25px' height='25px' /></li>
-              <li><img src={require('../assets/images/twitter.png')} className='rounded' alt='Twitter' width='25px' height='25px' /></li>
-              <li><img src={require('../assets/images/yt.jpg')} className='rounded' alt='Youtube' width='25px' height='25px' /></li>
-              <li><img src={require('../assets/images/ln.png')} className='rounded' alt='LinkedIn' width='25px' height='25px' /></li>
+              <li><a href='https://facebook.com'><img src={require('../assets/images/fb.png')} className='rounded' alt='Facebook' width='25px' height='25px' /></a></li>
+              <li><a href='https://twitter.com'><img src={require('../assets/images/twitter.png')} className='rounded' alt='Twitter' width='25px' height='25px' /></a></li>
+              <li><a href='https://youtube.com'><img src={require('../assets/images/yt.jpg')} className='rounded' alt='Youtube' width='25px' height='25px' /></a></li>
+              <li><a href='https://linkedin.com'><img src={require('../assets/images/ln.png')} className='rounded' alt='LinkedIn' width='25px' height='25px' /></a></li>
             </ul>
           </div>
         </div>

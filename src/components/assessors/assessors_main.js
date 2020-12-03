@@ -123,8 +123,6 @@ class AssessorMain extends Component {
                 <div className='row assessor_navigation'>
                     <div className='col'>
                         <Navbar bg="light" expand="lg" sticky='top'>
-                            <Navbar.Brand href="/assessor">
-                            </Navbar.Brand>
                             <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">

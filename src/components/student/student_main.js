@@ -210,8 +210,6 @@ class StudentMain extends Component {
                 <div className='row student_navigation'>
                     <div className='col'>
                         <Navbar bg="light" expand="lg">
-                            <Navbar.Brand href="/student">
-                            </Navbar.Brand>
                             <Navbar.Toggle label='Home' aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mr-auto">

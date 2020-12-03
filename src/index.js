@@ -4,7 +4,7 @@ import App from './App';
 
 import Test from './components/student/test.js'
 import DeoartmentTraining from './components/student/training.js'
-
+import ResetPassword from './components/reset.js'
 import './index.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -17,6 +17,10 @@ ReactDOM.render(
 
       <Route exact path='/test/:code'>
         <Test />
+      </Route>
+
+      <Route path='/reset_password/:uuid/:id'>
+        <ResetPassword />
       </Route>
 
       <Route path='/'>

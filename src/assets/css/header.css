@@ -1,0 +1,24 @@
+.modatent {
+    margin: auto;
+    display: block;
+    width: 100%;
+    height: 400px;
+    max-width: 1000px;
+}
+.modalimg {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mdl {
+    padding-top: 100px;
+}
+
+@media only screen and (max-width: 700px){
+    .modatent {
+        width: 100%;
+        height: 300px;
+    }
+}

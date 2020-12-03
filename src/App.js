@@ -87,7 +87,7 @@ class App extends Component {
         <img class="btn img-fluid rounded-circle wa" onClick={(e) => this.toggle_wa_block()} src={require('./assets/images/wa.png')} alt="whatsapp" hidden={!this.state.is_wa_block_hidden} />
         <img class="btn img-fluid rounded-circle wa_cancel" onClick={(e) => this.toggle_wa_block()} src={require('./assets/images/cancel.svg')} alt="cancel" hidden={this.state.is_wa_block_hidden} />
 
-        <iframe hidden={this.state.is_bot_block_hidden} class='bot_block' allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/efc40e90-993b-4d50-a67f-20efd15e18b3"></iframe>
+        <iframe title="Bot" hidden={this.state.is_bot_block_hidden} class='bot_block' allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/efc40e90-993b-4d50-a67f-20efd15e18b3"></iframe>
 
         <img class="btn img-fluid rounded-circle bot" onClick={(e) => this.toggle_bot_block()} src={require('./assets/images/bot.jpg')} alt="whatsapp" hidden={!this.state.is_bot_block_hidden} />
         <img class="btn img-fluid rounded-circle bot_cancel" onClick={(e) => this.toggle_bot_block()} src={require('./assets/images/cancel.svg')} alt="cancel" hidden={this.state.is_bot_block_hidden} />

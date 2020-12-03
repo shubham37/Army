@@ -99,12 +99,12 @@ class Main extends Component {
     ).then((data) => {
       this.setState({is_spinner_hidden:true});
       if (data.status === 200) {
-        let timeLeftVar = this.secondsToTime(30);
+        let timeLeftVar = this.secondsToTime(60);
         this.setState({
           free_test_error: data.data.detail,
           is_disable:false,
           time_part1: timeLeftVar,
-          seconds_part1: 30
+          seconds_part1: 60
         });
         localStorage.setItem('otp', data.data.OTP)
 
@@ -113,7 +113,7 @@ class Main extends Component {
         }
       } else {
           this.setState({
-            free_test_error: "Please Try Again."
+            free_test_error: "Either exam is already taken or email is not correct."
           });
         }
       })
