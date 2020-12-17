@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScheduleComponent, WorkWeek, Day, Month, Inject, ViewsDirective, ViewDirective, Agenda } from '@syncfusion/ej2-react-schedule';
+import { ScheduleComponent, Week, Day, Month, Inject, ViewsDirective, ViewDirective, Agenda } from '@syncfusion/ej2-react-schedule';
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
@@ -156,9 +156,9 @@ class AssessorAvailablityCheck extends Component {
                                 <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.availabilities }} 
                                     editorTemplate={this.editorTemplate} showQuickInfo={false} popupOpen={this.onPopupOpen}  
                                     actionBegin={this.onActionBegin} >
-                                <Inject services={[Day, WorkWeek, Month]}/> 
+                                <Inject services={[Day, Week, Month]}/> 
                                 <ViewsDirective>
-                                    <ViewDirective option='WorkWeek' startHour='09:00' endHour='18:00'/>
+                                    <ViewDirective option='Week' startHour='09:00' endHour='18:00'/>
                                     {/* <ViewDirective option='Week' startHour='08:00' endHour='20:00'/> */}
                                     <ViewDirective option='Month' showWeekend={false}/>
                                 </ViewsDirective>

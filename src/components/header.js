@@ -1,25 +1,59 @@
 import React, { Component } from 'react';
 import '../assets/css/header.css'
+import axios from 'axios'
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      'modalImage': '/media/army-gallery/headerimage/b6d6edb8-24ef-4345-86e8-6cfa1985b2b8.jpg',
+      'images': []
+    }
+    this.clickImage = this.clickImage.bind(this);
+  }
+
+  componentWillMount(){
+    axios.get(`/api/images/`)
+    .then((data) => {
+      if (data.data.is_exist) {
+        console.log(data)
+        this.setState({
+            modalImage: data.data.images[0].image,
+            images: data.data.images
+        });
+      }
+    })
+    .catch((error) =>  {
+        console.log(error.message)
+    });
+  }
+
+  clickImage(path) {
+    this.setState({
+      'modalImage': path
+    })
+  }
+
+
   render() {
+    const modalImages = (
+      this.state.images.map((img, index) => 
+        <div class={`carousel-item ${index==0 ?"active": ""}`}>
+          <img src={img.image} className='img-responsive flag' alt='flag' onClick={() => this.clickImage(img.image)} data-toggle='modal' data-target='#headerModal' />
+        </div>
+      )
+    )
+
+    const modalData = (
+      <img src={this.state.modalImage} className='img-responsive modalimg' alt='flag' />
+    )
+
     return (
       <div className="Header row">
         <div className="col-md-8 col-6 col-s-8">
           <div id="carouselExampleSlides" class="carousel slide carousel-fade" data-ride="carousel">
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src={require('../assets/images/img1.jpeg')} className='img-responsive flag' alt='flag' data-toggle='modal' data-target='#firstModal' />
-                </div>
-                <div class="carousel-item">
-                  <img src={require('../assets/images/img2.jpeg')} className='img-responsive flag' alt='flag' data-toggle='modal' data-target='#secondModal' />
-                </div>
-                <div class="carousel-item">
-                  <img src={require('../assets/images/img3.jpeg')} className='img-responsive flag' alt='flag' data-toggle='modal' data-target='#threeModal' />
-                </div>
-                <div class="carousel-item">
-                  <img src={require('../assets/images/img4.jpeg')} className='img-responsive flag' alt='flag' data-toggle='modal' data-target='#fourModal' />
-                </div>
+                {modalImages}
               </div>
             </div>
           </div>
@@ -29,34 +63,10 @@ class Header extends Component {
           </a>            
         </div>
 
-        <div class="modal fade bd-example-modal-lg mdl" id="firstModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl" role="document">
               <div class="modal-content modatent">
-                <img src={require('../assets/images/img1.jpeg')} className='img-responsive modalimg' alt='flag' />
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade bd-example-modal-lg mdl" id="secondModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl" role="document">
-              <div class="modal-content modatent">
-                <img src={require('../assets/images/img2.jpeg')} className='img-responsive modalimg' alt='flag' />
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade bd-example-modal-lg mdl" id="threeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl" role="document">
-              <div class="modal-content modatent">
-                <img src={require('../assets/images/img3.jpeg')} className='img-responsive modalimg' alt='flag' />
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade bd-example-modal-lg mdl" id="fourModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl" role="document">
-              <div class="modal-content modatent">
-                <img src={require('../assets/images/img4.jpeg')} className='img-responsive modalimg' alt='flag' />
+                {modalData}
             </div>
           </div>
         </div>

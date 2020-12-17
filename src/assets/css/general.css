@@ -20,11 +20,3 @@
 #basic-nav-dropdown:active{
     color: rgb(185, 169, 24);
 }
-
-
-.flag {
-    width: 100%;
-    height: 175px;
-    margin: 0;
-    padding: 0;
-}

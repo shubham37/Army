@@ -189,9 +189,9 @@ class AssessorTrainingSchedule extends Component {
          <ScheduleComponent ref={t => this.scheduleObj = t} eventSettings={{ dataSource: this.state.schedules }} 
          editorTemplate={this.editorTemplate} showQuickInfo={false} popupOpen={this.onPopupOpen}  
          actionBegin={this.onActionBegin} >
-          <Inject services={[Day, WorkWeek, Month]}/> 
+          <Inject services={[Day, Week, Month]}/> 
           <ViewsDirective>
-            <ViewDirective option='WorkWeek' startHour='09:00' endHour='18:00'/>
+            <ViewDirective option='Week' startHour='09:00' endHour='22:00'/>
             {/* <ViewDirective option='Week' startHour='08:00' endHour='20:00'/> */}
             <ViewDirective option='Month' showWeekend={false}/>
           </ViewsDirective>
