@@ -24,7 +24,7 @@ import TeamPD from '../general/team/pd_dept.js'
 import TeamPsych from '../general/team/psych_dept.js'
 import CoursesAgain from '../general/courses/courses.js'
 import CoursesFeeStructure from '../general/courses/fee_structure.js'
-import Contact from './contact.js'
+import ContactForm from '../forms/contact.js'
 import { NavDropdown, Navbar,Nav, Button } from 'react-bootstrap'
 import '../../assets/css/general.css'
 import axios from 'axios';
@@ -36,7 +36,8 @@ class GeneralMain extends Component {
     this.state ={
       globalview : {},
       star : [],
-      stars : []
+      stars : [],
+      notification: 'Upcoming Soon'
     }
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -82,9 +83,11 @@ class GeneralMain extends Component {
     axios.get(`/api/stars`)
     .then((data) =>{
         if (data.data.is_exist){
+          console.log(data);
           this.setState({
-            star: data.data.assessor,
-            stars:data.data.assessors
+            star: data.data.today,
+            stars:data.data.evergreen,
+            notification:data.data.notification
           });
         } else {
           this.setState({
@@ -231,12 +234,11 @@ class GeneralMain extends Component {
         {this.state.star.map((assessor) =>
           <div className='row'>
             <div className='col-4'>
-              <img class="img-fluid img-circle" src={'/media/' + assessor.assessor__image || require('../../assets/images/bot.jpg')} alt="user" width='100%' height='100%' />
+              <img class="img-fluid img-circle" src={assessor.image || require('../../assets/images/bot.jpg')} alt="user" width='100%' height='100%' />
             </div>
             <div className='col'>
-              <span>Name: {assessor.assessor__first_name + " " + assessor.assessor__last_name}</span><br />
-              <span>Email: {assessor.assessor__user__email}</span><br />
-              <span>Mobile:</span><br />
+              <h6>{assessor.heading}</h6>
+              <p>{assessor.text}</p>
             </div>
           </div>
       )}
@@ -261,12 +263,11 @@ class GeneralMain extends Component {
         {this.state.stars.map((star) =>
           <div className='row'>
             <div className='col-4'>
-              <img class="img-fluid img-circle" src={'/media/'+ star.assessor__image || require('../../assets/images/bot.jpg')} alt="profile" width='100%' height='100%' />
+              <img class="img-fluid img-circle" src={'/media/'+ star.image || require('../../assets/images/bot.jpg')} alt="profile" width='100%' height='100%' />
             </div>
             <div className='col'>
-              <span>Name: {star.assessor__first_name + " " + star.assessor__last_name}</span><br />
-              <span>Email: {star.assessor__user__email}</span><br />
-              <span>Mobile:</span><br />
+              <span>{star.heading}</span><br />
+              <span>{star.text}</span><br />
             <hr />
             </div>
           </div>
@@ -286,39 +287,6 @@ class GeneralMain extends Component {
         }
       </Popover>
     );
-
-    // const cmoPopover = (
-    //   <Popover id="popover-basic">
-    //     <Popover.Title as="h3">CMO</Popover.Title>
-    //     <Popover.Content>
-    //         <span>First Name</span><br />
-    //         <span>Email Id</span><br />
-    //         <span>Mobile No</span><br />
-    //     </Popover.Content>
-    //   </Popover>
-    // );
-
-    // const cooPopover = (
-    //   <Popover id="popover-basic">
-    //     <Popover.Title as="h3">COO</Popover.Title>
-    //     <Popover.Content>
-    //         <span>First Name</span><br />
-    //         <span>Email Id</span><br />
-    //         <span>Mobile No</span><br />
-    //     </Popover.Content>
-    //   </Popover>
-    // );
-
-    // const ceoPopover = (
-    //   <Popover id="popover-basic">
-    //     <Popover.Title as="h3">CEO</Popover.Title>
-    //     <Popover.Content>
-    //         <span>First Name</span><br />
-    //         <span>Email Id</span><br />
-    //         <span>Mobile No</span><br />
-    //     </Popover.Content>
-    //   </Popover>
-    // );
 
     return (
       <div className='content_home'>
@@ -375,10 +343,10 @@ class GeneralMain extends Component {
                 </NavDropdown>
 
                 <NavDropdown title="PD" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SE')} >SPOKEN ENGLISH</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('BL')} >BODY LANGUAGE</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DFS')} >DRESS FOR STAGE1 AND STAGE2</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DAD')} >DO'S AND DON'T</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('BL')} >Personality Development</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SE')} >Spoken English</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DFS')} >Dress For Stage1 and Stage2</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('DAD')} >Do's and Don't</Button></NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Current Affairs" id="basic-nav-dropdown">
@@ -419,7 +387,7 @@ class GeneralMain extends Component {
           <Main />
           <br/>
           <div className='scroll_message container-fluid'>
-            <marquee behavior="scroll" direction="left">Here is some scrolling text... </marquee>
+            <marquee behavior="scroll" direction="left">  {this.state.notification} </marquee>
           </div>
         </div>
 
@@ -504,7 +472,8 @@ class GeneralMain extends Component {
         </div>
 
         <div hidden={this.state.globalview.is_contact}>
-          <Contact />
+          {/* <Contact /> */}
+          <ContactForm />
         </div>
 
         <div hidden={this.state.globalview.is_courses}>

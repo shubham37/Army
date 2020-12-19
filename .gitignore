@@ -17,36 +17,4 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
-
-
-# 1. Training Session Schedule By Student go through department wise assessor. We saved in DB as Stream Scheduled. we Know student and assessor both.
-
-# 2. Tests In Which Student submit answer as PSYCH test. WE saves in DB as TestSubmission. We know student and answer and question but Don't know assessor who assessed this test.
-
-# 3. Is the test submitted by student deisplay on Test Report Tab of assessor in which he assessed teat and give his remark and comment on test submission.
-# If Yes than which assessor will show who's stdent which test.
-# If No than in test report tab of assessor what will display and at what basis he give remark and comment
-
-# 4. In progress Report an assessor will give progress report to which student  or on which basis either he scheduled a stream or assessor checked a test.
-# and for a dept for a student how many assessor give hime progress report and how many time.
-# In student progress report what progress report shown all or only last or how.
-
-# 5. An Assessor will give  intruction to which student on which basis and can he give only single time or multiple tme or what. 
-# and these intruction shown to student dashboard in which tab and which format.
-
-# 6. In Test Reports Is It really Test On mis confusion with Training Session.
-
-
-# Query
-
-# 5 Done (Account Kaise Create hoga and Mock test konsa hoga)
-# 6 Done
-# 7 Done
-# 8 Required PIQ Form Clear Field
-# 9 Test Predefined Hona Chahiye For New Tests Required Development Every time.
-# 10 Pending
-# 11 Done
-# 12 Required Exact Logic
-# 13 Done
-# 14 For Statistics, Account Exact Design Required
-
+*.txt

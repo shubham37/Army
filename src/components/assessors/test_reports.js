@@ -7,7 +7,8 @@ class AssessorTestReport extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tests: []
+      tests: [],
+      pending: []
     }
     this.onRefresh = this.onRefresh.bind(this);
     this.submitReport = this.submitReport.bind(this);
@@ -23,7 +24,11 @@ class AssessorTestReport extends Component {
     })
     .then((response) => {
       if (response.data.is_data) {
-        this.setState({ tests: response.data.tests})
+        console.log(response);
+        this.setState({ 
+          tests: response.data.pending,
+          pending: response.data.done
+        })
       }
     })
     .catch((error) => {
@@ -79,16 +84,34 @@ class AssessorTestReport extends Component {
                 <p><input type='text' style={{width: '100%', textIndent:'15px', padding: '2% 0'}} class='form-control' name='remark' /></p>
                 <span>Comment</span><br />
                 <p><input type='text' style={{width: '100%', textIndent:'15px', padding: '2% 0'}} class='form-control' name='comment' /></p>
-                <button type='submit' style={{border:'none', padding: '2% 0', fontWeight: 'bolder', fontSize: 'larger', backgroundColor:'rgb(260, 160, 0)', color:'white'}}> Submit</button>
+                <button type='submit' style={{border:'none', padding: '2%', fontWeight: 'bolder', fontSize: 'larger', backgroundColor:'rgb(260, 160, 0)', color:'white'}}> Submit</button>
               </form>
             </Card>
           </div>
         ))}
+
+        {this.state.pending.map((test) => (
+          <div className='col-md-6'>
+            <Card text style={{padding:'5%'}}>
+              <p>
+                <span className='float-left'><b>{test.student.first_name}</b></span>
+                <span className='float-right'>{test.student.gender===1?'Male':'Female'}</span>
+              </p>
+              <span>Answer</span><br />
+              <p style={{border:'2px solid black', color: 'gray', fontWeight: 'bolder', padding:'2%'}}>{test.answer}</p>
+              <span>Remark</span><br />
+              <p style={{border:'2px solid black', color: 'gray', fontWeight: 'bolder', padding:'2%'}}>{test.remark}</p>
+              <span>Comment</span><br />
+              <p style={{border:'2px solid black', color: 'gray', fontWeight: 'bolder', padding:'2%'}}>{test.comment}</p>
+            </Card>
+          </div>
+        ))}
+
       </div>
     )
     const no_content = (
       <div className='col'>
-        <p style={{fontSize: 'larger', color: 'gray'}}>No Test For Assessment</p>
+        <p style={{fontSize: 'larger', color: 'darkgray', textAlign: 'center', padding: '2% 0', width: '100%'}}>No Test For Assessment</p>
       </div>
     )
 

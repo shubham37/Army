@@ -24,18 +24,12 @@ export default function AssessorBriefcase() {
         headers : headers
       })
       .then((data) => {
-        const images = []
-        const videos = []
-        const documents = []
         console.log(data)
-        data.data.briefcases.map((file) => {
-          images.push({
-            'file_url': file.file
-          })
-        });
-        setVideo(videos);
-        setDocument(documents);
-        setImage(images);
+        if (data.data.is_data) {
+          setImage(data.data.images);
+          setVideo(data.data.videos);
+          setDocument(data.data.documents);
+        }
         setHassData(true);
       })
       .catch((error) => {
@@ -46,70 +40,45 @@ export default function AssessorBriefcase() {
   
   function Videos() {
     return (
-      <Accordion defaultActiveKey="0">
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          Videos
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <div className="row">
-              {video.map((video) => (
-                <div className="col">
-                  <p>File Location: {video.file_url}</p> 
-                </div>
-              ))}
-            </div>
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
+      <div className="row">
+        {video.map((video) => (
+          <div className="col">
+            <video
+              height='250'
+              width='250'
+              src={video.file}
+              preload="auto"
+              controls
+            >
+            </video><br />
+            <h4>{video.title}</h4>
+          </div>
+        ))}
+      </div>
     )
   }
 
   function Documents() {
     return (
-      <Accordion defaultActiveKey="0">
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          Documents
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <div className="row">
-              {document.map((doc) => (
-                <div className="col">
-                  <p>File Location: {doc.file_url}</p> 
-                </div>
-              ))}
-            </div>
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
+      <div className="row">
+        {document.map((doc) => (
+          <div className="col">
+            <p><a href={doc.file} target='_blank'>{ doc.title }</a></p> 
+          </div>
+        ))}
+      </div>
     )
   }
 
   function Images() {
     return (
-      <Accordion defaultActiveKey="0">
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          Images
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <div className="row">
-              {image.map((image) => (
-                <div className="col-md-4">
-                  <img src={image.file_url} alt="..." className='img-thumbnail' style={{width:'100%', height:'100%'}} />
-                </div>
-              ))}
-            </div>
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
+      <div className="row">
+        {image.map((image) => (
+          <div className="col-md-4">
+            <img src={image.file} alt="..." className='img-thumbnail img-responsive' style={{width:'200px', height:'200px'}} />
+          </div>
+        ))}
+      </div>
     )
   } 
 
@@ -124,11 +93,55 @@ export default function AssessorBriefcase() {
             </div>
           </div>
           <br />
-          <Videos />
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                Images
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  { image.length > 0
+                  ? <Images /> :
+                  <p>No Image</p>
+                  }
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
           <br />
-          <Documents />
+
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                Videos
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  { video.length > 0
+                  ? <Videos /> :
+                  <p>No Video</p>
+                  }
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
           <br />
-          <Images /> 
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                Documents
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  { document.length > 0
+                  ? <Documents /> :
+                  <p>No Document</p>
+                  }
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+    
           <br />
           <UploadDocument />
         </div>

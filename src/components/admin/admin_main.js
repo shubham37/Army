@@ -37,7 +37,7 @@ class AdminMain extends Component {
         this.state.globalview = Object.assign({}, this.view);
         this.state.globalview.is_Home_hidden = false;
 
-        if (localStorage.getItem('token') && (localStorage.getItem('role') == 2)){
+        if (localStorage.getItem('token') && (localStorage.getItem('role') === 2)){
             this.setState({is_logout:false});
         }
         else {

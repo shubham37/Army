@@ -37,7 +37,7 @@ class CurrentAffairDefence extends Component {
   render() {
 
     const ca_content = this.state.cas.map((ca) => 
-        <li style={{display: 'block'}}>* {ca.text}
+        <li style={{display: 'block'}} key={ca.text}>* {ca.text}
         </li>
     )
 

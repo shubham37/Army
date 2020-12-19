@@ -1,6 +1,22 @@
 .civil {
-    padding: 5px;
-    border-top: 2px gray solid;
+    padding: 5px 0;
+    text-align: center;
+    height: 250px;
+    width: 100%;
+}
+
+p {
+    font-weight: bolder;
+    font-family: Arial;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
 }
 
 ul {
@@ -15,4 +31,22 @@ ul {
 li {
     display: inline-block;
     padding: 4px;
+}
+
+.made {
+    width: 100%;
+    font-size: smaller;
+    font-family: Arial;
+    font-weight: bolder;
+    border: none;
+    background-color: white;
+}
+
+@media screen and (max-width: 480px) {
+    .civil {
+        height: 175px;
+    }
+    p {
+        font-size: smaller;
+    }
 }

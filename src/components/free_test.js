@@ -13,7 +13,7 @@ class FreeTest extends Component {
         </div>
         <div  className='row'>
           <div className='col-md-11 offset-md-1' style={{textAlign:'center'}}>
-            <a href='/free'><Button className='free_btn'>Free Test Me</Button></a>
+            <a href='/free'><Button className='free_btn'>Take Military Apptitute Test</Button></a>
           </div>
         </div>
     </div>

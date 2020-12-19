@@ -186,7 +186,7 @@ class Main extends Component {
           <div  className='row'>
             <div className='col-md-11 offset-md-1' style={{textAlign:'center'}}>
               <Button className='btn free_btn' onClick={e => this.setState({is_free_test_hidden:false, is_login_hidden:true, free_test_disable:true})} 
-              disabled={this.state.free_test_disable} >Free Test Me</Button>
+              disabled={this.state.free_test_disable} >Take Military Apptitute Test</Button>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@ class Main extends Component {
   
               <div className='row'>
                 <div className='col-md'>
-                  <p className='free_test_title'>Free Test Details</p>
+                  <p className='free_test_title'>Take Military Apptitute Test</p>
                 </div>
               </div>
 

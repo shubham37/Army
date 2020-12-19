@@ -53,7 +53,7 @@ class AssessorInstruction extends Component {
       headers : headers
     })
     .then((data) => {
-      if (data.status == 200) {
+      if (data.status === 200) {
         console.log("Data Updated");
     }
     }).catch((error) => console.log(error))

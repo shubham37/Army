@@ -9,17 +9,17 @@ import StudentDashboardGTO from './dashboard/gto_tests.js'
 import StudentDashboardIO from './dashboard/io_tests.js'
 import StudentDashboardPIQ from './dashboard/piq_form.js'
 
-import StudentProgressReportGTO from './progress_report/gto_dept.js'
-import StudentProgressReportITD from './progress_report/intt_test_dept.js'
-import StudentProgressReportIO from './progress_report/io_dept.js'
-import StudentProgressReportPD from './progress_report/pd_dept.js'
-import StudentProgressReportPsych from './progress_report/psych_dept.js'
+// import StudentProgressReportGTO from './progress_report/gto_dept.js'
+// import StudentProgressReportITD from './progress_report/intt_test_dept.js'
+// import StudentProgressReportIO from './progress_report/io_dept.js'
+// import StudentProgressReportPD from './progress_report/pd_dept.js'
+// import StudentProgressReportPsych from './progress_report/psych_dept.js'
 
-import StudentTestReportGTO from './test_reports/gto_dept.js'
-import StudentTestReportITD from './test_reports/intt_test_dept.js'
-import StudentTestReportIO from './test_reports/io_dept.js'
-import StudentTestReportPD from './test_reports/pd_dept.js'
-import StudentTestReportPsych from './test_reports/psych_dept.js'
+// import StudentTestReportGTO from './test_reports/gto_dept.js'
+// import StudentTestReportITD from './test_reports/intt_test_dept.js'
+// import StudentTestReportIO from './test_reports/io_dept.js'
+// import StudentTestReportPD from './test_reports/pd_dept.js'
+// import StudentTestReportPsych from './test_reports/psych_dept.js'
 
 import StudentIntruction from './instruction.js'
 import StudentScheduleToday from './schedule_for_today.js'
@@ -40,8 +40,8 @@ class StudentMain extends Component {
           globalview : {},
           logout_message: '',
           is_logout: false,
-          user:'',
-          image: ''
+          user:{}
+        //   image: ''
         }
         this.view = {
             is_PIQFORM_hidden:true,
@@ -61,17 +61,17 @@ class StudentMain extends Component {
 
             is_TSS_hidden:true,
 
-            is_GTOTR_hidden:true,
-            is_IOTR_hidden:true,
-            is_PSYCHTR_hidden:true,
-            is_PDTR_hidden:true,
-            is_ITTR_hidden:true,
+            // is_GTOTR_hidden:true,
+            // is_IOTR_hidden:true,
+            // is_PSYCHTR_hidden:true,
+            // is_PDTR_hidden:true,
+            // is_ITTR_hidden:true,
 
-            is_GTOPR_hidden:true,
-            is_IOPR_hidden:true,
-            is_PSYCHPR_hidden:true,
-            is_PDPR_hidden:true,
-            is_ITPR_hidden:true,
+            // is_GTOPR_hidden:true,
+            // is_IOPR_hidden:true,
+            // is_PSYCHPR_hidden:true,
+            // is_PDPR_hidden:true,
+            // is_ITPR_hidden:true,
   
             is_Home_hidden:true
         };
@@ -97,8 +97,9 @@ class StudentMain extends Component {
             })
             .then((data) => {
                 this.setState({
-                    user:data.data.first_name,
-                    image:data.data.image || ""
+                    user: Object.assign({}, data.data)
+                    // user:data.data.first_name,
+                    // image:data.data.image || ""
                 });
                 console.log(this.state.image)
             })
@@ -157,36 +158,36 @@ class StudentMain extends Component {
             case 'TSS':
                 view_local.is_TSS_hidden = false;
                 break;
-            case 'GTOTR':
-                view_local.is_GTOTR_hidden = false;
-                break;
-            case 'IOTR':
-                view_local.is_IOTR_hidden = false;
-                break;
-            case 'PSYCHTR':
-                view_local.is_PSYCHTR_hidden = false;
-                break;
-            case 'PDTR':
-                view_local.is_PDTR_hidden = false;
-                break;
-            case 'ITTR':
-                view_local.is_ITTR_hidden = false;
-                break;
-            case 'GTOPR':
-                view_local.is_GTOPR_hidden = false;
-                break;
-            case 'IOPR':
-                view_local.is_IOPR_hidden = false;
-                break;
-            case 'PSYCHPR':
-                view_local.is_PSYCHPR_hidden = false;
-                break;
-            case 'PDPR':
-                view_local.is_PDPR_hidden = false;
-                break;
-            case 'ITPR':
-                view_local.is_ITPR_hidden = false;
-                break;
+            // case 'GTOTR':
+            //     view_local.is_GTOTR_hidden = false;
+            //     break;
+            // case 'IOTR':
+            //     view_local.is_IOTR_hidden = false;
+            //     break;
+            // case 'PSYCHTR':
+            //     view_local.is_PSYCHTR_hidden = false;
+            //     break;
+            // case 'PDTR':
+            //     view_local.is_PDTR_hidden = false;
+            //     break;
+            // case 'ITTR':
+            //     view_local.is_ITTR_hidden = false;
+            //     break;
+            // case 'GTOPR':
+            //     view_local.is_GTOPR_hidden = false;
+            //     break;
+            // case 'IOPR':
+            //     view_local.is_IOPR_hidden = false;
+            //     break;
+            // case 'PSYCHPR':
+            //     view_local.is_PSYCHPR_hidden = false;
+            //     break;
+            // case 'PDPR':
+            //     view_local.is_PDPR_hidden = false;
+            //     break;
+            // case 'ITPR':
+            //     view_local.is_ITPR_hidden = false;
+            //     break;
             default:
                 view_local.is_Home_hidden = false;
         }
@@ -255,7 +256,7 @@ class StudentMain extends Component {
 
                                     <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
 
-                                    <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
+                                    {/* <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOTR")}>GTO Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOTR")}>IO Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHTR")}>Psych Dept</Button></NavDropdown.Item>
@@ -269,7 +270,7 @@ class StudentMain extends Component {
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHPR")}>Psych Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDPR")}>PD Dept</Button></NavDropdown.Item>
                                         <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITPR")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                    </NavDropdown>
+                                    </NavDropdown> */}
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -278,9 +279,9 @@ class StudentMain extends Component {
                 <br />
                 <div className='row container-fluid'>
                     <div className='col'>
-                        <span className='float-left'>Welcome, <br /> <b>Mr. {this.state.user}</b> </span>
+                        <span className='float-left'>Welcome, <br /> <b>Mr. {this.state.user.first_name}</b> </span>
                         <span style={{marginLeft:'2px'}}>
-                            <img src={this.state.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
+                            <img src={this.state.user.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
                         </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <br />
@@ -318,7 +319,7 @@ class StudentMain extends Component {
                 <div hidden={this.state.globalview.is_PSYCHA_hidden}>
                     <StudentAssessorPsych />
                 </div>
-                <div hidden={this.state.globalview.is_GTOPR_hidden}>
+                {/* <div hidden={this.state.globalview.is_GTOPR_hidden}>
                     <StudentProgressReportGTO />
                 </div>
                 <div hidden={this.state.globalview.is_ITPR_hidden}>
@@ -347,7 +348,7 @@ class StudentMain extends Component {
                 </div>
                 <div hidden={this.state.globalview.is_PSYCHTR_hidden}>
                     <StudentTestReportPsych />
-                </div>
+                </div> */}
 
                 <div hidden={this.state.globalview.is_SFD_hidden}>
                     <StudentScheduleToday />
@@ -359,10 +360,19 @@ class StudentMain extends Component {
                     <StudentTrainingSchedule />
                 </div>
                 <div hidden={this.state.globalview.is_Home_hidden}>
-                    <div className='container-fluid'>
-                        <p>
-                            Home Content Will Showed Here.
-                        </p>
+                    <div className='container' style={{textAlign: 'center'}}>
+                        <div className='profile'>
+                            <div className='row'>
+                                <div className='col-md-6 col-12'>
+                                    <img src={this.state.user.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-circle' alt='profile' style={{width: '90%', height: '200px', padding:'10px'}} />
+                                </div>
+                                <div className='col-md-6 col-12'>
+                                    <h4>{this.state.user.first_name} {this.state.user.middle_name || ''} {this.state.user.last_name || ''}</h4>
+                                    <span>{this.state.user.dob || ''}</span><br />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                     </div>
                 </div>
             </div>

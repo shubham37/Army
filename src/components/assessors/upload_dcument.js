@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios'
-import { useSelector } from 'react-redux';
 
 export default function UploadDocument() {
 
@@ -14,8 +13,7 @@ export default function UploadDocument() {
   }
 
   function onUploadFile(e) {
-      e.preventDefault();
-      
+      e.preventDefault();      
       const formData = new FormData();
       formData.append('file',selectedFile, selectedFile.name);
       const token = localStorage.getItem('token');

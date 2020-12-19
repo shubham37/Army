@@ -56,8 +56,9 @@ class AssessorMain extends Component {
             })
             .then((data) => {
                 this.setState({
-                    user: data.data.first_name,
-                    image: data.data.image || ""
+                    user: Object.assign({}, data.data)
+                    // user: data.data.first_name,
+                    // image: data.data.image || ""
                 });
             })
             .catch((error) =>  {
@@ -151,9 +152,9 @@ class AssessorMain extends Component {
                 <br />
                 <div className='row container-fluid'>
                     <div className='col'>
-                        <span className='float-left'>Welcome, <br /><b>Mr. {this.state.user}</b> </span>
+                        <span className='float-left'>Welcome, <br /><b>Mr. {this.state.user.first_name}</b> </span>
                         <span style={{marginTop:'2px'}}>
-                            <img src={this.state.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
+                            <img src={this.state.user.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-thumbnail' alt='profile' width='64' height='64' style={{marginLeft:'10px'}} />
                         </span>
                         <span className='float-right'><button className='btn-danger' onClick={this.logout}>Logout <ExitToAppIcon /></button></span>
                         <p style={{color:'red', fontWeight:'bolder', fontSize:'larger'}}>{this.state.logout_message}</p>
@@ -188,9 +189,19 @@ class AssessorMain extends Component {
                     <AssessorStatistics />
                 </div>
                 <div hidden={this.state.globalview.is_Home_hidden}>
-                    <div className='container-fluid'>
-                        <hr />
-                        <p>Assessor Home Content Will Show Here.</p>
+                    <hr />
+                    <div className='container' style={{textAlign: 'center'}}>
+                        <div className='profile'>
+                            <div className='row'>
+                                <div className='col-md-6 col-12'>
+                                    <img src={this.state.user.image || require('../../assets/images/bot.jpg')}  className='img-responsive img-circle' alt='profile' style={{width: '90%', height: '200px', padding:'10px'}} />
+                                </div>
+                                <div className='col-md-6 col-12'>
+                                    <h4>{this.state.user.first_name} {this.state.user.middle_name || ''} {this.state.user.last_name || ''}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
                     </div>
                 </div>
             </div>
