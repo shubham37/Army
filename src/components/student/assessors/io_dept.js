@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import {Card, Button, Modal } from 'react-bootstrap'
 import axios from 'axios'
 import { ScheduleComponent, Week, Day, Month, Inject, ViewsDirective, ViewDirective, Agenda } from '@syncfusion/ej2-react-schedule';
-import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
-import CachedIcon from '@material-ui/icons/Cached';
-import { Spinner } from 'react-bootstrap';
 
 
 class StudentAssessorIO extends Component {
@@ -167,12 +164,14 @@ class StudentAssessorIO extends Component {
       <div className='row'>
         {this.state.assessors.map((assessor) => 
           <div className='col'>
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rem' }} key={assessor.id}>
               <Card.Body>
                 <Card.Title>{assessor.first_name} {assessor.id}</Card.Title>
                 <Card.Text>
-                  <p>Gender : {assessor.gender === 1? 'Male' : 'FeMale'}</p>
-                  <p>Designation : {assessor.position.designation}</p>
+                  <div>
+                    Gender : {assessor.gender === 1? 'Male' : 'FeMale'} <br />
+                    Designation : {assessor.position.designation}
+                  </div>
                 </Card.Text>
                 <Button variant="primary" onClick={(e) => this.handleShow(assessor)}>See Availability</Button>
               </Card.Body>

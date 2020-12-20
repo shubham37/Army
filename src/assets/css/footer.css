@@ -42,6 +42,21 @@ li {
     background-color: white;
 }
 
+input, textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid darkgray;
+    font-size: medium;
+    text-indent: 5px;
+    padding: 3px 0;
+}
+
+input::placeholder, textarea::placeholder {
+    color: darkgray;
+    font-size: small;
+}
+
+
 @media screen and (max-width: 480px) {
     .civil {
         height: 175px;

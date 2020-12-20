@@ -212,7 +212,7 @@ class Test extends Component {
       <div class='row'>
         {this.state.test.images.map((image) => 
           <div class='col-md-6'>
-            <img src={image.image || require('../../assets/images/flag.jpg')} className='img-responsive img-thumbnail' alt='test_image' style={{width:"100%", height:'75%', padding:'2%'}} />
+            <img src={image.image || require('../../assets/images/bot.jpg')} className='img-responsive img-thumbnail' alt='test_image' style={{width:"100%", height:'75%', padding:'2%'}} />
           </div>
         )}
       </div>

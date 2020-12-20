@@ -1,7 +1,67 @@
 import React, { Component } from 'react';
 import '../assets/css/footer.css'
+import { Spinner, Button, Modal } from 'react-bootstrap'
+import axios from 'axios'
 
 class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      is_spinner_hidden: true,
+      action_info:'',
+      name: '',
+      mobile: '',
+      query: ''
+    }
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  handleShow() {
+    this.setState({
+      show: true
+    })
+  }
+
+  handleClose() {
+    this.setState({
+      show: false
+    })
+  }
+
+  submit (e) {
+    e.preventDefault();
+    this.setState({
+      is_spinner_hidden: false,
+      action_info: 'Sending'
+    })
+
+    const uploadForm = new FormData();
+    uploadForm.append('name', this.state.name);
+    uploadForm.append('number', this.state.mobile);
+    uploadForm.append('query', this.state.query);
+
+    axios.post(`/api/made_query/`,uploadForm)
+    .then((data) =>{
+        this.setState({
+          is_spinner_hidden: true,
+          action_info: 'Done! Our Team Will Contact You Soon.',
+          name: '',
+          mobile: '',
+          query: ''
+        })
+    })
+    .catch((error) => {
+      this.setState({
+        is_spinner_hidden: true,
+        action_info: 'Please Try Again'
+      })
+    });
+  }
+
+
   render() {
     return (
       <div className="Footer">
@@ -60,20 +120,51 @@ class Footer extends Component {
 
         <div className='row'>
           <div className='col'>
-            <button class='btn made' data-bs-toggle='modal' data-bs-target="#madeModal">Made By Team</button>
+            <Button className='made' variant="alert" onClick={(e) => this.handleShow()}>Made By Team</Button>
           </div>
         </div>
 
-        <div class="modal fade" id="madeModal" tabindex="-1" aria-labelledby="madeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-
-                <div class="modal-body">
-                  Form
+        <Modal show={this.state.show} onHide={(e) => this.handleClose()}>
+          <Modal.Header>
+            <div style={{ textAlign: 'center', fontWeight: 'bolder', fontSize: 'larger' }}>
+                Contact Us For Any Technical Help
+            </div>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.submit}>
+              <div className='row'>
+                <div className='col'>
+                  <label for='customer_name'>Name</label>
+                  <input type='text' placeholder='Full Name' id='customer_name' value={this.state.name} pattern='^([A-Za-z]).{4,}$' 
+                  title='Atleast 8 character' onChange={(e) => this.setState({name: e.target.value})} required />
                 </div>
               </div>
-            </div>
-        </div>
+              <br />
+              <div className='row'>
+                <div className='col'>
+                <label for='customer_number'>Phone Number</label>
+                  <input type='text' placeholder='Phone Number' id='customer_number' value={this.state.mobile} pattern="^\d{10}$"
+                  title='Should Be 10 Digit' onChange={(e) => this.setState({mobile: e.target.value})} required />
+                </div>
+              </div>
+              <br />
+              <div className='row'>
+                <div className='col'>
+                <label for='customer_query'>Message</label>
+                  <textarea ros='5' placeholder='Explain Your Query Here ...' value={this.state.query} onChange={(e) => this.setState({query: e.target.value})}></textarea>
+                </div>
+              </div>
+              <br />
+              <p style={{ textAlign: 'center'}}>
+                <button type='submit' class='btn btn-danger' style={{ width: '100%' }}>
+                  <span hidden={!this.state.is_spinner_hidden}>Send</span>
+                  <span hidden={this.state.is_spinner_hidden}><Spinner animation='border' /></span>
+                </button><br /><br />
+                <span hidden={this.state.action_info?false:true}>{this.state.action_info}</span>
+              </p>
+            </form>
+          </Modal.Body>
+        </Modal>
 
       </div>
     );
