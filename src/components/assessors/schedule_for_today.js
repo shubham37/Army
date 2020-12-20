@@ -12,15 +12,17 @@ class AssessorScheduleToday extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data : []
+      data : [],
+      action_info: ''
     }
     this.fetchData = this.fetchData.bind(this);
     this.editorTemplate = this.editorTemplate.bind(this);
   }
 
   fetchData() {
-    const token = localStorage.getItem('token');
+    this.setState({ action_info: 'fetching ...'});
 
+    const token = localStorage.getItem('token');
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Token ${token}`
@@ -40,17 +42,18 @@ class AssessorScheduleToday extends Component {
           })
         });
         this.setState({
-          data:schedules
+          data:schedules,
+          action_info: 'Data Fetched'
         });
       } else {
         this.setState({
-          data: []
+          data: [],
+          action_info: 'Try Again'
         });
       }
     })
     .catch((error) => {
-      this.setState({ data: [] });
-      // console.log(error.message);
+      this.setState({ data: [], action_info: 'Try Again' });
     });
   }
 

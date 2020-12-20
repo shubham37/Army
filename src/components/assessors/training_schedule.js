@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { ScheduleComponent, WorkWeek, Week, Month, Inject, Day, ViewsDirective, ViewDirective, Agenda } from '@syncfusion/ej2-react-schedule';
 import axios from 'axios';
 import CachedIcon from '@material-ui/icons/Cached';
@@ -12,7 +13,8 @@ class AssessorTrainingSchedule extends Component {
     super(props);
     this.state = {
       schedules : [],
-      action_info:'Click Confirm after Selection'
+      action_info: '',
+      is_spinner_hidden: true
     }
 
     this.onAddClick = this.onAddClick.bind(this);
@@ -23,6 +25,7 @@ class AssessorTrainingSchedule extends Component {
   }
   
   onRefresh(e) {
+    this.setState({ action_info: "fetching ..." })
     e.preventDefault();
     const token = localStorage.getItem('token');
     
@@ -44,7 +47,6 @@ class AssessorTrainingSchedule extends Component {
           })
         });
         data.data.not_availabilities.map((schedule) => {
-          // debugger
           schedules.push({
             Id: schedule.id,
             Subject: schedule.subject + " || " +schedule.student.first_name,
@@ -53,7 +55,8 @@ class AssessorTrainingSchedule extends Component {
           })
         });
         this.setState({
-          schedules:schedules
+          schedules:schedules,
+          action_info: "Data Fetched"
         });
       } else {
         this.setState({
@@ -62,12 +65,19 @@ class AssessorTrainingSchedule extends Component {
       }
     })
     .catch((error) => {
-      // console.log(error.message);
+      this.setState({
+        schedules: [],
+        action_info: 'Try Again.'
+      });
     });
   }
   
-  onActionBegin(action) {
+  onActionBegin(action) {  
+    this.setState({action_info:'Mark Youself Available'});
+
     if (action.requestType === 'eventRemove') {
+      this.setState({action_info:'Click To Save Changes'});
+
       const delete_ids = []; 
       const deleted_reco = [];
       action.deletedRecords.map((record) => {
@@ -86,7 +96,6 @@ class AssessorTrainingSchedule extends Component {
         }
       })
       .then((data) => {
-        // this.setState({action_info:''})
         if (data.data.is_delete) {
           this.setState({action_info: data.data.detail})
         } else {
@@ -99,7 +108,7 @@ class AssessorTrainingSchedule extends Component {
       });
     }
     else if (action.requestType === 'eventCreate') {
-      // const data = []
+      this.setState({action_info:'Click To Save Changes.'});
       action.addedRecords.map((record) => {
         if (record.EventType === 'Available') {
           record.Subject  = 'Available'
@@ -109,13 +118,9 @@ class AssessorTrainingSchedule extends Component {
         }
       })
     }
-    // else if (action.requestType === 'eventChange') {
-    //   const data = action.changedRecords
-    // } 
   }
 
   onPopupOpen(args) {
-    // debugger
     if (args.type === 'Editor') {
         if (args.data.Subject !== 'Available'){
           console.log(args.data);
@@ -145,43 +150,56 @@ class AssessorTrainingSchedule extends Component {
   }
 
   onAddClick() {
-    // console.log(this.scheduleObj);
-    const data = []
-    this.scheduleObj.eventsData.map((slot) => {
-      if (slot.EventType === 'Available') {
-        data.push({
-          Status: 1,
-          StartTime: slot.StartTime,
-          EndTime: slot.EndTime,
-          Id: slot.Id
+    this.setState({ 
+      is_spinner_hidden: false,
+      action_info: 'fetching ...'
+    });
+      const data = []
+      this.scheduleObj.eventsData.map((slot) => {
+        if (slot.EventType === 'Available') {
+          data.push({
+            Status: 1,
+            StartTime: slot.StartTime,
+            EndTime: slot.EndTime,
+            Id: slot.Id
+          });
+        }
+      });
+      const token = localStorage.getItem('token');
+  
+      axios.post(`/assessor_api/availablity/add_availability/`, {'schedules':data},
+      {
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+        }
+      })
+      .then((data) => {
+        this.setState({ 
+          is_spinner_hidden: true,
+          action_info: "Marked Available Sucessfully Done."
         });
-      }
-    });
-    const token = localStorage.getItem('token');
-
-    axios.post(`/assessor_api/availablity/add_availability/`, {'schedules':data},
-    {
-      headers:{
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`
-      }
-    })
-    .then((data) => {
-      // console.log(data);
-    })
-    .catch((error) => {
-      // console.log(error.message);
-    });
+      })
+      .catch((error) => {
+        this.setState({ 
+          is_spinner_hidden: true,
+          action_info: "Please Try Again."
+        });
+      });  
   }
 
   render() {
-    // // console.log(this.state.schedules);
     return (
       <div className='container-fluid'>
         <hr />
           <div className='float-right' style={{width:'100%'}}>
             <span style={{marginRight:'1%'}}><button className='btn btn-warning' onClick={this.onRefresh}><CachedIcon /></button></span>
-            <span style={{marginRight:'1%'}}><button className='btn btn-success' id='add' title='Add' ref={t => this.buttonObj = t} onClick={this.onAddClick}>Confirm</button></span>
+            <span style={{marginRight:'1%'}}>
+              <button className='btn btn-success' id='add' title='Add' ref={t => this.buttonObj = t} onClick={this.onAddClick}>
+                <span><Spinner animation='border' hidden={this.state.is_spinner_hidden} /></span>
+                <span hidden={!this.state.is_spinner_hidden}>Confirm</span>
+              </button>
+            </span>
             <span style={{padding:'2%', margin:'1%'}}>{this.state.action_info}</span>
           </div>
         <br />

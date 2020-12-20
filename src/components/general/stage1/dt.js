@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card, Accordion } from 'react-bootstrap'
+import { Card, Accordion, Button, Modal } from 'react-bootstrap'
 import axios from 'axios';
+import VideoPlayer from '../video_player.js'
 
 class Stage1DT extends Component {
 
@@ -8,8 +9,27 @@ class Stage1DT extends Component {
     super(props);
     this.state = {
       training: [],
-      practice: []
+      practice: [],
+      show: false,
+      current: {},
+      title: 'Video'
     }
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleShow(video) {
+    this.setState({
+      show: true,
+      current: video.video,
+      title: video.title
+    })
+  }
+
+  handleClose() {
+    this.setState({
+      show: false
+    })
   }
 
   componentWillMount() {
@@ -39,14 +59,9 @@ class Stage1DT extends Component {
             <div className='row'>
               {this.state.training.map((video) =>
                 <div className='col'>
-                  <video
-                    height='200'
-                    width='200'
-                    src={video.video}
-                    preload="auto"
-                    controls
-                  >
-                  </video>
+                  <Button variant="warning" onClick={(e) => this.handleShow(video)}>
+                    { video.title }
+                  </Button>
                 </div>
               )}
             </div>
@@ -67,7 +82,9 @@ class Stage1DT extends Component {
             <div className='row'>
               {this.state.practice.map((video) =>
                 <div className='col'>
-                  <h3>Video 1</h3>
+                  <Button variant="warning" onClick={(e) => this.handleShow(video)}>
+                    { video.title }
+                  </Button>
                 </div>
               )}
             </div>
@@ -106,7 +123,16 @@ class Stage1DT extends Component {
             }
           </div>
         </div>
-        <br />    
+        <br />
+
+        <Modal show={this.state.show} onHide={(e) => this.handleClose()} backdrop="static" keyboard={false}>
+          <Modal.Header closeButton>
+            <Modal.Title> { this.state.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <VideoPlayer video={this.state.current} />
+          </Modal.Body>
+        </Modal>
       </div>
       );
   }
