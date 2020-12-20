@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import axios from 'axios'
+
 import StudentAssessorGTO from './assessors/gto_dept.js'
 import StudentAssessorITD from './assessors/intt_test_dept.js'
 import StudentAssessorIO from './assessors/io_dept.js'
@@ -9,18 +13,6 @@ import StudentDashboardGTO from './dashboard/gto_tests.js'
 import StudentDashboardIO from './dashboard/io_tests.js'
 import StudentDashboardPIQ from './dashboard/piq_form.js'
 
-// import StudentProgressReportGTO from './progress_report/gto_dept.js'
-// import StudentProgressReportITD from './progress_report/intt_test_dept.js'
-// import StudentProgressReportIO from './progress_report/io_dept.js'
-// import StudentProgressReportPD from './progress_report/pd_dept.js'
-// import StudentProgressReportPsych from './progress_report/psych_dept.js'
-
-// import StudentTestReportGTO from './test_reports/gto_dept.js'
-// import StudentTestReportITD from './test_reports/intt_test_dept.js'
-// import StudentTestReportIO from './test_reports/io_dept.js'
-// import StudentTestReportPD from './test_reports/pd_dept.js'
-// import StudentTestReportPsych from './test_reports/psych_dept.js'
-
 import StudentIntruction from './instruction.js'
 import StudentScheduleToday from './schedule_for_today.js'
 import StudentTestPending from './tests_pending.js'
@@ -28,9 +20,6 @@ import StudentTrainingSchedule from './training_schedule.js'
 import StudentPIQForm from './piq_form.js'
 
 import '../../assets/css/student.css'
-import {NavDropdown, Navbar,Nav, Button, Dropdown} from 'react-bootstrap'
-import axios from 'axios'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 class StudentMain extends Component {
@@ -60,18 +49,6 @@ class StudentMain extends Component {
             is_SFD_hidden:true,
 
             is_TSS_hidden:true,
-
-            // is_GTOTR_hidden:true,
-            // is_IOTR_hidden:true,
-            // is_PSYCHTR_hidden:true,
-            // is_PDTR_hidden:true,
-            // is_ITTR_hidden:true,
-
-            // is_GTOPR_hidden:true,
-            // is_IOPR_hidden:true,
-            // is_PSYCHPR_hidden:true,
-            // is_PDPR_hidden:true,
-            // is_ITPR_hidden:true,
   
             is_Home_hidden:true
         };
@@ -98,8 +75,6 @@ class StudentMain extends Component {
             .then((data) => {
                 this.setState({
                     user: Object.assign({}, data.data)
-                    // user:data.data.first_name,
-                    // image:data.data.image || ""
                 });
                 console.log(this.state.image)
             })
@@ -158,36 +133,6 @@ class StudentMain extends Component {
             case 'TSS':
                 view_local.is_TSS_hidden = false;
                 break;
-            // case 'GTOTR':
-            //     view_local.is_GTOTR_hidden = false;
-            //     break;
-            // case 'IOTR':
-            //     view_local.is_IOTR_hidden = false;
-            //     break;
-            // case 'PSYCHTR':
-            //     view_local.is_PSYCHTR_hidden = false;
-            //     break;
-            // case 'PDTR':
-            //     view_local.is_PDTR_hidden = false;
-            //     break;
-            // case 'ITTR':
-            //     view_local.is_ITTR_hidden = false;
-            //     break;
-            // case 'GTOPR':
-            //     view_local.is_GTOPR_hidden = false;
-            //     break;
-            // case 'IOPR':
-            //     view_local.is_IOPR_hidden = false;
-            //     break;
-            // case 'PSYCHPR':
-            //     view_local.is_PSYCHPR_hidden = false;
-            //     break;
-            // case 'PDPR':
-            //     view_local.is_PDPR_hidden = false;
-            //     break;
-            // case 'ITPR':
-            //     view_local.is_ITPR_hidden = false;
-            //     break;
             default:
                 view_local.is_Home_hidden = false;
         }
@@ -255,22 +200,6 @@ class StudentMain extends Component {
                                     </NavDropdown>
 
                                     <Nav.Link id="basic-nav-dropdown" onClick={(e) => this.onClickOption('TSS')}>Tests Status</Nav.Link>
-
-                                    {/* <NavDropdown title="Tests Reports" id="basic-nav-dropdown">
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOTR")}>GTO Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOTR")}>IO Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHTR")}>Psych Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDTR")}>PD Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITTR")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                    </NavDropdown>
-
-                                    <NavDropdown title="Progress Report" id="basic-nav-dropdown">
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("GTOPR")}>GTO Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("IOPR")}>IO Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PSYCHPR")}>Psych Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("PDPR")}>PD Dept</Button></NavDropdown.Item>
-                                        <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption("ITPR")}>Intt Test</Button> Dept</NavDropdown.Item>
-                                    </NavDropdown> */}
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -319,37 +248,6 @@ class StudentMain extends Component {
                 <div hidden={this.state.globalview.is_PSYCHA_hidden}>
                     <StudentAssessorPsych />
                 </div>
-                {/* <div hidden={this.state.globalview.is_GTOPR_hidden}>
-                    <StudentProgressReportGTO />
-                </div>
-                <div hidden={this.state.globalview.is_ITPR_hidden}>
-                    <StudentProgressReportITD />
-                </div>
-                <div hidden={this.state.globalview.is_IOPR_hidden}>
-                    <StudentProgressReportIO />
-                </div>
-                <div hidden={this.state.globalview.is_PDPR_hidden}>
-                    <StudentProgressReportPD />
-                </div>
-                <div hidden={this.state.globalview.is_PSYCHPR_hidden}>
-                    <StudentProgressReportPsych />
-                </div>
-                <div hidden={this.state.globalview.is_GTOTR_hidden}>
-                    <StudentTestReportGTO />
-                </div>
-                <div hidden={this.state.globalview.is_ITTR_hidden}>
-                    <StudentTestReportITD />
-                </div>
-                <div hidden={this.state.globalview.is_IOTR_hidden}>
-                    <StudentTestReportIO />
-                </div>
-                <div hidden={this.state.globalview.is_PDTR_hidden}>
-                    <StudentTestReportPD />
-                </div>
-                <div hidden={this.state.globalview.is_PSYCHTR_hidden}>
-                    <StudentTestReportPsych />
-                </div> */}
-
                 <div hidden={this.state.globalview.is_SFD_hidden}>
                     <StudentScheduleToday />
                 </div>
