@@ -106,6 +106,15 @@ class PDDAD extends Component {
             <hr />            
           </div>
         </div>
+        <br />
+
+        <div style={{width:'100%', textAlign:'center', fontWeight:'bold', fontSize: 'larger', color: 'darkgray'}}>
+          {
+            this.state.practice.length < 1 && this.state.training.length < 1
+            ? <p>No Video Available</p> :
+            <div></div>
+          }
+        </div>
 
         <div className='row'>
           <div className='col'>

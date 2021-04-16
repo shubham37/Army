@@ -21,7 +21,8 @@ class Test extends Component {
       test:{
         "word": "",
         "text": "",
-        "images": []
+        "images": [],
+        "instructions": []
       },
       answer:"",
       is_test_submit:false,
@@ -66,7 +67,8 @@ class Test extends Component {
             test: {
               "word": data.data.test.question.word || "",
               "text": data.data.test.question.text || "",
-              "images": data.data.test.question.images || []
+              "images": data.data.test.question.images || [],
+              "instructions": data.data.test.instructions || []
             }
           });
         } else {
@@ -198,6 +200,15 @@ class Test extends Component {
   
 
   render() {
+
+    const Instruction = (
+      <ol>
+        { this.state.test.instructions.map((instruction, index) => 
+          <li key={index}>{instruction.text}</li>
+        )}
+      </ol>
+    );
+
     if (!this.state.is_user) {
       return <Redirect to='/' />
     }
@@ -231,13 +242,12 @@ class Test extends Component {
           </div>
           <div className='row container'>
             <div className='col-md'>
-              <h4><b><u>Instructions</u></b></h4>
-              <ol>
-                <li>1- Fill PIQ form</li><br />
-                <li>2- Select Your Assessors</li><br />
-                <li>3- Select Your Time Table</li><br />
-                <li>4- Follow the Time Table</li><br />
-              </ol>
+              <p>Instructions</p>
+              {
+                this.state.test.instructions.length > 0
+                ? Instruction :
+                <div></div>
+              }
               <br />
             </div>
           </div>

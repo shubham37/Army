@@ -77,7 +77,7 @@ export default function ContactForm() {
                         <br />
                         <div className='row'>
                             <div className='col-md-4 col-6'>
-                                <label for='user_number' className='lab'>Phone Number </label> 
+                                <label for='user_number' className='lab'>Mobile </label> 
                             </div>
                             <div className='col-md-8 col-6'>
                                 <input type='text' placeholder='Phone Number' id='user_number' className='query_take' value={number}
@@ -113,9 +113,25 @@ export default function ContactForm() {
                 </div>
 
                 <div className='col-md-6 col-12'>
-                    <p>Know Us</p>
+                    <p>KNOW ABOUT US</p>
+                    <hr />
+                    <div>
+                        <span style={{ fontSize: 'larger', fontWeight: 'bolder', fontFamily: 'Arial'}}>Our Mission</span><br />
+                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', 
+                        making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, 
+                        and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                    </div><br />
+                    <div>
+                        <span style={{ fontSize: 'larger', fontWeight: 'bolder', fontFamily: 'Arial'}}>Our Vision</span><br />
+                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', 
+                        making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, 
+                        and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                    </div>
                 </div>
             </div>
+            <br />
         </div>
     )
 }

@@ -25,7 +25,7 @@ import TeamPsych from '../general/team/psych_dept.js'
 import CoursesAgain from '../general/courses/courses.js'
 import CoursesFeeStructure from '../general/courses/fee_structure.js'
 import ContactForm from '../forms/contact.js'
-import { NavDropdown, Navbar,Nav, Button } from 'react-bootstrap'
+import { NavDropdown, Navbar,Nav, Button, NavItem } from 'react-bootstrap'
 import '../../assets/css/general.css'
 import axios from 'axios';
 
@@ -350,11 +350,11 @@ class GeneralMain extends Component {
                 </NavDropdown>
 
                 <NavDropdown title="Current Affairs" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('National')} >NATIONAL</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('International')} >INTERNATIONAL</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Economy')} >ECONOMY</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Defence')} >DEFENCE</Button></NavDropdown.Item>
-                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SAT')} >SCIENCE AND TECH</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('National')} >National</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('International')} >InterNational</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Economy')} >Economy</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('Defence')} >Defence</Button></NavDropdown.Item>
+                  <NavDropdown.Item><Button variant='None' onClick={(e) => this.onClickOption('SAT')} >Science & Tech</Button></NavDropdown.Item>
                 </NavDropdown>
 
                 <NavDropdown title="Courses" id="basic-nav-dropdown">
@@ -372,9 +372,10 @@ class GeneralMain extends Component {
                   </OverlayTrigger>
                 </NavDropdown>
 
-                {/* <NavLink id="basic"> */}
+                <NavItem>
                   <Button className='course' style={{fontWeight: 'bolder', color: 'gray'}} variant='None' onClick={(e) => this.onClickOption('Contact')} >Contact Us</Button>
-                  {/* </NavLink> */}
+                </NavItem>
+
  
               </Nav>
             </Navbar.Collapse>

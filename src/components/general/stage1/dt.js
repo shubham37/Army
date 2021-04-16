@@ -3,6 +3,7 @@ import { Card, Accordion, Button, Modal } from 'react-bootstrap'
 import axios from 'axios';
 import VideoPlayer from '../video_player.js'
 
+
 class Stage1DT extends Component {
 
   constructor(props) {
@@ -101,6 +102,15 @@ class Stage1DT extends Component {
             <h4>GD</h4>
             <hr />            
           </div>
+        </div>
+        <br />
+
+        <div style={{width:'100%', textAlign:'center', fontWeight:'bold', fontSize: 'larger', color: 'darkgray'}}>
+          {
+            this.state.practice.length < 1 && this.state.training.length < 1
+            ? <p>No Video Available</p> :
+            <div></div>
+          }
         </div>
 
         <div className='row'>

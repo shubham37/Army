@@ -37,8 +37,8 @@ class CurrentAffairInternational extends Component {
 
   render() {
 
-    const ca_content = this.state.cas.map((ca) => 
-        <li style={{display: 'block'}}>* {ca.text}
+    const ca_content = this.state.cas.map((ca, index) => 
+        <li style={{display: 'block'}} key={index}><b>{index +1}.</b>  {ca.text}
         </li>
     );
 

@@ -62,6 +62,14 @@ class StudentTestPending extends Component {
     
     return (
       <div className="container">
+
+        <div className='row'>
+          <div className='col'>
+            <h6 style={{ textAlign: 'center' }}>Test Status For This Month</h6>
+            <hr />            
+          </div>
+        </div>
+
         { this.state.status.length > 0 
           ? status_content :
           <div style={{width:'100%', padding:'2%',textAlign:'center', fontSize:'larger',color:'rgb(168, 162, 162)',backgroundColor:'rgb(236, 238, 240)', border:'1px solid rgb(172, 168, 168)', borderRadius:'5px'}}>
